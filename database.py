@@ -21,18 +21,18 @@ class SMWCentralDatabase:
     def create_tables(self, conn: sqlite3.Connection, **kwargs):
         print(f"Creating TABLE hacks")
         conn.execute('''
-        CREATE TABLE hacks (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            page_url TEXT NOT NULL UNIQUE,
-            is_demo TEXT NOT NULL,
-            is_featured TEXT NOT NULL,
-            exit_count INTEGER NOT NULL,
-            rating REAL NOT NULL,
-            size REAL NOT NULL,
-            size_units TEXT NOT NULL,
-            download_url TEXT NOT NULL,
-            downloaded_count INTEGER NOT NULL
+            CREATE TABLE hacks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                page_url TEXT NOT NULL UNIQUE,
+                is_demo TEXT NOT NULL,
+                is_featured TEXT NOT NULL,
+                exit_count INTEGER NOT NULL,
+                rating REAL NOT NULL,
+                size REAL NOT NULL,
+                size_units TEXT NOT NULL,
+                download_url TEXT NOT NULL,
+                downloaded_count INTEGER NOT NULL
             );
         ''') 
         print(f"Creating TABLE hack_types")
@@ -111,7 +111,12 @@ class SMWCentralDatabase:
             AND hacks.rating > 3.9;
         '''
         results = self.open_database(self.query, action_param=sql)
-        print(results)
+        for title, path, rating in results:
+            print(f"Title: {title}")
+            print(f"Path: {path}")
+            print(f"Rating: {rating}")
+            print()
+        return [path for _, path, _ in results]
 
     def query(self, conn: sqlite3.Connection, sql: str):
         c = conn.cursor()
