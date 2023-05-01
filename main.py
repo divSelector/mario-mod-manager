@@ -9,9 +9,9 @@ from config import RETROARCH_BIN, SNES_CORE
 def scrape():
     scraper = SMWCentralScraper()
     db.open_database(
-    db.write_records, 
-    action_param=scraper.records
-)
+        db.write_records, 
+        action_param=scraper.records
+    )
 
 def select_random_from_query(query: Callable):
     return choice(query())
