@@ -4,3 +4,4 @@ cleansmw.sfc
 sfc
 tmp
 smwcentral.db
+__pycache__
