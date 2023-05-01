@@ -1,3 +1,6 @@
 venv
 old
 cleansmw.sfc
+sfc
+tmp
+smwcentral.db

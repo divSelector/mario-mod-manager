@@ -10,6 +10,7 @@ import platform
 import subprocess
 from datetime import datetime
 import shutil
+import zlib
 
 TMP_PATH = Path('tmp')
 ZIPS_DL_PATH = TMP_PATH / 'zips'
@@ -121,7 +122,10 @@ class SMWCentralScraper:
 
         # Remove BPS Files After Patching
         for bps_file in bps_paths:
-            bps_file.unlink()
+            try:
+                bps_file.unlink()
+            except FileNotFoundError:
+                pass
         
         return record
 
@@ -185,6 +189,8 @@ class SMWCentralScraper:
                 zip.extractall(tmp_path)
         except zipfile.BadZipFile:
             print(f"BadZipFile: {zip_path}")
+        except zlib.error as e:
+            print(f"zlib.error: {e}")
 
 
         bps_files = []
