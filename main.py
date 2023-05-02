@@ -14,7 +14,12 @@ def scrape():
     )
 
 def select_random_from_query(query: Callable):
-    return choice(query())
+    pick = choice(query())
+    print(f"ID: {pick['id']}")
+    print(f"Title: {pick['title']}")
+    print(f"Path: {pick['path']}")
+    print(f"Rating: {pick['rating']}")
+    return pick['path']
 
 def launch_sfc_in_retroarch(sfc: str):
     subprocess.run([RETROARCH_BIN, '-L', SNES_CORE, sfc])

@@ -102,21 +102,20 @@ class SMWCentralDatabase:
             hack['downloaded_count']
         )
 
-    def query_standard_normal_rated_over_3_9(self):
+    def query_standard_normal_rated_over_3_9(self) -> List[dict]:
         sql = '''
-            SELECT hacks.title, hack_paths.path, hacks.rating FROM hacks
+            SELECT hacks.id, hacks.title, hack_paths.path, hacks.rating FROM hacks
             JOIN hack_paths ON hacks.id = hack_paths.hack_id
             JOIN hack_types ON hacks.id = hack_types.hack_id
-            WHERE hack_types.type LIKE '%Normal%'
+            WHERE hack_types.type LIKE '%Hard%'
             AND hacks.rating > 3.9;
         '''
         results = self.open_database(self.query, action_param=sql)
-        for title, path, rating in results:
-            print(f"Title: {title}")
-            print(f"Path: {path}")
-            print(f"Rating: {rating}")
-            print()
-        return [path for _, path, _ in results]
+        return [
+            dict(id=_id, title=title, path=path, rating=rating)
+            for _id, title, path, rating in results
+        ]
+    
 
     def query(self, conn: sqlite3.Connection, sql: str):
         c = conn.cursor()
