@@ -1,5 +1,5 @@
 from random import choice
-from typing import Callable
+from typing import List
 import subprocess
 
 from database import SMWCentralDatabase
@@ -13,21 +13,20 @@ def scrape():
         action_param=scraper.records
     )
 
-def select_random_from_query(query: Callable):
-    pick = choice(query())
+def get_random_hack(hacks: List[dict]):
+    pick = choice(hacks)
     print(f"ID: {pick['id']}")
     print(f"Title: {pick['title']}")
     print(f"Path: {pick['path']}")
     print(f"Rating: {pick['rating']}")
     return pick['path']
 
-def launch_sfc_in_retroarch(sfc: str):
+def launch_in_retroarch(sfc: str):
     subprocess.run([RETROARCH_BIN, '-L', SNES_CORE, sfc])
 
 
 
 db = SMWCentralDatabase('smwcentral.db')
-pick = select_random_from_query(
-    db.query_standard_normal_rated_over_3_9
-)
-launch_sfc_in_retroarch(pick)
+hacks = db.select_hacks('sql/select_hacks.sql')
+hack_path = get_random_hack(hacks)
+launch_in_retroarch(hack_path)

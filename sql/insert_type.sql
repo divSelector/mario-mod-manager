@@ -1,0 +1,1 @@
+INSERT INTO hack_types (hack_id, type) VALUES (?, ?);

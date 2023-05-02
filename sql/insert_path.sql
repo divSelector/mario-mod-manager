@@ -1,0 +1,1 @@
+INSERT INTO hack_paths (hack_id, path) VALUES (?, ?);

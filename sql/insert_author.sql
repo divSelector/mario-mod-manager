@@ -1,0 +1,1 @@
+INSERT INTO hack_authors (hack_id, author) VALUES (?, ?);
