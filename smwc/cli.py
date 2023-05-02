@@ -3,19 +3,16 @@ from typing import List
 import subprocess
 import argparse
 
-from database import SMWCentralDatabase
-from scraper import SMWCentralScraper
-from config import RETROARCH_BIN, SNES_CORE
+from .database import SMWCentralDatabase
+from .scraper import SMWCentralScraper
+from .config import RETROARCH_BIN, SNES_CORE
 
 def scrape():
     scraper = SMWCentralScraper()
-    db.open_database(
-        db.write_records, 
-        action_param=scraper.records
-    )
+    db.write_records(scraper.records)
 
 def random_hack():
-    hacks: List[dict] = db.select_hacks('sql/select_hacks.sql')
+    hacks: List[dict] = db.select_hacks('smwc/sql/select_hacks.sql')
     pick: dict = choice(hacks)
     print(f"ID: {pick['id']}")
     print(f"Title: {pick['title']}")

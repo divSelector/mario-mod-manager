@@ -18,7 +18,7 @@ class SMWCentralDatabase:
             sql = fo.read()
         return sql
     
-    def create_tables(self, sql_file: str = 'sql/create_table.sql'):
+    def create_tables(self, sql_file: str = 'smwc/sql/create_table.sql'):
         sql_query = self.read(sql_file)
         with sqlite3.connect(self.db) as conn:
             conn.execute(sql_query)
@@ -44,21 +44,26 @@ class SMWCentralDatabase:
         with sqlite3.connect(self.db) as conn:
             for record in records:
                 print(f"Inserting records for {record['title']}")
-                
-                c = conn.cursor()
+
+                insert_hack_sql: str = self.read('smwc/sql/insert_hack.sql')
+                insert_author_sql: str = self.read('smwc/sql/insert_author.sql')
+                insert_type_sql: str = self.read('smwc/sql/insert_type.sql')
+                insert_path_sql: str = self.read('smwc/sql/insert_path.sql')
 
                 prepared_record: tuple = self.prepare_hack_record_for_db(record)
-                c.execute(self.read('sql/insert_hack.sql'), prepared_record)
+                
+                c = conn.cursor()
+                c.execute(insert_hack_sql, prepared_record)
                 hack_id = c.lastrowid
 
                 for author in record['authors']:
-                    c.execute(self.read('sql/insert_author.sql'), (hack_id, author))
+                    c.execute(insert_author_sql, (hack_id, author))
 
                 for hack_type in record['types']:
-                    c.execute(self.read('sql/insert_type.sql'), (hack_id, hack_type))
+                    c.execute(insert_type_sql, (hack_id, hack_type))
 
                 for hack_path in record['sfc_files']:
-                    c.execute(self.read('sql/insert_path.sql'), (hack_id, hack_path))
+                    c.execute(insert_path_sql, (hack_id, hack_path))
 
             conn.commit()
 

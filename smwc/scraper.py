@@ -11,7 +11,7 @@ from datetime import datetime
 import shutil
 import zlib
 
-from config import *
+from .config import *
 
 class SMWCentralScraper:
     HACKS_URL = "https://www.smwcentral.net/?p=section&s=smwhacks&o=rating"
