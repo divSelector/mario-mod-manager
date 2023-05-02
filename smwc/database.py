@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Tuple, Dict
 import sqlite3
 
 
@@ -42,6 +42,13 @@ class SMWCentralDatabase:
             hack['download_url'], 
             hack['downloaded_count']
         )
+    
+    @staticmethod
+    def db_results_to_dict(results: List[Tuple]) -> List[Dict]:
+        keys = ['id', 'title', 'created_on', 'page_url', 'is_demo', 'is_featured',
+                'exit_count', 'rating', 'size', 'size_units', 'download_url',
+                'downloaded_count', 'hack_type', 'path', 'author']
+        return [dict(zip(keys, row)) for row in results]
 
     def write_records(self, records: List[dict]):
         print(f"Preparing to write {len(records)} records")
@@ -77,7 +84,21 @@ class SMWCentralDatabase:
             c = conn.cursor()
             c.execute(sql_query, (f'%{type_substr}%', rating_threshold))
             results = c.fetchall()
-            return [
-                dict(id=_id, title=title, path=path, rating=rating)
-                for _id, title, path, rating in results
-            ]
+            return self.db_results_to_dict(results)
+        
+    def select_hack_by_id(self, _id: int) -> dict:
+        sql_query = self.read('smwc/sql/select_hack_by_id.sql')
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            c.execute(sql_query, (_id,))
+            results = c.fetchall()
+            return self.db_results_to_dict(results)
+        
+    def select(self, sql_file: str):
+        sql_query = self.read(sql_file)
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            c.execute(sql_query)
+            results = c.fetchall()
+            for row in results:
+                print(row)

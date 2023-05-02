@@ -27,8 +27,17 @@ def random_hack(rating_threshold: float, type_substr: str):
 
     print(f"ID: {pick['id']}")
     print(f"Title: {pick['title']}")
-    print(f"Path: {pick['path']}")
+    print(f"Created On: {pick['created_on']}")
+    print(f"Page URL: {pick['page_url']}")
+    print(f"Is Demo: {pick['is_demo']}")
+    print(f"Is Featured: {pick['is_featured']}")
+    print(f"Exit Count: {pick['exit_count']}")
     print(f"Rating: {pick['rating']}")
+    print(f"Size: {pick['size']} {pick['size_units']}")
+    print(f"Download Count: {pick['downloaded_count']}")
+    print(f"Type: {pick['hack_type']}")
+    print(f"Path: {pick['path']}")
+    print(f"Author: {pick['author']}")
     launch_in_retroarch(pick['path'])
 
 

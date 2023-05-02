@@ -21,6 +21,7 @@ class SMWCentralScraper:
         self.hacks_total: int = self.get_hack_pages_count()
         self.hack_pages_urls: list = self.get_hack_pages_urls(self.hacks_url)
         self.records = self.flatten(self.scrape_all_pages())
+        shutil.rmtree(TMP_PATH)
 
     def get_page_content(self, page: str) -> str:
         print(f"Requesting page: {page}")
@@ -69,7 +70,7 @@ class SMWCentralScraper:
         else:
             for row in page_row_tags:
                 total_hacks_on_page.append(self.scrape_row_from_hacks_list(row))
-                
+
         return total_hacks_on_page
 
     def scrape_row_from_hacks_list(self, row: Tag) -> dict:
