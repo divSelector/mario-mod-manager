@@ -1,5 +1,6 @@
 INSERT INTO hacks (
-    title, 
+    title,
+    created_on,
     page_url, 
     is_demo, 
     is_featured, 
@@ -9,4 +10,4 @@ INSERT INTO hacks (
     size_units,
     download_url, 
     downloaded_count
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

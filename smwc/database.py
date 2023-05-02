@@ -19,15 +19,19 @@ class SMWCentralDatabase:
         return sql
     
     def create_tables(self, sql_file: str = 'smwc/sql/create_table.sql'):
-        sql_query = self.read(sql_file)
+        sql_queries: List[str] = self.read(sql_file).split(';')
         with sqlite3.connect(self.db) as conn:
-            conn.execute(sql_query)
+            cursor = conn.cursor()
+            for query in sql_queries:
+                if query.strip():
+                    cursor.execute(query)
             conn.commit()
 
     @staticmethod
     def prepare_hack_record_for_db(hack: dict) -> tuple:
         return (
-            hack['title'], 
+            hack['title'],
+            hack['created_on'],
             hack['page_url'], 
             hack['is_demo'], 
             hack['is_featured'], 

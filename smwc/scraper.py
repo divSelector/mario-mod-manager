@@ -50,9 +50,11 @@ class SMWCentralScraper:
     def scrape_all_pages(self) -> None:
         total_hacks_on_all_pages: List[dict] = []
 
-        for url in self.hack_pages_urls:
-            total_hacks_on_all_pages.append(self.scrape_hacks_list_page(url))
-        # total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[0]))
+        if DEBUG_SCRAPER["ONE_PAGE_ONLY"]:
+            total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[0]))
+        else:
+            for url in self.hack_pages_urls:
+                total_hacks_on_all_pages.append(self.scrape_hacks_list_page(url))
 
         return total_hacks_on_all_pages
 
@@ -62,14 +64,17 @@ class SMWCentralScraper:
         page_soup: BeautifulSoup = self.get_content_soup(content)
         page_row_tags: List[Tag] = page_soup.select('table.list tbody tr')
 
-        for row in page_row_tags:
-            total_hacks_on_page.append(self.scrape_row_from_hacks_list(row))
-        # self.scrape_row_from_hacks_list(page_row_tags[11])
-
+        if DEBUG_SCRAPER["ONE_HACK_ONLY"]:
+            self.scrape_row_from_hacks_list(page_row_tags[0])
+        else:
+            for row in page_row_tags:
+                total_hacks_on_page.append(self.scrape_row_from_hacks_list(row))
+                
         return total_hacks_on_page
 
     def scrape_row_from_hacks_list(self, row: Tag) -> dict:
         hack_title: str = self.scrape_title_from_row(row)
+        hack_date: datetime = self.scrape_upload_time_from_row(row)
         hack_page_url: str = self.scrape_url_from_row(row)
         hack_is_demo: str = row.find_all('td')[1].string
         hack_is_featured: str = row.find_all('td')[2].string
@@ -88,6 +93,7 @@ class SMWCentralScraper:
 
         record = {
             "title": hack_title,
+            "created_on": hack_date,
             "page_url": hack_page_url,
             "is_demo": hack_is_demo,
             "is_featured": hack_is_featured,
@@ -134,7 +140,8 @@ class SMWCentralScraper:
 
     @staticmethod
     def scrape_upload_time_from_row(row: Tag) -> str:
-        return row.select_one('time')['datetime']
+        t = row.select_one('time')['datetime']
+        return datetime.strptime(t.replace('T', ' '), '%Y-%m-%d %H:%M:%S')
 
     @staticmethod
     def scrape_rating_from_row(row: Tag) -> float:

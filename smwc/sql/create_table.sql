@@ -1,6 +1,7 @@
 CREATE TABLE hacks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
+    created_on TIMESTAMP NOT NULL,
     page_url TEXT NOT NULL UNIQUE,
     is_demo TEXT NOT NULL,
     is_featured TEXT NOT NULL,
@@ -8,7 +9,7 @@ CREATE TABLE hacks (
     rating REAL NOT NULL,
     size REAL NOT NULL,
     size_units TEXT NOT NULL,
-    download_url TEXT NOT NULL,
+    download_url TEXT NOT NULL UNIQUE,
     downloaded_count INTEGER NOT NULL
 );
 

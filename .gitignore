@@ -5,3 +5,5 @@ sfc
 tmp
 smwcentral.db
 __pycache__
+*backup*
+*backup
