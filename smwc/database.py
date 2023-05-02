@@ -67,11 +67,11 @@ class SMWCentralDatabase:
 
             conn.commit()
 
-    def select_hacks(self, sql_file: str) -> List[dict]:
+    def select_hacks_by_rating_type(self, sql_file: str, rating_threshold: float, type_substr: str) -> List[dict]:
         sql_query = self.read(sql_file)
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
-            c.execute(sql_query)
+            c.execute(sql_query, (f'%{type_substr}%', rating_threshold))
             results = c.fetchall()
             return [
                 dict(id=_id, title=title, path=path, rating=rating)
