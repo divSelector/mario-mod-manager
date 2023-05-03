@@ -9,15 +9,14 @@ import shutil
 from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
 from .romhack import SMWRomhack
-from .config import RETROARCH_BIN, SNES_CORE, DEFAULT_RA_CONFIG, MODIFIED_RA_CONFIG
 
 def scrape():
     scraper = SMWCentralScraper()
     db.write_records(scraper.records)
 
-def random_hack(rating_threshold: float, type_substr: str, rewind: bool):
-    hacks: List[dict] = db.select_hacks_by_rating_type(
-        rating_threshold=rating_threshold,
+def random_hack(rating_gt: float, type_substr: str, rewind: bool):
+    hacks: List[dict] = db.select_hacks(
+        rating_gt=rating_gt,
         type_substr=type_substr
     )
 
@@ -29,7 +28,7 @@ def random_hack(rating_threshold: float, type_substr: str, rewind: bool):
 
     print_record(pick)
 
-    romhack = SMWRomhack(pick['path'])
+    romhack = SMWRomhack(pick['path'][0])
     romhack.launch_in_retroarch(rewind=rewind)
 
 
@@ -89,11 +88,11 @@ if __name__ == '__main__':
         scrape()
 
     if args.random:
-        rating_threshold = -0.1 if args.rating is None else args.rating
+        rating_gt = -0.1 if args.rating is None else args.rating
         type_substr = '' if args.type is None else args.type
         rewind = True if args.rewind else False if args.no_rewind else None
         random_hack(
-            rating_threshold=rating_threshold, 
+            rating_gt=rating_gt, 
             type_substr=type_substr,
             rewind=rewind
         )

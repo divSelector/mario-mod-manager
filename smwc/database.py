@@ -48,8 +48,18 @@ class SMWCentralDatabase:
     def db_results_to_dict(results: List[Tuple]) -> List[Dict]:
         keys = ['id', 'title', 'created_on', 'page_url', 'is_demo', 'is_featured',
                 'exit_count', 'rating', 'size', 'size_units', 'download_url',
-                'downloaded_count', 'hack_type', 'path', 'author']
-        return [dict(zip(keys, row)) for row in results]
+                'downloaded_count', 'hack_type', 'author', 'path']
+        structured_results = [dict(zip(keys, row)) for row in results]
+        for result in structured_results:
+            try:
+                result['author'] = result['author'].split(',')
+                result['path'] = result['path'].split(',')
+                result['hack_type'] = result['hack_type'].split(',')
+            except AttributeError as e:
+                # This is how you can identify the hacks the need to be removed from the database because the paths don't exist.
+                # print(result['title'])
+                pass
+        return structured_results
 
     def write_records(self, records: List[dict]):
         print(f"Preparing to write {len(records)} records")
@@ -87,11 +97,45 @@ class SMWCentralDatabase:
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
+    def select_hacks(self, 
+            title_substr: str = '',
+            type_substr: str = '',
+            author_substr: str = '',
+            rating_gt: float = -0.1,
+            rating_lt: float = 5.1,
+            exits_gt: int = 0,
+            exits_lt: int = 255,
+            downloads_gt: int = -1,
+            downloads_lt: int = 99999,
+            created_on_gt: str = '1999-08-24',
+            created_on_lt: str = '2023-03-24',
+            featured: str = '',
+            demo: str = '') -> List[dict]:
+        sql_query = self.read('smwc/sql/select_hacks.sql')
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            query_params: tuple = (
+                f'%{title_substr}%', f'%{type_substr}%', f'%{author_substr}%',
+                rating_gt, rating_lt, exits_gt, exits_lt, downloads_gt, downloads_lt,
+                created_on_gt, created_on_lt, f'%{featured}%', f'%{demo}%'
+            )
+            c.execute(sql_query, query_params)
+            results = c.fetchall()
+            return self.db_results_to_dict(results)
+        
     def select_hack_by_id(self, _id: int) -> dict:
         sql_query = self.read('smwc/sql/select_hack_by_id.sql')
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
             c.execute(sql_query, (_id,))
+            results = c.fetchall()
+            return self.db_results_to_dict(results)
+        
+    def select_hack_by_title(self, title: str) -> dict:
+        sql_query = self.read('smwc/sql/select_hack_by_title.sql')
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            c.execute(sql_query, (title,))
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
