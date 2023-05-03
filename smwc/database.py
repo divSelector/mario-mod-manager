@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 import sqlite3
 
+from .config import RETROARCH_CONFIG_DIR
 
 class SMWCentralDatabase:
     def __init__(self, db_path: str) -> None:

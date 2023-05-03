@@ -8,6 +8,7 @@ import shutil
 
 from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
+from .romhack import SMWRomhack
 from .config import RETROARCH_BIN, SNES_CORE, DEFAULT_RA_CONFIG, MODIFIED_RA_CONFIG
 
 def scrape():
@@ -123,3 +124,6 @@ if __name__ == '__main__':
         rating_threshold = -0.1 if args.rating is None else args.rating
         random_hack(rating_threshold=rating_threshold, type_substr=type_substr)
         
+
+
+test_sfc_file = db.select_hack_by_id(208)[0]['path']
