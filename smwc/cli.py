@@ -15,7 +15,7 @@ def random_hack(title_substr: str, type_substr: str, author_substr: str, rating_
                 rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
                 downloads_lt: int, created_on_gt: str, created_on_lt: str, 
                 featured: str, demo: str, rewind: Optional[bool]=None):
-    hacks = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
+    hacks: List[dict] = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
                             exits_gt, exits_lt, downloads_gt, downloads_lt, created_on_gt,
                             created_on_lt, featured, demo)
 
