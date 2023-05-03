@@ -11,7 +11,10 @@ ZIP_DL_PATH = TMP_PATH / 'tmp'
 BPS_PATH = TMP_PATH / 'bps'
 
 RETROARCH_BIN = '/usr/local/bin/retroarch'
-SNES_CORE = Path.home() / '.config/retroarch/cores/snes9x_libretro.so'
+RETROARCH_CONFIG_DIR = Path.home() / '.config/retroarch'
+SNES_CORE = RETROARCH_CONFIG_DIR / 'cores/snes9x_libretro.so'
+DEFAULT_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch.cfg'
+MODIFIED_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch-modified.cfg'
 
 FLIPS_BIN = '/usr/bin/flips'
 CLEAN_ROM = 'cleansmw.sfc'
