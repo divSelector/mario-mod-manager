@@ -79,8 +79,8 @@ class SMWCentralDatabase:
 
             conn.commit()
 
-    def select_hacks_by_rating_type(self, sql_file: str, rating_threshold: float, type_substr: str) -> List[dict]:
-        sql_query = self.read(sql_file)
+    def select_hacks_by_rating_type(self, rating_threshold: float, type_substr: str) -> List[dict]:
+        sql_query = self.read('smwc/sql/select_hacks_by_rating_type.sql')
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
             c.execute(sql_query, (f'%{type_substr}%', rating_threshold))
@@ -92,6 +92,14 @@ class SMWCentralDatabase:
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
             c.execute(sql_query, (_id,))
+            results = c.fetchall()
+            return self.db_results_to_dict(results)
+        
+    def select_hack_by_path(self, path: str):
+        sql_query = self.read('smwc/sql/select_hack_id_from_path.sql')
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            c.execute(sql_query, (path,))
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
