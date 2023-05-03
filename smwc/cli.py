@@ -1,5 +1,5 @@
 from random import choice
-from typing import List
+from typing import List, Optional
 import argparse
 import sys
 
@@ -11,26 +11,13 @@ def scrape():
     scraper = SMWCentralScraper()
     db.write_records(scraper.records)
 
-def random_hack(
-        title_substr: str, type_substr: str, author_substr: str, rating_gt: float,
-        rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int,
-        downloads_lt: int, created_on_gt: str, created_on_lt: str, featured: str,
-        demo: str, rewind: bool):
-    hacks: List[dict] = db.select_hacks(
-        title_substr=title_substr,
-        type_substr=type_substr,
-        author_substr=author_substr,
-        rating_gt=rating_gt,
-        rating_lt=rating_lt,
-        exits_gt=exits_gt,
-        exits_lt=exits_lt,
-        downloads_gt=downloads_gt,
-        downloads_lt=downloads_lt,
-        created_on_gt=created_on_gt,
-        created_on_lt=created_on_lt,
-        featured=featured,
-        demo=demo
-    )
+def random_hack(title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
+                rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
+                downloads_lt: int, created_on_gt: str, created_on_lt: str, 
+                featured: str, demo: str, rewind: Optional[bool]=None):
+    hacks = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
+                            exits_gt, exits_lt, downloads_gt, downloads_lt, created_on_gt,
+                            created_on_lt, featured, demo)
 
     try:
         pick: dict = choice(hacks)
@@ -80,55 +67,55 @@ if __name__ == '__main__':
     top_level_options.add_argument('--random', action='store_true', 
         help='Choose a random SMW hack and launch in RetroArch')
     
-    query_options.add_argument('--title', type=str, dest='X',
+    query_options.add_argument('--title', type=str, default='', metavar='X',
         help='Substring to match against hack titles to include (e.g., "Super", "World")'
     )
 
-    query_options.add_argument('--type', type=str, dest='X',
+    query_options.add_argument('--type', type=str, default='', metavar='X',
         help='Substring to match against hack types to include (e.g., "Easy", "Kaizo")'
     )
 
-    query_options.add_argument('--author', type=str, dest='X',
+    query_options.add_argument('--author', type=str, default='', metavar='X',
         help='Substring to match against hack authors to include (e.g., "NewPointless", "yeahman")'
     )
 
-    query_options.add_argument('--rating-over', type=float, dest='X',
+    query_options.add_argument('--rating-over', type=float, default=-0.1, metavar='X',
         help='Minimum rating for a hack to be considered (e.g., 4.5)'
     )
 
-    query_options.add_argument('--rating-under', type=float, dest='X',
+    query_options.add_argument('--rating-under', type=float, default=5.1, metavar='X',
         help='Maximum rating for a hack to be considered (e.g., 2.1)'
     )
 
-    query_options.add_argument('--exits-over', type=int, dest='X',
+    query_options.add_argument('--exits-over', type=int, default=0, metavar='X',
         help='Minimum exits for a hack to be considered (e.g., 10)'
     )
 
-    query_options.add_argument('--exits-under', type=int, dest='X',
+    query_options.add_argument('--exits-under', type=int, default=255, metavar='X',
         help='Maximum exits for a hack to be considered (e.g., 96)'
     )
 
-    query_options.add_argument('--downloads-over', type=int, dest='X',
+    query_options.add_argument('--downloads-over', type=int, default=-1, metavar='X',
         help='Minimum times downloaded for a hack to be considered (e.g., -1)'
     )
 
-    query_options.add_argument('--downloads-under', type=int, dest='X',
+    query_options.add_argument('--downloads-under', type=int, default=999999, metavar='X',
         help='Maximum times downloaded for a hack to be considered (e.g., 9999999)'
     )
 
-    query_options.add_argument('--date-after', type=str, dest='X',
+    query_options.add_argument('--date-after', type=str, default='1999-08-24', metavar='X',
         help='Must be uploaded after this date for hack to be considered (e.g., 1999-08-24)'
     )
 
-    query_options.add_argument('--date-before', type=str, dest='X',
+    query_options.add_argument('--date-before', type=str, default='2023-03-24', metavar='X',
         help='Must be uploaded before this date for hack to be considered (e.g., 2023-03-24)'
     )
 
-    query_options.add_argument('--featured', type=str, dest='X',
+    query_options.add_argument('--featured', type=str, default='', metavar='X',
         help='Use "Yes" or "No" to consider hacks marked as *featured* by smwentral.net'
     )
     
-    query_options.add_argument('--demo', type=str, dest='X',
+    query_options.add_argument('--demo', type=str, default='', metavar='X',
         help='Use "Yes" or "No" to consider hacks marked as demos'
     )
     
@@ -148,19 +135,7 @@ if __name__ == '__main__':
         scrape()
 
     if args.random:
-        random_hack(
-            title_substr = '' if args.title is None else args.title,
-            type_substr = '' if args.type is None else args.type,
-            author_substr = '' if args.author is None else args.author,
-            rating_gt = -0.1 if args.rating_over is None else args.rating_over,
-            rating_lt = 5.1 if args.rating_under is None else args.rating_under, 
-            exits_gt = 0 if args.exits_over is None else args.exits_over,
-            exits_lt = 255 if args.exits_under is None else args.exits_under,
-            downloads_gt = -1 if args.downloads_over is None else args.downloads_over,
-            downloads_lt = 99999 if args.downloads_under is None else args.downloads_under,
-            created_on_gt = '1999-08-24' if args.date_after is None else args.date_after,
-            created_on_lt = '2023-03-24' if args.date_before is None else args.date_before,
-            featured = '' if args.featured is None else args.featured,
-            demo = '' if args.demo is None else args.demo,
-            rewind = True if args.rewind else False if args.no_rewind else None
-        )
+        rewind = True if args.rewind else False if args.no_rewind else None
+        random_hack(args.title, args.type, args.author, args.rating_over, args.rating_under, 
+                    args.exits_over, args.exits_under, args.downloads_over, args.downloads_under,
+                    args.date_after, args.date_before, args.featured, args.demo, rewind)
