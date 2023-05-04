@@ -6,11 +6,15 @@ USER_HOME = Path.home()
 #                                     Are These Paths Okay With You?
 ####################################################################
 
+# The script should try to find these paths for you.
+# If it fails or if you'd prefer to specify a different path, 
+# # you can.
+
 # RetroArch Binary
-RETROARCH_BIN = '/usr/local/bin/retroarch'
+RETROARCH_BIN = ''
 
 # Floating IPS Binary
-FLIPS_BIN = '/usr/bin/flips'
+FLIPS_BIN = ''
 
 # RA Config Directory
 RETROARCH_CONFIG_DIR = USER_HOME / '.config/retroarch'

@@ -12,6 +12,7 @@ import shutil
 import zlib
 
 from .config import *
+from .utils import get_bin
 
 class SMWCentralScraper:
     HACKS_URL = "https://www.smwcentral.net/?p=section&s=smwhacks&o=rating"
@@ -212,5 +213,10 @@ class SMWCentralScraper:
                 Path(output_dir).mkdir(parents=True, exist_ok=True)
             sfc_path = f"{output_dir}/{bps.stem}-{datetime.now().strftime('%Y%m%d%H%M%S')}.sfc"
             print("Executing flips to patch romhack")
+            flips_bin = get_bin(
+                FLIPS_BIN, 
+                which_cmd_name='flips', 
+                version_output_substrings=['floating', 'flips']
+            )
             subprocess.run([FLIPS_BIN, '-a', bps, CLEAN_ROM, sfc_path])
             return sfc_path

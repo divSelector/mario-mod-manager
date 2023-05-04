@@ -11,6 +11,7 @@ from .config import (
     DEFAULT_RA_CONFIG,
     MODIFIED_RA_CONFIG
 )
+from .utils import get_bin
 
 class SMWRomhack:
     def __init__(self, sfc_file: str):
@@ -61,7 +62,12 @@ class SMWRomhack:
             with MODIFIED_RA_CONFIG.open('w') as wfo:
                 wfo.write(modified_cfg_text)
 
-        cmd: List = [RETROARCH_BIN, '-L', SNES_CORE, self.sfc]
+        retroarch_bin = get_bin(
+            RETROARCH_BIN, 
+            which_cmd_name='retroarch', 
+            version_output_substrings=['retroarch']
+        )
+        cmd: List = [retroarch_bin, '-L', SNES_CORE, self.sfc]
 
         if rewind:
             cmd = modify_cfg('rewind_enable = "false"',
