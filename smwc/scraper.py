@@ -158,7 +158,7 @@ class SMWCentralScraper:
     
     def download_zip(self, url: str) -> Path:
         zips_path: Path = ZIPS_DL_PATH
-        tmp_path: Path = ZIP_DL_PATH
+        tmp_path: Path = UNZIP_DL_PATH
         # Create Paths if they do not exist
         for path in [zips_path, tmp_path]:
             if not path.exists():
@@ -180,7 +180,7 @@ class SMWCentralScraper:
         return output_path
     
     def unzip_for_bps(self, zip_path: Path) -> Path:
-        tmp_path: Path = ZIP_DL_PATH
+        tmp_path: Path = UNZIP_DL_PATH
         bps_dir: Path = BPS_PATH
         if not bps_dir.exists():
             bps_dir.mkdir(parents=True, exist_ok=True)

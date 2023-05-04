@@ -1,20 +1,64 @@
 from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+USER_HOME = Path.home()
 
-DEBUG_SCRAPER = {
-    "ONE_PAGE_ONLY": False,
-    "ONE_HACK_ONLY": False
-}
+####################################################################
+#                                     Are These Paths Okay With You?
+####################################################################
 
-TMP_PATH = Path('tmp')
-ZIPS_DL_PATH = TMP_PATH / 'zips'
-ZIP_DL_PATH = TMP_PATH / 'tmp'
-BPS_PATH = TMP_PATH / 'bps'
-
+# RetroArch Binary
 RETROARCH_BIN = '/usr/local/bin/retroarch'
-RETROARCH_CONFIG_DIR = Path.home() / '.config/retroarch'
-SNES_CORE = RETROARCH_CONFIG_DIR / 'cores/snes9x_libretro.so'
-DEFAULT_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch.cfg'
-MODIFIED_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch-modified.cfg'
 
+# Floating IPS Binary
 FLIPS_BIN = '/usr/bin/flips'
-CLEAN_ROM = 'cleansmw.sfc'
+
+# RA Config Directory
+RETROARCH_CONFIG_DIR = USER_HOME / '.config/retroarch'
+
+# RA SNES Core
+SNES_CORE = RETROARCH_CONFIG_DIR / 'cores/snes9x_libretro.so'
+
+# Clean Vanilla Super Mario World ROM
+CLEAN_ROM = BASE_DIR / 'cleansmw.sfc'
+
+#####################################################################
+#                                                        Okay, Great!
+#####################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Just Leave These Alone
+DEFAULT_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch.cfg'            # RA Default Config
+MODIFIED_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch-modified.cfg'  # Save location for copy of default 
+                                                                      # config used for options like --no-rewind
+# Temp Paths
+# Just Leave These Alone
+TMP_PATH = BASE_DIR / 'tmp'         # These Directories Will Be Deleted After Scrape
+ZIPS_DL_PATH = TMP_PATH / 'zips'    # Used To Store Downloaded Zips During Scrape Phase
+UNZIP_DL_PATH = TMP_PATH / 'unzip'  # Used to Store Unzipped Files During ROM Patch Phase
+BPS_PATH = TMP_PATH / 'bps'         # Used to Store BPS patches pulled from Unzipped Archives
+
+# Developer Options
+# Just Leave These Alone
+DEBUG_SCRAPER = {
+    "ONE_PAGE_ONLY": False, # If True, Scrapes Every Hack From Only One Page
+    "ONE_HACK_ONLY": False  # If True, Scrapes One Hack Only From Every Page
+}                           # If Both Options True, Scrapes One Hack From One Page
