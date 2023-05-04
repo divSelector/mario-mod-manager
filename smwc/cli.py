@@ -47,9 +47,8 @@ def print_record(r):
     print(f"Author: {r['author']}")
 
 
-db = SMWCentralDatabase('smwcentral.db')
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="""
+    parser = argparse.ArgumentParser(prog="smwc.cli", description="""
         smwcentral.net scraper, downloader, database, romhack patcher and launcher
         by divselector
     """)
@@ -130,6 +129,8 @@ if __name__ == '__main__':
     )
 
     args = parser.parse_args()
+
+    db = SMWCentralDatabase('smwcentral.db')
 
     if args.scrape:
         scrape()

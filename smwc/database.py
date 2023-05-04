@@ -122,3 +122,8 @@ class SMWCentralDatabase:
             c.execute(sql_query, (_id,))
             results = c.fetchall()
             return self.db_results_to_dict(results)
+
+    def _execute(self, sql_statement: str):
+        with sqlite3.connect(self.db) as conn:
+            conn.execute(sql_statement)
+            conn.commit()

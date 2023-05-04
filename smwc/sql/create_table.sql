@@ -11,6 +11,7 @@ CREATE TABLE hacks (
     size_units TEXT NOT NULL,
     download_url TEXT NOT NULL UNIQUE,
     downloaded_count INTEGER NOT NULL
+    exits_cleared INT NOT NULL DEFAULT 0;
 );
 
 CREATE TABLE hack_types (
@@ -30,3 +31,4 @@ CREATE TABLE hack_paths (
     path TEXT NOT NULL,
     FOREIGN KEY (hack_id) REFERENCES hacks(id) ON DELETE CASCADE
 );
+

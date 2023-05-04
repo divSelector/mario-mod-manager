@@ -1,5 +1,10 @@
-SELECT hacks.*, hack_types.type, hack_paths.path, hack_authors.author FROM hacks 
-JOIN hack_paths ON hacks.id = hack_paths.hack_id
-JOIN hack_types ON hacks.id = hack_types.hack_id
-JOIN hack_authors ON hacks.id = hack_authors.hack_id
-WHERE id = ?;
+SELECT h.*, 
+    GROUP_CONCAT(DISTINCT ht.type) as types,
+    GROUP_CONCAT(DISTINCT ha.author) as authors,
+    GROUP_CONCAT(DISTINCT hp.path) as paths
+FROM hacks h
+LEFT JOIN hack_types ht ON ht.hack_id = h.id
+LEFT JOIN hack_authors ha ON ha.hack_id = h.id
+LEFT JOIN hack_paths hp ON hp.hack_id = h.id
+WHERE h.id = ?
+GROUP BY h.id;
