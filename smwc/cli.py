@@ -1,5 +1,5 @@
 from random import choice
-from typing import List, Optional
+from typing import List, Optional, Dict
 from argparse import ArgumentParser, Namespace
 import sys
 
@@ -23,12 +23,14 @@ class SMWCommandLineInterface:
         if self.args.scrape:
             self.scrape()
 
-        if self.args.random:
-            rewind = True if self.args.rewind else False if self.args.no_rewind else None
-            self.random_hack(self.args.title, self.args.type, self.args.author, self.args.rating_over, 
-                             self.args.rating_under, self.args.exits_over, self.args.exits_under, 
-                             self.args.downloads_over, self.args.downloads_under,self.args.date_after, 
-                             self.args.date_before, self.args.featured, self.args.demo, rewind)
+        rewind = True if self.args.rewind else False if self.args.no_rewind else None
+        if self.args._id:
+            self.play_hack_with_id(self.args._id, rewind)
+        elif self.args.random:
+            self.play_random_hack(self.args.title, self.args.type, self.args.author, self.args.rating_over, 
+                                  self.args.rating_under, self.args.exits_over, self.args.exits_under, 
+                                  self.args.downloads_over, self.args.downloads_under,self.args.date_after, 
+                                  self.args.date_before, self.args.featured, self.args.demo, rewind)
 
             
     def parse_args(self) -> Namespace:
@@ -43,7 +45,11 @@ class SMWCommandLineInterface:
             help='Scrape SMWCentral and Build Database of Patched Romhacks'
         )
         top_level_options.add_argument('--random', action='store_true', 
-            help='Choose a random SMW hack and launch in RetroArch')
+            help='Choose a random SMW hack and launch in RetroArch'
+        )
+        top_level_options.add_argument('--id', type=int, default=None, metavar='X', dest='_id',
+            help='Launch a specific hack by ID number. Ignores --random and query options.'
+        )
 
         # Query Options
         query_options = parser.add_argument_group("Query Modifiers (use these with --random)")
@@ -99,15 +105,16 @@ class SMWCommandLineInterface:
 
         return parser.parse_args()
 
+
     @staticmethod
     def scrape():
         scraper = SMWCentralScraper()
         db.write_records(scraper.records)
 
-    def random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
-                    rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
-                    downloads_lt: int, created_on_gt: str, created_on_lt: str, 
-                    featured: str, demo: str, rewind: Optional[bool]=None):
+    def play_random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
+                         rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
+                         downloads_lt: int, created_on_gt: str, created_on_lt: str, 
+                         featured: str, demo: str, rewind: Optional[bool]=None):
         hacks: List[dict] = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
                                 exits_gt, exits_lt, downloads_gt, downloads_lt, created_on_gt,
                                 created_on_lt, featured, demo)
@@ -119,9 +126,19 @@ class SMWCommandLineInterface:
             sys.exit()
 
         self.print_record(pick)
+        self.launch_hack(pick['path'][0], {'rewind': rewind})
+        
 
-        romhack = SMWRomhack(pick['path'][0])
-        romhack.launch_in_retroarch(rewind=rewind)
+    def play_hack_with_id(self, _id: int, rewind: Optional[bool]=None):
+        hack = db.select_hack_by('id', _id)[0]
+        self.print_record(hack)
+        self.launch_hack(hack['path'][0], {'rewind': rewind})
+
+    @staticmethod
+    def launch_hack(path: str, opts: Dict):
+        romhack = SMWRomhack(path)
+        romhack.launch_in_retroarch(rewind=opts['rewind'])
+
 
     @staticmethod
     def print_record(r):
