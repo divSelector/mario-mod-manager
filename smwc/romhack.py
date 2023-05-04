@@ -76,7 +76,7 @@ class SMWRomhack:
         self.post_launch()
 
     def post_launch(self):
-        self.srm = self.get_srm_from_sfc()
+        self.srm = self.get_srm_from_sfc(self.sfc)
         self.update_exit_clear_count()
 
     def update_exit_clear_count(self):
