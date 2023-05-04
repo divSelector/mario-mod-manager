@@ -1,7 +1,9 @@
 from pathlib import Path
 from typing import Optional, List, Tuple
 import subprocess 
+import sys
 
+from smwc import db
 from .config import (
     RETROARCH_CONFIG_DIR,
     RETROARCH_BIN,
@@ -13,7 +15,7 @@ from .config import (
 class SMWRomhack:
     def __init__(self, sfc_file: str):
         self.sfc: Path = Path(sfc_file)
-        self.srm : Path = self.get_srm_from_sfc(sfc_file)
+        self.srm : Optional[Path] = self.get_srm_from_sfc(sfc_file)
 
     @staticmethod
     def get_srm_from_sfc(sfc_file: str) -> Optional[Path]:
@@ -41,13 +43,13 @@ class SMWRomhack:
     
     def launch_in_retroarch(self, rewind: bool) -> None:
 
-        def modify(old: str, new: str, subprocess_cmd: List[str]) -> None:
-            _modify_retroarch_config((old, new))
+        def modify_cfg(old: str, new: str, subprocess_cmd: List[str]) -> None:
+            init_new_cfg((old, new))
             for additional_arg in ['-c', MODIFIED_RA_CONFIG]:
                 subprocess_cmd.append(additional_arg)
             return subprocess_cmd
         
-        def _modify_retroarch_config(mod: List[Tuple]):
+        def init_new_cfg(mod: List[Tuple]):
             if MODIFIED_RA_CONFIG.exists():
                 MODIFIED_RA_CONFIG.unlink()
 
@@ -62,11 +64,30 @@ class SMWRomhack:
         cmd: List = [RETROARCH_BIN, '-L', SNES_CORE, self.sfc]
 
         if rewind:
-            cmd = modify('rewind_enable = "false"',
-                        'rewind_enable = "true"', cmd)
+            cmd = modify_cfg('rewind_enable = "false"',
+                             'rewind_enable = "true"', cmd)
             
         if not rewind and rewind is not None:
-            cmd = modify('rewind_enable = "true"',
-                        'rewind_enable = "false"', cmd)
+            cmd = modify_cfg('rewind_enable = "true"',
+                             'rewind_enable = "false"', cmd)
 
         subprocess.run(cmd)
+
+        self.post_launch()
+
+    def post_launch(self):
+        self.srm = self.get_srm_from_sfc()
+        self.update_exit_clear_count()
+
+    def update_exit_clear_count(self):
+        count_from_srm: int = self.get_exit_clear_count()
+        try:
+            hack = db.select_hack_by('path', str(self.sfc))[0]
+        except IndexError as e:
+            print(e)
+
+        if count_from_srm != hack['exits_cleared']:
+            update_sql: str = db.read('smwc/sql/update_exits_cleared.sql')
+
+            db.execute(update_sql, (count_from_srm, hack['id']))
+            print(f"{hack['title']} updated exits_cleared from {hack['exits_cleared']} to {count_from_srm}")

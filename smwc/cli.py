@@ -3,7 +3,8 @@ from typing import List, Optional
 import argparse
 import sys
 
-from .database import SMWCentralDatabase
+# from .database import SMWCentralDatabase
+from smwc import db
 from .scraper import SMWCentralScraper
 from .romhack import SMWRomhack
 
@@ -130,7 +131,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    db = SMWCentralDatabase('smwcentral.db')
+    # db = SMWCentralDatabase('smwcentral.db')
 
     if args.scrape:
         scrape()

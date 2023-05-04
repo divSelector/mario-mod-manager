@@ -48,7 +48,7 @@ class SMWCentralDatabase:
     def db_results_to_dict(results: List[Tuple]) -> List[Dict]:
         keys = ['id', 'title', 'created_on', 'page_url', 'is_demo', 'is_featured',
                 'exit_count', 'rating', 'size', 'size_units', 'download_url',
-                'downloaded_count', 'hack_type', 'author', 'path']
+                'downloaded_count', 'hack_type', 'author', 'path', 'exits_cleared']
         structured_results = [dict(zip(keys, row)) for row in results]
         for result in structured_results:
             try:
@@ -115,15 +115,18 @@ class SMWCentralDatabase:
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
-    def select_hack_by_id(self, _id: int) -> dict:
-        sql_query = self.read('smwc/sql/select_hack_by_id.sql')
+    def select_hack_by(self, field_name: str, field_value: str|int) -> dict:
+        sql_query = self.read(f'smwc/sql/select_hack_by_{field_name}.sql')
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
-            c.execute(sql_query, (_id,))
+            c.execute(sql_query, (field_value,))
             results = c.fetchall()
             return self.db_results_to_dict(results)
 
-    def _execute(self, sql_statement: str):
+    def execute(self, sql_statement: str, sql_params: Optional[Tuple]):
         with sqlite3.connect(self.db) as conn:
-            conn.execute(sql_statement)
+            if sql_params is None:
+                conn.execute(sql_statement)
+            else:
+                conn.execute(sql_statement, sql_params)
             conn.commit()
