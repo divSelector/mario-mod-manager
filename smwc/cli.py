@@ -26,11 +26,15 @@ class SMWCommandLineInterface:
         rewind = True if self.args.rewind else False if self.args.no_rewind else None
         if self.args._id:
             self.play_hack_with_id(self.args._id, rewind)
+
         elif self.args.random:
             self.play_random_hack(self.args.title, self.args.type, self.args.author, self.args.rating_over, 
                                   self.args.rating_under, self.args.exits_over, self.args.exits_under, 
                                   self.args.downloads_over, self.args.downloads_under,self.args.date_after, 
                                   self.args.date_before, self.args.featured, self.args.demo, rewind)
+            
+        elif self.args.show_beaten:
+            self.show_beaten()
 
             
     def parse_args(self) -> Namespace:
@@ -103,6 +107,11 @@ class SMWCommandLineInterface:
             help='When launching Retroarch, disable rewind support. The default option is determined by your RA config.'
         )
 
+        info_options = parser.add_argument_group("Show Info Options")
+        info_options.add_argument('--show-beaten', action='store_true', 
+            help='Display hacks in database where all exits are cleared'
+        )
+
         return parser.parse_args()
 
 
@@ -138,6 +147,17 @@ class SMWCommandLineInterface:
     def launch_hack(path: str, opts: Dict):
         romhack = SMWRomhack(path)
         romhack.launch_in_retroarch(rewind=opts['rewind'])
+
+    def show_beaten(self):
+        print("\nHACKS WITH ALL EXITS CLEARED:")
+        results = db.select_hacks_beaten()
+        if results:
+            for record in results:
+                _id, title, cleared, _, _ = record
+                print(f"{_id}: {title} -- {cleared} Exits Clear!")
+        else:
+            print("\nYou haven't cleared any hacks yet... :(")
+        print()
 
 
     @staticmethod

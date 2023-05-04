@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List, Tuple, Dict, Optional
 import sqlite3
 
-from .config import RETROARCH_CONFIG_DIR
+from .config import RETROARCH_CONFIG_DIR, BASE_DIR
 
 class SMWCentralDatabase:
     def __init__(self, db_path: str) -> None:
@@ -13,8 +13,8 @@ class SMWCentralDatabase:
             print(f"Database Found at {self.db}")
 
     @staticmethod
-    def read(path: str):
-        p = Path(path)
+    def read(path: str|Path):
+        p = Path(path) if isinstance(path, str) else path
         with p.open() as fo:
             sql = fo.read()
         return sql
@@ -122,6 +122,14 @@ class SMWCentralDatabase:
             c.execute(sql_query, (field_value,))
             results = c.fetchall()
             return self.db_results_to_dict(results)
+        
+    def select_hacks_beaten(self) -> List:
+        sql_path = BASE_DIR / 'smwc/sql/select_hacks_beaten.sql'
+        sql = self.read(sql_path)
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            c.execute(sql)
+            return c.fetchall()
 
     def execute(self, sql_statement: str, sql_params: Optional[Tuple]):
         with sqlite3.connect(self.db) as conn:
