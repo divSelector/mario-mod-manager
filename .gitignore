@@ -3,7 +3,7 @@ old
 cleansmw.sfc
 sfc
 tmp
-smwcentral.db
+smwcentral*
 __pycache__
 *backup*
 *backup
