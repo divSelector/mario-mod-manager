@@ -60,9 +60,17 @@ ZIPS_DL_PATH = TMP_PATH / 'zips'    # Used To Store Downloaded Zips During Scrap
 UNZIP_DL_PATH = TMP_PATH / 'unzip'  # Used to Store Unzipped Files During ROM Patch Phase
 BPS_PATH = TMP_PATH / 'bps'         # Used to Store BPS patches pulled from Unzipped Archives
 
+# Storage Paths
+SFC_DIR = BASE_DIR / 'sfc'         # This is Whrere Your Patched ROMs Go
+
 # Developer Options
 # Just Leave These Alone
 DEBUG_SCRAPER = {
-    "ONE_PAGE_ONLY": False, # If True, Scrapes Every Hack From Only One Page
-    "ONE_HACK_ONLY": False  # If True, Scrapes One Hack Only From Every Page
-}                           # If Both Options True, Scrapes One Hack From One Page
+    "ONE_PAGE_ONLY": True,         # If True, Scrapes Every Hack From Only One Page
+    "ONE_HACK_ONLY": False,         # If True, Scrapes One Hack Only From Every Page,
+                                    # If Both Options True, Scrapes One Hack From One Page
+    "SKIP_DATABASE_INSERT": False
+
+
+
+}

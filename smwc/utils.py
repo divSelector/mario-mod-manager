@@ -24,7 +24,8 @@ def get_bin(path: str, which_cmd_name: str, version_output_substrings: List[str]
                 path = check_output(['which', which_cmd_name])
                 print(f"`which {which_cmd_name}` found a binary...")
                 return path
-            except subprocess.CalledProcessError as e:
+            except (subprocess.CalledProcessError,
+                    PermissionError) as e:
                 print(f"{which_cmd_name} is not installed")
                 return ''
 

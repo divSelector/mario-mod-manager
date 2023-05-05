@@ -1,28 +1,21 @@
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from typing import List
+from typing import List, Dict
 import requests
 import sys
-from pathlib import Path
-import zipfile
-import platform
-import subprocess
 from datetime import datetime
-import shutil
-import zlib
 
 from .config import *
 from .utils import get_bin
 
 class SMWCentralScraper:
-    HACKS_URL = "https://www.smwcentral.net/?p=section&s=smwhacks&o=rating"
+    HACKS_URL = "https://www.smwcentral.net/?p=section&s=smwhacks"
     def __init__(self) -> None:
-        self.test = None
-        self.hacks_url = SMWCentralScraper.HACKS_URL
-        self.hacks_total: int = self.get_hack_pages_count()
-        self.hack_pages_urls: list = self.get_hack_pages_urls(self.hacks_url)
-        self.records = self.flatten(self.scrape_all_pages())
-        shutil.rmtree(TMP_PATH)
+        self.hack_pages_count: int = self.get_hack_pages_count()
+        self.hack_pages_urls: list = self.get_hack_pages_urls(
+            SMWCentralScraper.HACKS_URL
+        )
+        self.records: List[Dict] = self.flatten(self.scrape_all_pages())
 
     def get_page_content(self, page: str) -> str:
         print(f"Requesting page: {page}")
@@ -34,7 +27,7 @@ class SMWCentralScraper:
         return BeautifulSoup(content, "html.parser")
     
     def get_hack_pages_count(self) -> int:
-        content: str = self.get_page_content(self.hacks_url)
+        content: str = self.get_page_content(SMWCentralScraper.HACKS_URL)
         soup: BeautifulSoup = self.get_content_soup(content)
         last_page: str = soup.select_one('ul.page-list li:last-child')
         try:
@@ -45,7 +38,7 @@ class SMWCentralScraper:
 
     def get_hack_pages_urls(self, base_url: str):
         urls: list = []
-        for page_number in range(1, self.hacks_total+1):
+        for page_number in range(1, self.hack_pages_count+1):
             urls.append(base_url + f"&n={page_number}")
         return urls
     
@@ -108,26 +101,6 @@ class SMWCentralScraper:
             "downloaded_count": hack_total_downloads,
             "sfc_files": []
         }
-
-        zip_path: Path = self.download_zip(record["download_url"])
-        bps_paths: List[Path] = self.unzip_for_bps(zip_path)
-
-        sfc_files: List = []
-
-        # Apply the patch to the bps files
-        for bps_file in bps_paths:
-            sfc_files.append(self.apply_patch(bps_file))
-
-        # Add SFC file paths to record dict
-        for sfc in sfc_files:
-            record['sfc_files'].append(sfc)
-
-        # Remove BPS Files After Patching
-        for bps_file in bps_paths:
-            try:
-                bps_file.unlink()
-            except FileNotFoundError:
-                pass
         
         return record
 
@@ -156,67 +129,4 @@ class SMWCentralScraper:
     @staticmethod
     def flatten(array: List) -> List:
         return [item for sublist in array for item in sublist]
-    
-    def download_zip(self, url: str) -> Path:
-        zips_path: Path = ZIPS_DL_PATH
-        tmp_path: Path = UNZIP_DL_PATH
-        # Create Paths if they do not exist
-        for path in [zips_path, tmp_path]:
-            if not path.exists():
-                path.mkdir(exist_ok=True, parents=True)
-        # Empty Temp Directory
-        shutil.rmtree(tmp_path)
-
-
-        filename: str = Path(url).name.replace("%20", "_").replace('%', '')
-
-        res = requests.get(url)
-        res.raise_for_status()
-
-        output_path: Path = zips_path / filename
-        with open(output_path, "wb") as f:
-            f.write(res.content)
-        print("File saved as {}".format(output_path))
-
-        return output_path
-    
-    def unzip_for_bps(self, zip_path: Path) -> Path:
-        tmp_path: Path = UNZIP_DL_PATH
-        bps_dir: Path = BPS_PATH
-        if not bps_dir.exists():
-            bps_dir.mkdir(parents=True, exist_ok=True)
-
-        print(f"Unzipping to {zip_path}")
-        try:
-            with zipfile.ZipFile(zip_path, 'r') as zip:
-                zip.extractall(tmp_path)
-        except zipfile.BadZipFile:
-            print(f"BadZipFile: {zip_path}")
-        except zlib.error as e:
-            print(f"zlib.error: {e}")
-
-
-        bps_files = []
-        for bps_file in tmp_path.glob('**/*.bps'):
-            new_bps_filename = bps_file.name.replace(' ', '_')
-            bps_move_path = bps_dir / new_bps_filename
-            print(f"Moving {bps_file} to {bps_move_path}")
-            bps_file.replace(bps_move_path)
-            bps_files.append(bps_move_path)
-
-        return bps_files
-        
-    def apply_patch(self, bps: Path) -> Path:   
-        if platform.system() != 'Windows':
-            output_dir = 'sfc'
-            if not Path(output_dir).exists():
-                Path(output_dir).mkdir(parents=True, exist_ok=True)
-            sfc_path = f"{output_dir}/{bps.stem}-{datetime.now().strftime('%Y%m%d%H%M%S')}.sfc"
-            print("Executing flips to patch romhack")
-            flips_bin = get_bin(
-                FLIPS_BIN, 
-                which_cmd_name='flips', 
-                version_output_substrings=['floating', 'flips']
-            )
-            subprocess.run([FLIPS_BIN, '-a', bps, CLEAN_ROM, sfc_path])
-            return sfc_path
+  

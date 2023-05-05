@@ -5,8 +5,9 @@ import sys
 
 from smwc import db
 from .scraper import SMWCentralScraper
+from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
-
+from .config import DEBUG_SCRAPER
 
 class SMWCommandLineInterface:
 
@@ -18,8 +19,11 @@ class SMWCommandLineInterface:
     EPILOG: str = ""
 
     def __init__(self):
+        self.scraper: Optional[SMWCentralScraper] = None
+        self.downloader: Optional[SMWRomhackDownloader] = None
+        
         self.args: Namespace = self.parse_args()
-
+        
         if self.args.scrape:
             self.scrape()
 
@@ -114,11 +118,11 @@ class SMWCommandLineInterface:
 
         return parser.parse_args()
 
-
-    @staticmethod
-    def scrape():
-        scraper = SMWCentralScraper()
-        db.write_records(scraper.records)
+    def scrape(self):
+        self.scraper = SMWCentralScraper()
+        self.downloader = SMWRomhackDownloader(self.scraper.records)
+        if not DEBUG_SCRAPER['SKIP_DATABASE_INSERT']:
+            db.write_records(self.scraper.records)
 
     def play_random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
                          rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 

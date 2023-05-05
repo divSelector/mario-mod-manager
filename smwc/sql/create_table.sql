@@ -10,8 +10,8 @@ CREATE TABLE hacks (
     size REAL NOT NULL,
     size_units TEXT NOT NULL,
     download_url TEXT NOT NULL UNIQUE,
-    downloaded_count INTEGER NOT NULL
-    exits_cleared INT NOT NULL DEFAULT 0;
+    downloaded_count INTEGER NOT NULL,
+    exits_cleared INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE hack_types (
