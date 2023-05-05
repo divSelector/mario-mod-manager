@@ -9,8 +9,6 @@ class SMWCentralDatabase:
         self.db: Path = Path(db_path)
         if not self.db.exists():
             self.create_tables()
-        else:
-            print(f"Database Found at {self.db}")
 
     @staticmethod
     def read(path: str|Path):

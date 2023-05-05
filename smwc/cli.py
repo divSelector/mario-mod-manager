@@ -4,6 +4,7 @@ from argparse import ArgumentParser, Namespace
 import sys
 
 from smwc import db
+from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
 from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
@@ -187,4 +188,5 @@ class SMWCommandLineInterface:
 
 
 if __name__ == '__main__':
-    cli = SMWCommandLineInterface()
+    app = SMWCommandLineInterface()
+    db = SMWCentralDatabase('smwcentral.db')
