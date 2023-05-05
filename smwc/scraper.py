@@ -5,6 +5,7 @@ import requests
 import sys
 from datetime import datetime
 
+from smwc import db
 from .config import *
 from .utils import get_bin
 
@@ -15,7 +16,19 @@ class SMWCentralScraper:
         self.hack_pages_urls: list = self.get_hack_pages_urls(
             SMWCentralScraper.HACKS_URL
         )
-        self.records: List[Dict] = self.flatten(self.scrape_all_pages())
+
+        self.already_scraped_url_ids = [
+            record[-1] for record in db.select_hacks_already_scraped()
+        ]
+        
+        self.all_records: List[Dict] = self.flatten(self.scrape_all_pages())
+
+        # Remove Already Downloaded Hack Records
+        self.records: List[Dict] = [
+            record for record in self.all_records 
+            if record['page_url'].split('=')[-1] not in self.already_scraped_url_ids
+        ]
+
 
     def get_page_content(self, page: str) -> str:
         print(f"Requesting page: {page}")
@@ -46,7 +59,7 @@ class SMWCentralScraper:
         total_hacks_on_all_pages: List[dict] = []
 
         if DEBUG_SCRAPER["ONE_PAGE_ONLY"]:
-            total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[0]))
+            total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[1]))
         else:
             for url in self.hack_pages_urls:
                 total_hacks_on_all_pages.append(self.scrape_hacks_list_page(url))

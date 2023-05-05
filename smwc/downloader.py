@@ -22,8 +22,6 @@ from .config import (
 )
 from .utils import get_bin
 
-
-
 class SMWRomhackDownloader:
 
     flips_bin = get_bin(

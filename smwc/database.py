@@ -101,7 +101,8 @@ class SMWCentralDatabase:
             created_on_lt: str = '2023-03-24',
             featured: str = '',
             demo: str = '') -> List[dict]:
-        sql_query = self.read('smwc/sql/select_hacks.sql')
+        sql_path = BASE_DIR / 'smwc/sql/select_hacks.sql'
+        sql_query = self.read(sql_path)
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
             query_params: tuple = (
@@ -114,13 +115,22 @@ class SMWCentralDatabase:
             return self.db_results_to_dict(results)
         
     def select_hack_by(self, field_name: str, field_value: str|int) -> dict:
-        sql_query = self.read(f'smwc/sql/select_hack_by_{field_name}.sql')
+        sql_path = BASE_DIR / f'smwc/sql/select_hack_by_{field_name}.sql'
+        sql_query = self.read(sql_path)
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
             c.execute(sql_query, (field_value,))
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
+    def select_hacks_already_scraped(self) -> List:
+        sql_path = BASE_DIR / 'smwc/sql/select_hacks_already_scraped.sql'
+        sql = self.read(sql_path)
+        with sqlite3.connect(self.db) as conn:
+            c = conn.cursor()
+            c.execute(sql)
+            return c.fetchall()
+
     def select_hacks_beaten(self) -> List:
         sql_path = BASE_DIR / 'smwc/sql/select_hacks_beaten.sql'
         sql = self.read(sql_path)

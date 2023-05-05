@@ -70,5 +70,6 @@ DEBUG_SCRAPER = {
     "ONE_PAGE_ONLY": True,         # If True, Scrapes Every Hack From Only One Page
     "ONE_HACK_ONLY": False,         # If True, Scrapes One Hack Only From Every Page,
                                     # If Both Options True, Scrapes One Hack From One Page
-    "SKIP_DATABASE_INSERT": False
+    "SKIP_DATABASE_INSERT": True,
+    "SKIP_DOWNLOAD": True
 }

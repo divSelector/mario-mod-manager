@@ -121,11 +121,13 @@ class SMWCommandLineInterface:
 
     def scrape(self):
         self.scraper = SMWCentralScraper()
-        self.downloader = SMWRomhackDownloader(self.scraper.records, {
-            'batch_size': 10, 'batch_delay': 8, 'download_delay': 3, 
-            'timeout': 60, 'max_retries': 3
-        })
         
+        if not DEBUG_SCRAPER['SKIP_DOWNLOAD']:
+            self.downloader = SMWRomhackDownloader(self.scraper.records, {
+                'batch_size': 10, 'batch_delay': 8, 'download_delay': 3, 
+                'timeout': 60, 'max_retries': 3
+            })
+            
         if not DEBUG_SCRAPER['SKIP_DATABASE_INSERT']:
             db.write_records(self.scraper.records)
 
