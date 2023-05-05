@@ -23,13 +23,13 @@ from .utils import get_bin
 
 class SMWRomhackDownloader:
 
-    def __init__(self, records: List[Dict], opts: Dict = {
-        'batch_size': 10, 
-        'batch_delay': 1, 
-        'download_delay': 0, 
-        'timeout': 60,
-        'max_retries': 3
-    }) -> None:
+    flips_bin = get_bin(
+        FLIPS_BIN, 
+        which_cmd_name='flips', 
+        version_output_substrings=['floating', 'flips']
+    )
+
+    def __init__(self, records: List[Dict], opts: Dict) -> None:
         self.records: List[Dict] = records
         self.failures = { 'http': [],
                           'badzip': [],
@@ -43,8 +43,17 @@ class SMWRomhackDownloader:
 
         self.batches: List[List[Dict]] = self.enqueue_batches(self.records)
 
-        self.make_temp_dirs()
-        self.download_batches()
+        self.make_temp_dirs([ZIPS_DL_PATH, 
+                             UNZIP_DL_PATH, 
+                             BPS_PATH])
+        
+        record_to_zip_pairs = self.download_batches()
+
+        for record, zip_file in record_to_zip_pairs:
+            sfc_files = self.unzip(zip_file)
+            record['sfc_files'] = sfc_files
+            shutil.rmtree(UNZIP_DL_PATH)
+
         shutil.rmtree(TMP_PATH)
 
     def enqueue_batches(self, records: List[Dict]) -> List[List[Dict]]:
@@ -54,22 +63,23 @@ class SMWRomhackDownloader:
         return [records[i:i+self.batch_size] 
                 for i in range(0, len(records), self.batch_size)]
 
-    def make_temp_dirs(self):
+    def make_temp_dirs(self, dirs: List[Path]):
         """
         Create temp directories if they do not exist
         """
         # Create Paths if they do not exist
-        for path in [ZIPS_DL_PATH, UNZIP_DL_PATH, BPS_PATH]:
+        for path in dirs:
             if not path.exists():
                 path.mkdir(exist_ok=True, parents=True)
 
 
-    def download_batches(self):
+    def download_batches(self) -> List[Tuple[Dict, Path]]:
         """
         This is just a basic way of implementing some self-imposed restraint and
         ratelimiting while downloading so much from the server at once.
         Most of the function is just informing the user about the state of the process. 
         """
+        records: List = [] 
         for b_idx, batch in enumerate(self.batches):
             print(f"[{b_idx}/{len(self.batches)}] Downloading batch of {self.batch_size} archives...")
 
@@ -77,19 +87,26 @@ class SMWRomhackDownloader:
                 url = record['download_url']
                 print(f"[{u_idx}/{len(batch)}] Downloading archive from {url}...")
 
-                self.make_temp_dirs()
+                self.make_temp_dirs([UNZIP_DL_PATH])
                 zip_file = self.download_zip(url)
-                sfc_files = self.unzip(zip_file)
-                record['sfc_files'] = sfc_files
-                shutil.rmtree(UNZIP_DL_PATH)
+
+                records.append((record, zip_file))
+
+                # sfc_files = self.unzip(zip_file)
+                # record['sfc_files'] = sfc_files
+                # shutil.rmtree(UNZIP_DL_PATH)
 
 
                 print(f"Waiting {self.download_delay} second(s) till next download...")
+                print()
                 time.sleep(self.download_delay)
 
             print(f"Waiting {self.batch_delay} second(s) to start next batch of downloads...")
             time.sleep(self.batch_delay)
-        print("Scraping batches complete")
+
+        print("Downloading batches complete")
+        return records
+
       
 
     def download_zip(self, url: str) -> Path:
@@ -152,6 +169,7 @@ class SMWRomhackDownloader:
         """
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip:
+                print()
                 print(f"Unzipping {zip_path}...")
                 zip.extractall(UNZIP_DL_PATH)
         except (zipfile.BadZipFile, zlib.error) as e:
@@ -199,12 +217,7 @@ class SMWRomhackDownloader:
             sfc_path: Path = SFC_DIR / (patch.stem + sfc_file_suffix)
 
             print("Executing flips to patch romhack...")
-            flips_bin = get_bin(
-                FLIPS_BIN, 
-                which_cmd_name='flips', 
-                version_output_substrings=['floating', 'flips']
-            )
-
+            flips_bin = SMWRomhackDownloader.flips_bin
             subprocess.run([flips_bin, '-a', patch, CLEAN_ROM, sfc_path])
 
             return sfc_path
