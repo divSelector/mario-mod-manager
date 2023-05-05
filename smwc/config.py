@@ -51,18 +51,17 @@ CLEAN_ROM = BASE_DIR / 'cleansmw.sfc'
 
 
 # Just Leave These Alone
-DEFAULT_RA_CONFIG = 'retroarch.cfg'            # RA Default Config
+DEFAULT_RA_CONFIG  = 'retroarch.cfg'            # RA Default Config
 MODIFIED_RA_CONFIG = 'retroarch-modified.cfg'  # Save location for copy of default 
                                                # config used for options like --no-rewind
 # Temp Paths
-# Just Leave These Alone
-TMP_PATH = BASE_DIR / 'tmp'         # These Directories Will Be Deleted After Scrape
-ZIPS_DL_PATH = TMP_PATH / 'zips'    # Used To Store Downloaded Zips During Scrape Phase
-UNZIP_DL_PATH = TMP_PATH / 'unzip'  # Used to Store Unzipped Files During ROM Patch Phase
-BPS_PATH = TMP_PATH / 'bps'         # Used to Store BPS patches pulled from Unzipped Archives
+TMP_PATH     =  BASE_DIR / 'tmp'         # These Directories Will Be Deleted After Scrape
+ZIPS_DL_PATH    =  TMP_PATH / 'zips'    # Used To Store Downloaded Zips During Scrape Phase
+UNZIP_DL_PATH   =  TMP_PATH / 'unzip'  # Used to Store Unzipped Files During ROM Patch Phase
+BPS_PATH        =  TMP_PATH / 'bps'         # Used to Store BPS patches pulled from Unzipped Archives
 
 # Storage Paths
-SFC_DIR = BASE_DIR / 'sfc'         # This is Whrere Your Patched ROMs Go
+SQLITE_DB_FILE    = BASE_DIR / 'smwcentral.db'  # The Database
 
 # Developer Options
 # Just Leave These Alone
@@ -71,7 +70,4 @@ DEBUG_SCRAPER = {
     "ONE_HACK_ONLY": False,         # If True, Scrapes One Hack Only From Every Page,
                                     # If Both Options True, Scrapes One Hack From One Page
     "SKIP_DATABASE_INSERT": False
-
-
-
 }

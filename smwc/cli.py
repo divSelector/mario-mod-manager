@@ -8,7 +8,7 @@ from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
 from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
-from .config import DEBUG_SCRAPER
+from .config import DEBUG_SCRAPER, SQLITE_DB_FILE
 
 class SMWCommandLineInterface:
 
@@ -189,4 +189,4 @@ class SMWCommandLineInterface:
 
 if __name__ == '__main__':
     app = SMWCommandLineInterface()
-    db = SMWCentralDatabase('smwcentral.db')
+    db = SMWCentralDatabase(SQLITE_DB_FILE)

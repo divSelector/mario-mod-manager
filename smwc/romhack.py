@@ -49,8 +49,9 @@ class SMWRomhack:
     def launch_in_retroarch(self, rewind: bool) -> None:
 
         def modify_cfg(old: str, new: str, subprocess_cmd: List[str]) -> None:
+            modified_ra_cfg: Path = self.ra_config_dir / MODIFIED_RA_CONFIG
             init_new_cfg((old, new))
-            for additional_arg in ['-c', MODIFIED_RA_CONFIG]:
+            for additional_arg in ['-c', modified_ra_cfg]:
                 subprocess_cmd.append(additional_arg)
             return subprocess_cmd
         
@@ -99,8 +100,8 @@ class SMWRomhack:
         except IndexError as e:
             print(e)
 
-        if count_from_srm != hack['exits_cleared']:
-            update_sql: str = db.read('smwc/sql/update_exits_cleared.sql')
 
-            db.execute(update_sql, (count_from_srm, hack['id']))
-            print(f"{hack['title']} updated exits_cleared from {hack['exits_cleared']} to {count_from_srm}")
+        update_sql: str = db.read('smwc/sql/update_exits_cleared.sql')
+
+        db.execute(update_sql, (count_from_srm, hack['id']))
+        print(f"{hack['title']} updated exits_cleared from {hack['exits_cleared']} to {count_from_srm}")

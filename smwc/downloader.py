@@ -16,10 +16,16 @@ from .config import (
     BPS_PATH, 
     FLIPS_BIN, 
     CLEAN_ROM,
-    SFC_DIR,
-    TMP_PATH
+    TMP_PATH,
+    BASE_DIR
 )
 from .utils import get_bin
+
+SFC_DIR = BASE_DIR / 'sfc'  # For Now, This directory should be defined here instead of in config.py, 
+    # because the sfc_paths in the database are saved relative to this path.
+    # If it's changed after insertion, the paths will break. In the future,
+    # the `sfc/romhack.sfc` record should be simplified to just `romhack.sfc`
+    # and the path to the directory should be derived after the query.
 
 class SMWRomhackDownloader:
 
