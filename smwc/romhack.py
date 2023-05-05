@@ -12,10 +12,11 @@ from .config import (
     MODIFIED_RA_CONFIG
 )
 from .utils import get_bin, locate_retroarch_config_dir
+from .downloader import SFC_DIR
 
 class SMWRomhack:
     def __init__(self, sfc_file: str):
-        self.sfc: Path = Path(sfc_file)
+        self.sfc: Path = SFC_DIR / sfc_file
         self.ra_config_dir: Path = locate_retroarch_config_dir()
         print(self.ra_config_dir)
         self.srm : Optional[Path] = self.get_srm_from_sfc(sfc_file)

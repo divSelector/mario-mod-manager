@@ -17,15 +17,12 @@ from .config import (
     FLIPS_BIN, 
     CLEAN_ROM,
     TMP_PATH,
-    BASE_DIR
+    BASE_DIR,
+    SFC_DIR
 )
 from .utils import get_bin
 
-SFC_DIR = BASE_DIR / 'sfc'  # For Now, This directory should be defined here instead of in config.py, 
-    # because the sfc_paths in the database are saved relative to this path.
-    # If it's changed after insertion, the paths will break. In the future,
-    # the `sfc/romhack.sfc` record should be simplified to just `romhack.sfc`
-    # and the path to the directory should be derived after the query.
+
 
 class SMWRomhackDownloader:
 
@@ -97,11 +94,6 @@ class SMWRomhackDownloader:
                 zip_file = self.download_zip(url)
 
                 records.append((record, zip_file))
-
-                # sfc_files = self.unzip(zip_file)
-                # record['sfc_files'] = sfc_files
-                # shutil.rmtree(UNZIP_DL_PATH)
-
 
                 print(f"Waiting {self.download_delay} second(s) till next download...")
                 print()
@@ -226,4 +218,4 @@ class SMWRomhackDownloader:
             flips_bin = SMWRomhackDownloader.flips_bin
             subprocess.run([flips_bin, '-a', patch, CLEAN_ROM, sfc_path])
 
-            return sfc_path
+            return sfc_path.relative_to(SFC_DIR)
