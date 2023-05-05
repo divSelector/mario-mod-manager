@@ -11,20 +11,24 @@ from .config import (
     DEFAULT_RA_CONFIG,
     MODIFIED_RA_CONFIG
 )
-from .utils import get_bin
+from .utils import get_bin, locate_retroarch_config_dir
 
 class SMWRomhack:
     def __init__(self, sfc_file: str):
         self.sfc: Path = Path(sfc_file)
+        self.ra_config_dir: Path = locate_retroarch_config_dir()
+        print(self.ra_config_dir)
         self.srm : Optional[Path] = self.get_srm_from_sfc(sfc_file)
+        
 
-    @staticmethod
-    def get_srm_from_sfc(sfc_file: str) -> Optional[Path]:
+
+    def get_srm_from_sfc(self, sfc_file: str) -> Optional[Path]:
         sfc_path = Path(sfc_file)
         srm_filename = sfc_path.stem + ".srm"
-        srm_path = RETROARCH_CONFIG_DIR / 'saves' / srm_filename
+        srm_path = self.ra_config_dir / 'saves' / srm_filename
         return srm_path if srm_path.exists() else None
     
+
     def read_memory_address(self, hex: int, size_bytes: int = 1) -> int:
         if self.srm is not None and self.srm.exists():
             with self.srm.open('rb') as fo:
@@ -51,15 +55,17 @@ class SMWRomhack:
             return subprocess_cmd
         
         def init_new_cfg(mod: List[Tuple]):
-            if MODIFIED_RA_CONFIG.exists():
-                MODIFIED_RA_CONFIG.unlink()
+            default_ra_cfg: Path = self.ra_config_dir / DEFAULT_RA_CONFIG
+            modified_ra_cfg: Path = self.ra_config_dir / MODIFIED_RA_CONFIG
+            if modified_ra_cfg.exists():
+                modified_ra_cfg.unlink()
 
-            with DEFAULT_RA_CONFIG.open() as rfo:
+            with default_ra_cfg.open() as rfo:
                 cfg_text = rfo.read()
 
             modified_cfg_text = cfg_text.replace(mod[0], mod[1])
 
-            with MODIFIED_RA_CONFIG.open('w') as wfo:
+            with modified_ra_cfg.open('w') as wfo:
                 wfo.write(modified_cfg_text)
 
         retroarch_bin = get_bin(
@@ -67,7 +73,8 @@ class SMWRomhack:
             which_cmd_name='retroarch', 
             version_output_substrings=['retroarch']
         )
-        cmd: List = [retroarch_bin, '-L', SNES_CORE, self.sfc]
+        snes_core: Path = self.ra_config_dir / SNES_CORE
+        cmd: List = [retroarch_bin, '-L', snes_core, self.sfc]
 
         if rewind:
             cmd = modify_cfg('rewind_enable = "false"',

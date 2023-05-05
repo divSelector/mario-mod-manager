@@ -2,6 +2,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 USER_HOME = Path.home()
 
+
 ####################################################################
 #                                     Are These Paths Okay With You?
 ####################################################################
@@ -17,10 +18,10 @@ RETROARCH_BIN = ''
 FLIPS_BIN = ''
 
 # RA Config Directory
-RETROARCH_CONFIG_DIR = USER_HOME / '.config/retroarch'
+RETROARCH_CONFIG_DIR = ''
 
 # RA SNES Core
-SNES_CORE = RETROARCH_CONFIG_DIR / 'cores/snes9x_libretro.so'
+SNES_CORE = 'cores/snes9x_libretro.so'
 
 # Clean Vanilla Super Mario World ROM
 CLEAN_ROM = BASE_DIR / 'cleansmw.sfc'
@@ -50,9 +51,9 @@ CLEAN_ROM = BASE_DIR / 'cleansmw.sfc'
 
 
 # Just Leave These Alone
-DEFAULT_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch.cfg'            # RA Default Config
-MODIFIED_RA_CONFIG = RETROARCH_CONFIG_DIR / 'retroarch-modified.cfg'  # Save location for copy of default 
-                                                                      # config used for options like --no-rewind
+DEFAULT_RA_CONFIG = 'retroarch.cfg'            # RA Default Config
+MODIFIED_RA_CONFIG = 'retroarch-modified.cfg'  # Save location for copy of default 
+                                               # config used for options like --no-rewind
 # Temp Paths
 # Just Leave These Alone
 TMP_PATH = BASE_DIR / 'tmp'         # These Directories Will Be Deleted After Scrape
