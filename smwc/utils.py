@@ -2,7 +2,8 @@ import platform
 import subprocess
 from typing import List
 from pathlib import Path
-import time
+import binascii
+import sys
 
 from .config import (
     RETROARCH_BIN, 
@@ -83,3 +84,24 @@ def locate_retroarch_config_dir() -> Path:
         return find_cfg_in_log()
 
 
+def validate_clean_rom(path: Path = CLEAN_ROM) -> bool:
+    BASE_CHECKSUM = 0xB19ED489
+
+    try:
+        with path.open('rb') as fo:
+            buffer = fo.read()
+    except FileNotFoundError:
+        print(f"\nCannot find a clean Super Mario World rom at\n\t{CLEAN_ROM}\n")
+        print("Try again when you get the right file here.\n")
+        sys.exit()
+
+    rom = bytearray(buffer)
+    if len(rom) == 0x80200:
+        rom = rom[0x200:]
+
+    crc32rom = binascii.crc32(rom)
+    if crc32rom != BASE_CHECKSUM:
+        print(f'{BASE_CHECKSUM:08X}, got {crc32rom:08X}')
+        return False
+    
+    return True

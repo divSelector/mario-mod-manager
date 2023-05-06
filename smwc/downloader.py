@@ -85,7 +85,7 @@ class SMWRomhackDownloader:
         """
         records: List = [] 
         for b_idx, batch in enumerate(self.batches):
-            print(f"[{b_idx}/{len(self.batches)}] Downloading batch of {self.batch_size} archives...")
+            print(f"[{b_idx}/{len(self.batches)}] Downloading batch of {len(batch)} archives...")
 
             for u_idx, record in enumerate(batch):
                 url = record['download_url']
@@ -193,7 +193,8 @@ class SMWRomhackDownloader:
             for patch in UNZIP_DL_PATH.glob(f'**/*.{ext}'):
                 new_patch_filename: str = patch.name.replace(' ', '_')
                 patch_move_path = BPS_PATH / new_patch_filename
-                print(f"Moving {patch} to {patch_move_path}")
+                print(f"Moving {patch.relative_to(BASE_DIR)} to "+\
+                      f"{patch_move_path.relative_to(BASE_DIR)}")
                 patch.replace(patch_move_path)
                 patches.append(patch_move_path)
 

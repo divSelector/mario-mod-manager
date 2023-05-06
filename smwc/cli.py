@@ -8,7 +8,8 @@ from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
 from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
-from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR
+from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR, CLEAN_ROM
+from .utils import validate_clean_rom
 
 class SMWCommandLineInterface:
 
@@ -127,7 +128,12 @@ class SMWCommandLineInterface:
         return parser.parse_args()
 
     def scrape(self):
-        self.scraper = SMWCentralScraper()
+        if validate_clean_rom():
+            print("Clean Super Mario World ROM found and validated...")
+            self.scraper = SMWCentralScraper()
+        else:
+            print(f"\nCannot find a clean Super Mario World rom at\n\t{CLEAN_ROM}\n")
+            print("Try again when you get the right file here.\n")
         
         if not DEBUG_SCRAPER['SKIP_DOWNLOAD']:
             self.downloader = SMWRomhackDownloader(self.scraper.records, {
@@ -141,7 +147,7 @@ class SMWCommandLineInterface:
             if self.downloader.failures['badzip']:
                 print("Removing records without paths to an SFC file...")
                 db.execute(
-                    db.read(BASE_DIR / 'smwc/sql/delete_hacks_where_null_path.sql')
+                    db.read(BASE_DIR / 'smwc/sql/delete_hacks_where_null_path.sql'), sql_params=None
                 )
 
     def play_random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 

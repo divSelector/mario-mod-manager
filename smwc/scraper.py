@@ -61,7 +61,7 @@ class SMWCentralScraper:
         total_hacks_on_all_pages: List[dict] = []
 
         if DEBUG_SCRAPER["ONE_PAGE_ONLY"]:
-            total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[1]))
+            total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[0]))
         else:
             for url in self.hack_pages_urls:
                 total_hacks_on_all_pages.append(self.scrape_hacks_list_page(url))
