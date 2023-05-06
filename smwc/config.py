@@ -61,8 +61,8 @@ UNZIP_DL_PATH   =  TMP_PATH / 'unzip'  # Used to Store Unzipped Files During ROM
 BPS_PATH        =  TMP_PATH / 'bps'         # Used to Store BPS patches pulled from Unzipped Archives
 
 # Storage Paths
-SQLITE_DB_FILE    = BASE_DIR / 'smwcentral-test.db'  # The Database
-SFC_DIR           = BASE_DIR / 'romhacks'            # Directory to Store Romhacks
+SQLITE_DB_FILE    = BASE_DIR / 'smwcentral.db'  # The Database
+SFC_DIR           = BASE_DIR / 'sfc'            # Directory to Store Romhacks
 
 # Developer Options
 # Just Leave These Alone

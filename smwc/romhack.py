@@ -97,7 +97,8 @@ class SMWRomhack:
     def update_exit_clear_count(self):
         count_from_srm: int = self.get_exit_clear_count()
         try:
-            hack = db.select_hack_by('path', str(self.sfc))[0]
+            print(self.sfc)
+            hack = db.select_hack_by('path', self.sfc.name)[0]
         except IndexError as e:
             print(e)
 
