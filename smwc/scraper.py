@@ -18,7 +18,9 @@ class SMWCentralScraper:
         )
 
         self.already_scraped = [
-            record[-1] for record in db.select_hacks_already_scraped()
+            record[-1] for record in db.select_without_params_from_file(
+                'smwc/sql/select_hacks_already_scraped.sql'
+            )
         ]
 
         self.all_records: List[Dict] = self.flatten(self.scrape_all_pages())

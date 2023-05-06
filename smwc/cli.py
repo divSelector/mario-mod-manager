@@ -38,9 +38,13 @@ class SMWCommandLineInterface:
                                   self.args.downloads_over, self.args.downloads_under,self.args.date_after, 
                                   self.args.date_before, self.args.featured, self.args.demo, rewind)
             
-        elif self.args.show_beaten:
-            self.show_beaten()
+        if self.args.show_beaten:
+            self.show_exits_cleared(beaten=True)
 
+        if self.args.show_started:
+            self.show_exits_cleared()
+
+        
             
     def parse_args(self) -> Namespace:
         parser = ArgumentParser(
@@ -114,7 +118,10 @@ class SMWCommandLineInterface:
 
         info_options = parser.add_argument_group("Show Info Options")
         info_options.add_argument('--show-beaten', action='store_true', 
-            help='Display hacks in database where all exits are cleared'
+            help='Display hacks in database where all exits are cleared.'
+        )
+        info_options.add_argument('--show-started', action='store_true', 
+            help='Display hacks in database where any exits are marked cleared.'
         )
 
         return parser.parse_args()
@@ -165,16 +172,28 @@ class SMWCommandLineInterface:
         romhack = SMWRomhack(path)
         romhack.launch_in_retroarch(rewind=opts['rewind'])
 
-    def show_beaten(self):
-        print("\nHACKS WITH ALL EXITS CLEARED:")
-        results = db.select_hacks_beaten()
+    def show_exits_cleared(self, beaten: bool = False):
+        if beaten:
+            print("\nHACKS WITH ALL EXITS CLEARED:")
+            results = db.select_without_params_from_file(
+                'smwc/sql/select_hacks_beaten.sql'
+            )
+        else:
+            print("\nHACKS WITH SOME EXITS CLEARED:")
+            results = db.select_without_params_from_file(
+                'smwc/sql/select_hacks_started.sql'
+            )
+        
         if results:
             for record in results:
-                _id, title, cleared, _, _ = record
-                print(f"{_id}: {title} -- {cleared} Exits Clear!")
+                _id, title, total, cleared, *_ = record
+                print(f"{_id}: {title} -- {cleared}/{total} Exits Clear!")
         else:
-            print("\nYou haven't cleared any hacks yet... :(")
+            
+            print(f"\nYou haven't {'cleared' if beaten else 'started'} any yet... :(")
         print()
+
+
 
 
     @staticmethod

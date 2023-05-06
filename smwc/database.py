@@ -114,6 +114,7 @@ class SMWCentralDatabase:
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
+
     def select_hack_by(self, field_name: str, field_value: str|int) -> dict:
         sql_path = BASE_DIR / f'smwc/sql/select_hack_by_{field_name}.sql'
         sql_query = self.read(sql_path)
@@ -123,21 +124,15 @@ class SMWCentralDatabase:
             results = c.fetchall()
             return self.db_results_to_dict(results)
         
-    def select_hacks_already_scraped(self) -> List:
-        sql_path = BASE_DIR / 'smwc/sql/select_hacks_already_scraped.sql'
+
+    def select_without_params_from_file(self, path: str) -> List[Tuple]:
+        sql_path = BASE_DIR / path
         sql = self.read(sql_path)
         with sqlite3.connect(self.db) as conn:
             c = conn.cursor()
             c.execute(sql)
             return c.fetchall()
 
-    def select_hacks_beaten(self) -> List:
-        sql_path = BASE_DIR / 'smwc/sql/select_hacks_beaten.sql'
-        sql = self.read(sql_path)
-        with sqlite3.connect(self.db) as conn:
-            c = conn.cursor()
-            c.execute(sql)
-            return c.fetchall()
 
     def execute(self, sql_statement: str, sql_params: Optional[Tuple]):
         with sqlite3.connect(self.db) as conn:

@@ -62,7 +62,7 @@ BPS_PATH        =  TMP_PATH / 'bps'         # Used to Store BPS patches pulled f
 
 # Storage Paths
 SQLITE_DB_FILE    = BASE_DIR / 'smwcentral.db'  # The Database
-SFC_DIR           = BASE_DIR / 'sfc'            # Directory to Store Romhacks
+SFC_DIR           = BASE_DIR / 'romhacks'       # Directory to Store Romhacks
 
 # Developer Options
 # Just Leave These Alone
