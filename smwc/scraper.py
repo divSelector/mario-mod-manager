@@ -17,16 +17,16 @@ class SMWCentralScraper:
             SMWCentralScraper.HACKS_URL
         )
 
-        self.already_scraped_url_ids = [
+        self.already_scraped = [
             record[-1] for record in db.select_hacks_already_scraped()
         ]
-        
+
         self.all_records: List[Dict] = self.flatten(self.scrape_all_pages())
 
         # Remove Already Downloaded Hack Records
         self.records: List[Dict] = [
             record for record in self.all_records 
-            if record['page_url'].split('=')[-1] not in self.already_scraped_url_ids
+            if record['page_url'] not in self.already_scraped
         ]
 
 

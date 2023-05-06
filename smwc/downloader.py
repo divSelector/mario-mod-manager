@@ -53,7 +53,10 @@ class SMWRomhackDownloader:
         for record, zip_file in record_to_zip_pairs:
             sfc_files = self.unzip(zip_file)
             record['sfc_files'] = sfc_files
-            shutil.rmtree(UNZIP_DL_PATH)
+            try:
+                shutil.rmtree(UNZIP_DL_PATH)
+            except FileNotFoundError:
+                pass
 
         shutil.rmtree(TMP_PATH)
 
@@ -163,6 +166,7 @@ class SMWRomhackDownloader:
         """
         Unzip a single file and log failures.
         """
+        self.make_temp_dirs([UNZIP_DL_PATH])
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip:
                 print()

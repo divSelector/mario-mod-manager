@@ -8,7 +8,7 @@ from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
 from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
-from .config import DEBUG_SCRAPER, SQLITE_DB_FILE
+from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR
 
 class SMWCommandLineInterface:
 
@@ -130,6 +130,12 @@ class SMWCommandLineInterface:
             
         if not DEBUG_SCRAPER['SKIP_DATABASE_INSERT']:
             db.write_records(self.scraper.records)
+
+            if self.downloader.failures['badzip']:
+                print("Removing records without paths to an SFC file...")
+                db.execute(
+                    db.read(BASE_DIR / 'smwc/sql/delete_hacks_where_null_path.sql')
+                )
 
     def play_random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
                          rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
