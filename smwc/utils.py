@@ -1,6 +1,6 @@
 import platform
 import subprocess
-from typing import List, Generator
+from typing import List, Optional
 from pathlib import Path
 import binascii
 import sys
@@ -14,7 +14,7 @@ from .config import (
 
 def get_bin(path: str, 
             which_cmd_name: str, 
-            version_output_substrings: List[str]) -> Path:
+            version_output_substrings: List[str]) -> Path|str:
     
     def run_which() -> Path:
         if platform.system() != 'Windows':
@@ -22,7 +22,6 @@ def get_bin(path: str,
                 path = subprocess.check_output(
                     ['which', which_cmd_name]
                 ).decode().strip()
-                # print(f"`which {which_cmd_name}` found a binary...")
                 return Path(path)
             except (subprocess.CalledProcessError,
                     PermissionError) as e:
@@ -36,7 +35,6 @@ def get_bin(path: str,
     
     if bin_path.exists():
         try:
-            # any(substring in string for substring in substrings)
             version_output = subprocess.check_output(
                 [bin_path, '--version']
             ).decode().strip().lower()
@@ -110,7 +108,10 @@ def validate_clean_rom(path) -> bool:
 def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Path:
 
     def handle_not_found():
-        clean_rom_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            clean_rom_dir.mkdir(parents=True, exist_ok=True)
+        except PermissionError:
+            pass
         print(f"\nCannot find a clean Vanilla Super Mario World ROM in\n\t{clean_rom_dir}\n")
         print("Try again when you get the right file here.\n")
         sys.exit(1)
@@ -122,10 +123,10 @@ def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Path:
             paths = sfcs + smcs
             if paths:
                 for path in paths:
-                    rom = validate_clean_rom(path)
                     if validate_clean_rom(path):
                         print("Clean Super Mario World ROM found and validated...")
                         return path
+                handle_not_found()
             else:
                 handle_not_found()
         else:

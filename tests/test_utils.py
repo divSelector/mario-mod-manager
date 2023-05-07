@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+import platform
 
 from smwc.utils import (
     get_bin, 
@@ -8,15 +8,24 @@ from smwc.utils import (
     validate_clean_rom, 
     get_clean_rom_path
 )
+from smwc.config import BASE_DIR
+
 
 class TestGetBin:
 
-    def test_found_from_nonexisting_path_in_config(self):
-        bin_path = get_bin('', 'bash', ['GNU bash'])
+    @pytest.mark.skipif(platform.system() == 'Windows', reason='This test is for POSIX systems only')
+    def test_found_from_blank_path_in_config(self):
+        bin_path = get_bin('', 'bash', ['gnu bash'])
         assert bin_path.exists()
 
+    @pytest.mark.skipif(platform.system() == 'Windows', reason='This test is for POSIX systems only')
+    def test_found_from_nonexisting_path_in_config(self):
+        bin_path = get_bin('/does/not/exist', 'bash', ['gnu bash'])
+        assert bin_path.exists()
+
+    @pytest.mark.skipif(platform.system() == 'Windows', reason='This test is for POSIX systems only')
     def test_found_from_existing_path_in_config(self):
-        bin_path = get_bin('/bin/bash', 'bash', ['bash'])
+        bin_path = get_bin('/bin/bash', 'bash', ['gnu bash'])
         assert bin_path.exists() and str(bin_path) == '/bin/bash'
 
 
@@ -26,12 +35,17 @@ class TestLocateRetroarchConfigDir:
         config_dir = locate_retroarch_config_dir('/does/not/exist')
         assert config_dir.is_dir() and str(config_dir) != '/does/not/exist' 
 
-    def test_found_from_existing_path_in_config(self, mock_config_dir):
+    def test_found_from_no_path_specified_in_config(self):
+        config_dir = locate_retroarch_config_dir('')
+        assert config_dir.is_dir() and config_dir != BASE_DIR
+
+    def test_found_from_existing_path_in_config(self, mock_ra_config_dir):
         # Mock the find_cfg_in_log function to raise an exception if called
-        config_dir = locate_retroarch_config_dir(mock_config_dir)
+        config_dir = locate_retroarch_config_dir(mock_ra_config_dir)
             
         # Assert that the returned path is equal to the supplied path
-        assert config_dir == mock_config_dir
+        assert config_dir == mock_ra_config_dir
+
 
 class TestValidateCleanRom:
 
@@ -49,6 +63,20 @@ class TestValidateCleanRom:
             validate_clean_rom(rom_path)
 
 
-def test_get_clean_rom_path():
-    clean_rom_path = get_clean_rom_path()
-    assert clean_rom_path.is_file()
+class TestGetCleanRomPath:
+
+    def test_valid_sfc_in_dir(self):
+        clean_rom_path = get_clean_rom_path(Path('roms/clean'))
+        assert clean_rom_path.is_file()
+
+    def test_only_invalid_sfc_in_dir(self, mock_not_clean_rom_dir):
+        with pytest.raises(SystemExit):
+            get_clean_rom_path(mock_not_clean_rom_dir)
+
+    def test_empty_dir(self, mock_empty_dir):
+        with pytest.raises(SystemExit):
+            get_clean_rom_path(mock_empty_dir)
+
+    def test_dir_does_not_exist(self):
+        with pytest.raises(SystemExit):
+            get_clean_rom_path(Path("/self/love/"))
