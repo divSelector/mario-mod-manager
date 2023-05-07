@@ -1,32 +1,29 @@
 import platform
 import subprocess
-from typing import List
+from typing import List, Generator
 from pathlib import Path
 import binascii
 import sys
 
 from .config import (
     RETROARCH_BIN, 
-    FLIPS_BIN, 
     RETROARCH_CONFIG_DIR,
-    SNES_CORE,
-    CLEAN_ROM, 
-    BASE_DIR
+    BASE_DIR,
+    CLEAN_ROM_DIR
 )
 
-def check_output(cmd: List[str]):
-    if platform.system() != 'Windows':
-        return subprocess.check_output(cmd).decode().strip()
-        
-
-def get_bin(path: str, which_cmd_name: str, version_output_substrings: List[str]):
+def get_bin(path: str, 
+            which_cmd_name: str, 
+            version_output_substrings: List[str]) -> Path:
     
-    def run_which():
+    def run_which() -> Path:
         if platform.system() != 'Windows':
             try:
-                path = check_output(['which', which_cmd_name])
+                path = subprocess.check_output(
+                    ['which', which_cmd_name]
+                ).decode().strip()
                 # print(f"`which {which_cmd_name}` found a binary...")
-                return path
+                return Path(path)
             except (subprocess.CalledProcessError,
                     PermissionError) as e:
                 print(f"{which_cmd_name} is not installed")
@@ -40,7 +37,9 @@ def get_bin(path: str, which_cmd_name: str, version_output_substrings: List[str]
     if bin_path.exists():
         try:
             # any(substring in string for substring in substrings)
-            version_output = check_output([bin_path, '--version']).lower()
+            version_output = subprocess.check_output(
+                [bin_path, '--version']
+            ).decode().strip().lower()
             if any(substr in version_output for substr in version_output_substrings):
                 print("Path in config.py is valid")
                 return bin_path
@@ -52,7 +51,9 @@ def get_bin(path: str, which_cmd_name: str, version_output_substrings: List[str]
     else:
         return run_which()
     
-def locate_retroarch_config_dir() -> Path:
+def locate_retroarch_config_dir(
+        specified_config_dir: str = RETROARCH_CONFIG_DIR
+    ) -> Path:
 
     def find_cfg_in_log():
         tmp: Path = BASE_DIR / 'tmp.log'
@@ -72,8 +73,8 @@ def locate_retroarch_config_dir() -> Path:
         return Path(config_file).parent
 
 
-    if RETROARCH_CONFIG_DIR:
-        ra_config_dir = Path(RETROARCH_CONFIG_DIR)
+    if specified_config_dir:
+        ra_config_dir = Path(specified_config_dir)
         if ra_config_dir.is_dir():
             cfg = ra_config_dir / 'retroarch.cfg'
             if cfg.is_file():
@@ -84,14 +85,14 @@ def locate_retroarch_config_dir() -> Path:
         return find_cfg_in_log()
 
 
-def validate_clean_rom(path: Path = CLEAN_ROM) -> bool:
+def validate_clean_rom(path) -> bool:
     BASE_CHECKSUM = 0xB19ED489
 
     try:
         with path.open('rb') as fo:
             buffer = fo.read()
     except FileNotFoundError:
-        print(f"\nCannot find a clean Super Mario World rom at\n\t{CLEAN_ROM}\n")
+        print(f"\nCannot find a clean Super Mario World rom at\n\t{path}\n")
         print("Try again when you get the right file here.\n")
         sys.exit()
 
@@ -105,3 +106,29 @@ def validate_clean_rom(path: Path = CLEAN_ROM) -> bool:
         return False
     
     return True
+
+def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Path:
+
+    def handle_not_found():
+        clean_rom_dir.mkdir(parents=True, exist_ok=True)
+        print(f"\nCannot find a clean Vanilla Super Mario World ROM in\n\t{clean_rom_dir}\n")
+        print("Try again when you get the right file here.\n")
+        sys.exit(1)
+
+    try:
+        if clean_rom_dir.is_dir():
+            sfcs: List[Path] = list(clean_rom_dir.glob('*.sfc'))
+            smcs: List[Path] = list(clean_rom_dir.glob('*.smc'))
+            paths = sfcs + smcs
+            if paths:
+                for path in paths:
+                    rom = validate_clean_rom(path)
+                    if validate_clean_rom(path):
+                        print("Clean Super Mario World ROM found and validated...")
+                        return path
+            else:
+                handle_not_found()
+        else:
+            handle_not_found()
+    except AttributeError:
+        handle_not_found()

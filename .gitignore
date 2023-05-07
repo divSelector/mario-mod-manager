@@ -1,10 +1,10 @@
 venv
-old
 cleansmw.sfc
 sfc
 tmp
-smwcentral*
+*.db
 __pycache__
 *backup*
 *backup
-romhacks
+roms/hacks
+roms/clean/*.sfc

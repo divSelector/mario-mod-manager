@@ -23,8 +23,6 @@ RETROARCH_CONFIG_DIR = ''
 # RA SNES Core
 SNES_CORE = 'cores/snes9x_libretro.so'
 
-# Clean Vanilla Super Mario World ROM
-CLEAN_ROM = BASE_DIR / 'cleansmw.sfc'
 
 #####################################################################
 #                                                        Okay, Great!
@@ -55,14 +53,16 @@ DEFAULT_RA_CONFIG  = 'retroarch.cfg'            # RA Default Config
 MODIFIED_RA_CONFIG = 'retroarch-modified.cfg'  # Save location for copy of default 
                                                # config used for options like --no-rewind
 # Temp Paths
-TMP_PATH     =  BASE_DIR / 'tmp'         # These Directories Will Be Deleted After Scrape
+TMP_PATH      =  BASE_DIR / 'tmp'         # These Directories Will Be Deleted After Scrape
 ZIPS_DL_PATH    =  TMP_PATH / 'zips'    # Used To Store Downloaded Zips During Scrape Phase
 UNZIP_DL_PATH   =  TMP_PATH / 'unzip'  # Used to Store Unzipped Files During ROM Patch Phase
 BPS_PATH        =  TMP_PATH / 'bps'         # Used to Store BPS patches pulled from Unzipped Archives
 
 # Storage Paths
-SQLITE_DB_FILE    = BASE_DIR / 'smwcentral.db'  # The Database
-SFC_DIR           = BASE_DIR / 'romhacks'       # Directory to Store Romhacks
+SQLITE_DB_FILE    = BASE_DIR / 'smwc.db'     # The sqlite3 Database
+ROMS_DIR          = BASE_DIR / 'roms'       # Storage of clean rom and romhacks
+CLEAN_ROM_DIR       = ROMS_DIR / 'clean'    # Directory Where Vanilla SMW .sfc file goes.
+ROMHACKS_DIR        = ROMS_DIR / 'hacks'       # Directory to Store Romhacks
 
 # Developer Options
 # Just Leave These Alone

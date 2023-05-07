@@ -15,10 +15,9 @@ from .config import (
     UNZIP_DL_PATH, 
     BPS_PATH, 
     FLIPS_BIN, 
-    CLEAN_ROM,
     TMP_PATH,
     BASE_DIR,
-    SFC_DIR
+    ROMHACKS_DIR
 )
 from .utils import get_bin
 
@@ -30,7 +29,8 @@ class SMWRomhackDownloader:
         version_output_substrings=['floating', 'flips']
     )
 
-    def __init__(self, records: List[Dict], opts: Dict) -> None:
+    def __init__(self, records: List[Dict], opts: Dict, clean_rom: Path) -> None:
+        self.clean_rom = clean_rom
         self.records: List[Dict] = records
         self.failures = { 'http': [],
                           'badzip': [],
@@ -212,13 +212,13 @@ class SMWRomhackDownloader:
         a timestamp to avoid overwriting similar filenames.
         Locate the Floating IPS binary and run it on the clean vanilla SMW rom.
         """
-        SFC_DIR.mkdir(parents=True, exist_ok=True)
+        ROMHACKS_DIR.mkdir(parents=True, exist_ok=True)
         if platform.system() != 'Windows':
             sfc_file_suffix: str = f"-{datetime.now().strftime('%Y%m%d%H%M%S')}.sfc"
-            sfc_path: Path = SFC_DIR / (patch.stem + sfc_file_suffix)
+            sfc_path: Path = ROMHACKS_DIR / (patch.stem + sfc_file_suffix)
 
             print("Executing flips to patch romhack...")
             flips_bin = SMWRomhackDownloader.flips_bin
-            subprocess.run([flips_bin, '-a', patch, CLEAN_ROM, sfc_path])
+            subprocess.run([flips_bin, '-a', patch, self.clean_rom, sfc_path])
 
-            return sfc_path.relative_to(SFC_DIR)
+            return sfc_path.relative_to(ROMHACKS_DIR)

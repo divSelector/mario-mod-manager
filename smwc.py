@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from smwc.cli import SMWCommandLineInterface
 from smwc.database import SMWCentralDatabase
 

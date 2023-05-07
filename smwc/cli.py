@@ -8,12 +8,12 @@ from .database import SMWCentralDatabase
 from .scraper import SMWCentralScraper
 from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
-from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR, CLEAN_ROM
-from .utils import validate_clean_rom
+from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR
+from .utils import validate_clean_rom, get_clean_rom_path
 
 class SMWCommandLineInterface:
 
-    PROG: str = "smwc.cli"
+    PROG: str = 'smwc.py'
     DESCRIPTION: str = """
         smwcentral.net scraper, downloader, database, romhack patcher and launcher\n
         by divselector
@@ -128,18 +128,15 @@ class SMWCommandLineInterface:
         return parser.parse_args()
 
     def scrape(self):
-        if validate_clean_rom():
-            print("Clean Super Mario World ROM found and validated...")
-            self.scraper = SMWCentralScraper()
-        else:
-            print(f"\nCannot find a clean Super Mario World rom at\n\t{CLEAN_ROM}\n")
-            print("Try again when you get the right file here.\n")
+        clean_smw = get_clean_rom_path()
+
+        self.scraper = SMWCentralScraper()
         
         if not DEBUG_SCRAPER['SKIP_DOWNLOAD']:
             self.downloader = SMWRomhackDownloader(self.scraper.records, {
                 'batch_size': 10, 'batch_delay': 8, 'download_delay': 3, 
                 'timeout': 60, 'max_retries': 3
-            })
+            }, clean_smw)
             
         if not DEBUG_SCRAPER['SKIP_DATABASE_INSERT']:
             db.write_records(self.scraper.records)
