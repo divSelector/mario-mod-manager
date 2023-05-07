@@ -27,8 +27,8 @@ class SMWRomhackDownloader:
 
 
     def __init__(self, records: List[Dict], opts: Dict, clean_rom: Path) -> None:
-        self.flips: Optional[Path] = self.find_flips()
-        if self.flips is None:
+        self.flips_bin: Optional[Path] = self.find_flips()
+        if self.flips_bin is None:
             print("Cannot find flips... please install it")
             print("https://github.com/Alcaro/Flips")
             sys.exit()
@@ -220,7 +220,7 @@ class SMWRomhackDownloader:
         sfc_path: Path = ROMHACKS_DIR / (patch.stem + sfc_file_suffix)
 
         print("Executing flips to patch romhack...")
-        flips_bin = SMWRomhackDownloader.flips_bin
+        flips_bin = self.flips_bin
         subprocess.run([str(flips_bin), '-a', str(patch), str(self.clean_rom), str(sfc_path)])
 
         return sfc_path.relative_to(ROMHACKS_DIR)
@@ -234,7 +234,7 @@ class SMWRomhackDownloader:
         if flips_bin is None and VENDOR_FLIPS_BIN.exists():
             print("Looking for flips in vendor directory... this version could be outdated.")
             flips_bin = get_bin(
-                VENDOR_FLIPS_BIN, 
+                str(VENDOR_FLIPS_BIN), 
                 which_cmd_name='', 
                 version_output_substrings=['']
             )
