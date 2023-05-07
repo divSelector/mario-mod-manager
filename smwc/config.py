@@ -1,4 +1,5 @@
 from pathlib import Path
+import platform
 BASE_DIR = Path(__file__).resolve().parent.parent
 USER_HOME = Path.home()
 
@@ -73,3 +74,6 @@ DEBUG_SCRAPER = {
     "SKIP_DATABASE_INSERT": False,
     "SKIP_DOWNLOAD": False
 }
+
+VENDOR_FLIPS_DIR = BASE_DIR / 'vendor/flips'
+VENDOR_FLIPS_BIN    = (VENDOR_FLIPS_DIR / 'flips') if platform.system() != 'Windows' else (VENDOR_FLIPS_DIR / 'flips.exe')

@@ -34,10 +34,12 @@ class TestGetBin:
 
 class TestLocateRetroarchConfigDir:
 
+    @pytest.mark.skipif(platform.system() == 'Windows', reason='This test is for POSIX systems only')
     def test_found_from_nonexisting_path_in_config(self) -> None:
         config_dir = locate_retroarch_config_dir('/does/not/exist')
         assert config_dir.is_dir() and str(config_dir) != '/does/not/exist' 
 
+    @pytest.mark.skipif(platform.system() == 'Windows', reason='This test is for POSIX systems only')
     def test_found_from_no_path_specified_in_config(self) -> None:
         config_dir = locate_retroarch_config_dir('')
         assert config_dir.is_dir() and config_dir != BASE_DIR
@@ -52,10 +54,13 @@ class TestLocateRetroarchConfigDir:
 
 class TestValidateCleanRom:
 
+    @pytest.mark.optional(reason="Impossibleto test without distributing a valid rom.")
     def test_is_valid(self) -> None:
         rom_path = Path('roms/clean/cleansmw.sfc')
         assert validate_clean_rom(rom_path)
-        
+       
+       
+    @pytest.mark.optional(reason="Impossibleto test without distributing an invalid rom.")
     def test_is_invalid(self) -> None:
         rom_path = Path('roms/clean/unclean.sfc')
         assert not validate_clean_rom(rom_path)
@@ -72,7 +77,8 @@ class TestGetCleanRomPath:
         clean_rom_path = get_clean_rom_path(Path('roms/clean'))
         if clean_rom_path is not None:
             assert clean_rom_path.is_file()
-
+    
+    @pytest.mark.optional(reason="Impossibleto test without distributing an invalid rom.")
     def test_only_invalid_sfc_in_dir(self, mock_not_clean_rom_dir: Path) -> None:
         with pytest.raises(SystemExit):
             get_clean_rom_path(mock_not_clean_rom_dir)

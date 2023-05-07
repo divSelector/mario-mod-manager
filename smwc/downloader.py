@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple, Sequence
+from typing import List, Dict, Tuple, Sequence, Optional
 from pathlib import Path
 import requests
 import shutil
@@ -9,6 +9,7 @@ import subprocess
 from datetime import datetime
 import time
 import string
+import sys
 
 from .config import (
     ZIPS_DL_PATH, 
@@ -17,19 +18,20 @@ from .config import (
     FLIPS_BIN, 
     TMP_PATH,
     BASE_DIR,
-    ROMHACKS_DIR
+    ROMHACKS_DIR,
+    VENDOR_FLIPS_BIN
 )
 from .utils import get_bin
 
 class SMWRomhackDownloader:
 
-    flips_bin = get_bin(
-        FLIPS_BIN, 
-        which_cmd_name='flips', 
-        version_output_substrings=['floating', 'flips']
-    )
 
     def __init__(self, records: List[Dict], opts: Dict, clean_rom: Path) -> None:
+        self.flips: Optional[Path] = self.find_flips()
+        if self.flips is None:
+            print("Cannot find flips... please install it")
+            print("https://github.com/Alcaro/Flips")
+            sys.exit()
         self.clean_rom = clean_rom
         self.records: List[Dict] = records
         self.failures: Dict[str, List] = { 'http': [],
@@ -222,3 +224,20 @@ class SMWRomhackDownloader:
         subprocess.run([str(flips_bin), '-a', str(patch), str(self.clean_rom), str(sfc_path)])
 
         return sfc_path.relative_to(ROMHACKS_DIR)
+
+    def find_flips(self) -> Optional[Path]:
+        flips_bin = get_bin(
+            FLIPS_BIN, 
+            which_cmd_name='flips', 
+            version_output_substrings=['floating', 'flips']
+        )
+        if flips_bin is None and VENDOR_FLIPS_BIN.exists():
+            print("Looking for flips in vendor directory... this version could be outdated.")
+            flips_bin = get_bin(
+                VENDOR_FLIPS_BIN, 
+                which_cmd_name='', 
+                version_output_substrings=['']
+            )
+            if flips_bin is not None:
+                print(f"Found {flips_bin}!!!")
+        return flips_bin

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, List, Tuple, Any
+from typing import Optional, List, Tuple, Any, Union
 import subprocess 
 import sys
 
@@ -23,7 +23,7 @@ class SMWRomhack:
         
 
 
-    def get_srm_from_sfc(self, sfc_file: str|Path) -> Optional[Path]:
+    def get_srm_from_sfc(self, sfc_file: Union[str, Path]) -> Optional[Path]:
         sfc_path = Path(sfc_file)
         srm_filename = sfc_path.stem + ".srm"
         srm_path = self.ra_config_dir / 'saves' / srm_filename

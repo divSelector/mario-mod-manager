@@ -17,18 +17,17 @@ def get_bin(path: str,
             version_output_substrings: List[str]) -> Optional[Path]:
     
     def run_which() -> Optional[Path]:
-        if platform.system() != 'Windows':
-            try:
-                path = subprocess.check_output(
-                    ['which', which_cmd_name]
-                ).decode().strip()
-                return Path(path)
-            except (subprocess.CalledProcessError,
-                    PermissionError) as e:
-                print(f"{which_cmd_name} is not installed")
-                return None
-        else:
+       
+        try:
+            path = subprocess.check_output(
+                ['which', which_cmd_name]
+            ).decode().strip()
+            return Path(path)
+        except (subprocess.CalledProcessError,
+                PermissionError) as e:
+            print(f"{which_cmd_name} is not installed")
             return None
+
 
     if path:
         bin_path = Path(path)

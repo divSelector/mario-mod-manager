@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict, Optional, Union
 import sqlite3
 
 from .config import BASE_DIR
@@ -11,7 +11,7 @@ class SMWCentralDatabase:
             self.create_tables()
 
     @staticmethod
-    def read(path: str|Path) -> str:
+    def read(path: Union[str, Path]) -> str:
         p = Path(path) if isinstance(path, str) else path
         with p.open() as fo:
             sql = fo.read()
@@ -115,7 +115,7 @@ class SMWCentralDatabase:
             return self.db_results_to_dict(results)
         
 
-    def select_hack_by(self, field_name: str, field_value: str|int) -> List[Dict]:
+    def select_hack_by(self, field_name: str, field_value: Union[str, int]) -> List[Dict]:
         sql_path = BASE_DIR / f'smwc/sql/select_hack_by_{field_name}.sql'
         sql_query = self.read(sql_path)
         with sqlite3.connect(self.db) as conn:
