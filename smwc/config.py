@@ -67,7 +67,7 @@ ROMHACKS_DIR        = ROMS_DIR / 'hacks'       # Directory to Store Romhacks
 # Developer Options
 # Just Leave These Alone
 DEBUG_SCRAPER = {
-    "ONE_PAGE_ONLY": True,         # If True, Scrapes Every Hack From Only One Page
+    "ONE_PAGE_ONLY": False,         # If True, Scrapes Every Hack From Only One Page
     "ONE_HACK_ONLY": False,         # If True, Scrapes One Hack Only From Every Page,
                                     # If Both Options True, Scrapes One Hack From One Page
     "SKIP_DATABASE_INSERT": False,

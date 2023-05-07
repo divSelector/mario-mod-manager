@@ -90,23 +90,28 @@ class SMWCentralScraper:
 
 
     def scrape_row_from_hacks_list(self, row: Tag) -> dict:
-        hack_title: str = self.scrape_title_from_row(row)
-        hack_date: datetime = self.scrape_upload_time_from_row(row)
-        hack_page_url: str = self.scrape_url_from_row(row)
-        hack_is_demo: str = row.find_all('td')[1].string
-        hack_is_featured: str = row.find_all('td')[2].string
-        hack_exit_count: str = row.find_all('td')[3].string.split()[0]
-        hack_types: list = row.find_all('td')[4].string.split(', ')
-        hack_authors: list = [
-            author.string for author in row.find_all('td')[5].select('a')
-        ]
-        hack_rating: float = self.scrape_rating_from_row(row)
-        hack_size: dict = {
-            'value': row.find_all('td')[7].string.split('\xa0')[0],
-            'units': row.find_all('td')[7].string.split('\xa0')[1]
-        }
-        hack_download_url: str = "https:" + row.find_all('td')[8].select_one('a')['href']
-        hack_total_downloads: str = row.find_all('td')[8].select_one('span.secondary-info').string.split()[0].replace(',', '')
+        try:
+            hack_title: str = self.scrape_title_from_row(row)
+            hack_date: datetime = self.scrape_upload_time_from_row(row)
+            hack_page_url: str = self.scrape_url_from_row(row)
+            hack_is_demo: str = row.find_all('td')[1].string
+            hack_is_featured: str = row.find_all('td')[2].string
+            hack_exit_count: str = row.find_all('td')[3].string.split()[0]
+            hack_types: list = row.find_all('td')[4].string.split(', ')
+            hack_authors: list = [
+                author.string for author in row.find_all('td')[5].select('a')
+            ]
+            hack_rating: float = self.scrape_rating_from_row(row)
+            hack_size: dict = {
+                'value': row.find_all('td')[7].string.split('\\xc2\\xa0')[0],
+                'units': row.find_all('td')[7].string.split('\\xc2\\xa0')[1]
+            }
+            hack_download_url: str = "https:" + row.find_all('td')[8].select_one('a')['href']
+            hack_total_downloads: str = row.find_all('td')[8].select_one('span.secondary-info').string.split()[0].replace(',', '')
+        except IndexError as e:
+            print("Problem scraping size due to separator characters:")
+            print(row.find_all('td')[7].string.split('\xc2\xa0')[0])
+            sys.exit(1)
 
         record = {
             "title": hack_title,
