@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple, Sequence
+from typing import List, Dict, Tuple, Sequence, Optional
 from pathlib import Path
 import requests
 import shutil
@@ -9,6 +9,9 @@ import subprocess
 from datetime import datetime
 import time
 import string
+import sys
+from urllib3.exceptions import ProtocolError
+from requests.exceptions import ConnectionError as ReqConnError
 
 from .config import (
     ZIPS_DL_PATH, 
@@ -17,19 +20,20 @@ from .config import (
     FLIPS_BIN, 
     TMP_PATH,
     BASE_DIR,
-    ROMHACKS_DIR
+    ROMHACKS_DIR,
+    VENDOR_FLIPS_BIN
 )
 from .utils import get_bin
 
 class SMWRomhackDownloader:
 
-    flips_bin = get_bin(
-        FLIPS_BIN, 
-        which_cmd_name='flips', 
-        version_output_substrings=['floating', 'flips']
-    )
 
     def __init__(self, records: List[Dict], opts: Dict, clean_rom: Path) -> None:
+        self.flips_bin: Optional[Path] = self.find_flips()
+        if self.flips_bin is None:
+            print("Cannot find flips... please install it")
+            print("https://github.com/Alcaro/Flips")
+            sys.exit()
         self.clean_rom = clean_rom
         self.records: List[Dict] = records
         self.failures: Dict[str, List] = { 'http': [],
@@ -131,6 +135,22 @@ class SMWRomhackDownloader:
             except requests.exceptions.HTTPError:
                 print(f"Received a {response.status_code} from server and failed on {url}")
                 self.failures['http'].append(url)
+            except (ConnectionResetError,
+                    ProtocolError,
+                    ReqConnError) as e:
+                waiting: int = 120
+                print()
+                print()
+                print(f"We have received an error: {e}")
+                print()
+                print(f"We are going to be waiting {waiting} seconds before trying the request again.")
+                print()
+                print()
+                time.sleep(waiting)
+                if attempt == self.max_retries - 1:
+                    print("We are receiving too many connection errors to continue running the program.")
+                    print("Please check your connection. If you are being blocked by the server, stop making requests.")
+                    sys.exit()
 
         filename: str = self.get_filename_from_url(url)
         output_path: Path = ZIPS_DL_PATH / filename
@@ -218,7 +238,24 @@ class SMWRomhackDownloader:
         sfc_path: Path = ROMHACKS_DIR / (patch.stem + sfc_file_suffix)
 
         print("Executing flips to patch romhack...")
-        flips_bin = SMWRomhackDownloader.flips_bin
+        flips_bin = self.flips_bin
         subprocess.run([str(flips_bin), '-a', str(patch), str(self.clean_rom), str(sfc_path)])
 
         return sfc_path.relative_to(ROMHACKS_DIR)
+
+    def find_flips(self) -> Optional[Path]:
+        flips_bin = get_bin(
+            FLIPS_BIN, 
+            which_cmd_name='flips', 
+            version_output_substrings=['floating', 'flips']
+        )
+        if flips_bin is None and VENDOR_FLIPS_BIN.exists():
+            print("Looking for flips in vendor directory... this version could be outdated.")
+            flips_bin = get_bin(
+                str(VENDOR_FLIPS_BIN), 
+                which_cmd_name='', 
+                version_output_substrings=['']
+            )
+            if flips_bin is not None:
+                print(f"Found {flips_bin}!!!")
+        return flips_bin

@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import Optional, List, Tuple, Any
+from typing import Optional, List, Tuple, Any, Union
 import subprocess 
 import sys
+import platform
 
 from smwc import db
 from .config import (
@@ -23,7 +24,7 @@ class SMWRomhack:
         
 
 
-    def get_srm_from_sfc(self, sfc_file: str|Path) -> Optional[Path]:
+    def get_srm_from_sfc(self, sfc_file: Union[str, Path]) -> Optional[Path]:
         sfc_path = Path(sfc_file)
         srm_filename = sfc_path.stem + ".srm"
         srm_path = self.ra_config_dir / 'saves' / srm_filename
@@ -71,12 +72,16 @@ class SMWRomhack:
 
             with modified_ra_cfg.open('w') as wfo:
                 wfo.write(modified_cfg_text)
-
-        retroarch_bin = get_bin(
-            RETROARCH_BIN, 
-            which_cmd_name='retroarch', 
-            version_output_substrings=['retroarch']
-        )
+        
+        if platform.system() != 'Windows':
+            retroarch_bin = get_bin(
+                RETROARCH_BIN, 
+                which_cmd_name='retroarch', 
+                version_output_substrings=['retroarch']
+            )
+        else:
+            retroarch_bin = Path(RETROARCH_BIN)
+            print(retroarch_bin)
         snes_core: Path = self.ra_config_dir / SNES_CORE
         cmd: List = [retroarch_bin, '-L', snes_core, self.sfc]
 

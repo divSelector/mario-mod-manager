@@ -13,7 +13,7 @@ from .utils import validate_clean_rom, get_clean_rom_path
 
 class SMWCommandLineInterface:
 
-    PROG: str = 'smwc.py'
+    PROG: str = 'smwcentral.py'
     DESCRIPTION: str = """
         smwcentral.net scraper, downloader, database, romhack patcher and launcher\n
         by divselector
