@@ -214,6 +214,7 @@ class SMWCommandLineInterface:
         print(f"Type: {r['hack_type']}")
         print(f"Path: {r['path']}")
         print(f"Author: {r['author']}")
+        input("\nPRESS ANY KEY TO START")
 
 
 if __name__ == '__main__':

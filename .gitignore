@@ -9,3 +9,4 @@ __pycache__
 roms/hacks
 roms/clean/*.sfc
 .pytest*
+*cache
