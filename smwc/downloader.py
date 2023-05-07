@@ -10,6 +10,8 @@ from datetime import datetime
 import time
 import string
 import sys
+from urllib3.exceptions import ProtocolError
+from requests.exceptions import ConnectionError as ReqConnError
 
 from .config import (
     ZIPS_DL_PATH, 
@@ -133,6 +135,22 @@ class SMWRomhackDownloader:
             except requests.exceptions.HTTPError:
                 print(f"Received a {response.status_code} from server and failed on {url}")
                 self.failures['http'].append(url)
+            except (ConnectionResetError,
+                    ProtocolError,
+                    ReqConnError) as e:
+                waiting: int = 120
+                print()
+                print()
+                print(f"We have received an error: {e}")
+                print()
+                print(f"We are going to be waiting {waiting} seconds before trying the request again.")
+                print()
+                print()
+                time.sleep(waiting)
+                if attempt == self.max_retries - 1:
+                    print("We are receiving too many connection errors to continue running the program.")
+                    print("Please check your connection. If you are being blocked by the server, stop making requests.")
+                    sys.exit()
 
         filename: str = self.get_filename_from_url(url)
         output_path: Path = ZIPS_DL_PATH / filename
