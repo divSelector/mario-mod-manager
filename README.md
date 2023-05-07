@@ -2,8 +2,6 @@
 
 The end goal of this project was to have a large collection of Super Mario World romhacks and be able to dive into them effortlessly -- one after the other -- with some idea of what you're looking for, but ultimately with no idea what to pick.
 
-So I began scraping [smwcentral.net]((https://www.smwcentral.net)) for download links.
-
 ## What is SMW Central?
 
 [SMW Central](https://www.smwcentral.net) is a website dedicated to Super Mario World ROM hacking. It is a community-driven platform where users can upload and download ROM hacks, discuss ROM hacking techniques, and collaborate on projects. SMW Central also hosts a variety of resources such as tutorials, tools, and custom graphics for Super Mario World ROM hacking. The website has been active since 2005 and has a large and active user base.
@@ -18,55 +16,9 @@ What's great about the tool is that it takes all the effort out of finding somet
 
 You'll be surprised what you can find.
 
-## Installation
-
-Clone the repo. Open virtual environment. Install python dependencies:
-
-```bash
-git clone https://github.com/divSelector/smwcentral-scraper.git
-cd smwcentral-scraper
-python3 -m pip install virtualenv
-python3 -m virtualenv venv
-. venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-There are two additional binaries required:
-
-I'm hoping to automate this more in the future but for now, you just need to get these things installed yourself.
-
-### 1. flips (required to use the option `--scrape`)
-
-Install [Floating IPS (flips)](https://github.com/Alcaro/Flips) in order to pathc the downloaded romhacks. After downloading it, move the binary to system `PATH` and confirm you can access it with `which flips`. The program will be able to find it once you do this.
-
-You can otherwise open `smwc/config.py` and add any path to a flips binary that you like into the quotations of `FLIPS_BIN`.
-
-For example:
-
-`FLIPS_BIN = '/path/to/flips'`
-
-### 2. retroarch (required to use the launch options; like `--random`)
-
-Install [RetroArch](https://github.com/libretro/RetroArch) in order to use the launcher. You basically follow the same procedure as above. If you put `retroarch` on system `PATH`, it will be found. If you can't do that, you can specify that PATH in `smwc/config.py` under `RETROARCH_BIN`.
-
-**Another thing...** Once you have downloaded retroarch, you'll need to download a snes core. I use `snes9x_libretro.so` but you can use any SNES core for RA if you specify the path to it in `smwc/config.py`.
-
-#### I have build script for retroarch on debian systems btw
-
-[Here](https://github.com/divSelector/ra-sh/blob/main/build.sh)...
-
-#### I've written more about setting up retroarch and downloading cores before if you're interested
-
-[Here](https://divsel.neocities.org/blog/2023/03/retroarch-linux/)...
-
-### 3. Oh yeah... you need a clean Super Mario World rom
-
-Obviously I can't help you with that. Use [Google](https://www.google.com) and get the USA version.
-
-You'll put the .sfc file (not the zip) into the `roms/clean/` directory. It doesn't matter what the filename is. If you put it there, it will find it.
-
 ## Usage
+
+Let's look at what it does and we'll save installation for last.
 
 ### Getting Help With Commands
 
@@ -291,6 +243,59 @@ Neat! You may have noticed the last one that says 119/1 exits cleared! I told yo
 `$ python smwcentral.py --id 581`
 
 The IDs are quite useful for working on the games you have started but not finished yet.
+
+
+
+## Installation
+
+Clone the repo. Open virtual environment. Install python dependencies:
+
+```bash
+git clone https://github.com/divSelector/smwcentral-scraper.git
+cd smwcentral-scraper
+python3 -m pip install virtualenv
+python3 -m virtualenv venv
+. venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+There are two additional binaries required:
+
+I'm hoping to automate this more in the future but for now, you just need to get these things installed yourself.
+
+### 1. flips (required to use the option `--scrape`)
+
+Install [Floating IPS (flips)](https://github.com/Alcaro/Flips) in order to pathc the downloaded romhacks. After downloading it, move the binary to system `PATH` and confirm you can access it with `which flips`. The program will be able to find it once you do this.
+
+You can otherwise open `smwc/config.py` and add any path to a flips binary that you like into the quotations of `FLIPS_BIN`.
+
+For example:
+
+`FLIPS_BIN = '/path/to/flips'`
+
+### 2. retroarch (required to use the launch options; like `--random`)
+
+Install [RetroArch](https://github.com/libretro/RetroArch) in order to use the launcher. You basically follow the same procedure as above. If you put `retroarch` on system `PATH`, it will be found. If you can't do that, you can specify that PATH in `smwc/config.py` under `RETROARCH_BIN`.
+
+**Another thing...** Once you have downloaded retroarch, you'll need to download a snes core. I use `snes9x_libretro.so` but you can use any SNES core for RA if you specify the path to it in `smwc/config.py`.
+
+#### I have build script for retroarch on debian systems btw
+
+[Here](https://github.com/divSelector/ra-sh/blob/main/build.sh)...
+
+#### I've written more about setting up retroarch and downloading cores before if you're interested
+
+[Here](https://divsel.neocities.org/blog/2023/03/retroarch-linux/)...
+
+### 3. Oh yeah... you need a clean Super Mario World rom
+
+Obviously I can't help you with that. Use [Google](https://www.google.com) and get the USA version.
+
+You'll put the .sfc file (not the zip) into the `roms/clean/` directory. It doesn't matter what the filename is. If you put it there, it will find it.
+
+
+
 
 ## Please Submit Issues.
 
