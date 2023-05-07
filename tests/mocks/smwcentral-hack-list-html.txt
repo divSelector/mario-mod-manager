@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Super Mario World Hacks - SMW Central</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Kieran Menor, p4plus2, wye, Ersanio, DaxterSpeed, Telinc1">		<link rel="stylesheet" type="text/css" href="/assets/css/default.css?v=1680288756">
+		</head>
+	<body id="section-list-body">
+		<input type="checkbox" id="mobile-menu">
+		<header id="user-menu">
+			<ul>
+							<li>
+					<a href="/?p=login">Login</a>
+				</li>
+				<li>
+					<a href="/?p=register">Register</a>
+				</li>
+						</ul>
+			<div id="mobile-menu-button"><label for="mobile-menu"><img src="/assets/images/icons/menu.svg" alt="Menu"></label></div>
+			<div class="mobile-break"></div>
+			<div class="time-display"><time datetime="2023-05-07T05:25:23">2023-05-07 05:25:23 AM</time></div>
+			<div id="search">
+				<form method="GET" action="https://www.google.com/search">
+					<input type="text" name="q" placeholder="Search…">
+					<input type="hidden" name="q" value="site:smwcentral.net">
+					<input type="submit" name="go" value="Go">
+				</form>
+			</div>
+			<div id="language-select">
+				Language…				<ul id="language-submenu" class="submenu">
+									<li class="active"><a>English</a></li>
+									<li><a href="/?p=section&amp;s=smwhacks&amp;locale=fr-CA&amp;locale_token=69UboJ5lDx4HHkVN70LlT41zSGPtjJkuJbi0Rl06">Français</a></li>
+									<li><a href="/?p=section&amp;s=smwhacks&amp;locale=pt-BR&amp;locale_token=69UboJ5lDx4HHkVN70LlT41zSGPtjJkuJbi0Rl06">Português</a></li>
+								</ul>
+			</div>
+		</header>
+		<header id="header">
+			<div class="header-background"></div>
+			<div class="header-shading"></div>
+			<a href="/?p=main"><img class="header-logo" src="/assets/images/logo.png" alt="SMW Central" title="SMW Central"></a>
+			<div class="header-boxes">
+								<aside class="header-textbox"><div class="smwcTip smwcTip-Technical" title="Technical Tip"></div> Tip: Keep track of ALL patches and hex edits in case you need to transfer your data to a new ROM. It's definitely worth the trouble.</aside>
+			</div>
+		</header>
+		<div id="user-list">
+			<div class="online-users">
+	<strong>9</strong> users online:	<span class="un-outer"><a href="/?p=profile&amp;id=52234" style="color: #7c60b0;" class="un">Angel Miranda</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=45194" style="color: #97acef;" class="un">GDSeven7</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=52362" style="color: #97acef;" class="un">Heitor Porfirio</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=36566" style="color: #7c60b0;" class="un">Isikoro</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=25020" style="color: #97acef;" class="un">Murphmario</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=38436" style="color: #7c60b0;" class="un">RecToR_24</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=39659" style="color: #7c60b0;" class="un">SethOsDotEXE</a></span>, <span class="un-outer"><span title="Staff Member" class="icon icon-staff"></span>&nbsp;<a href="/?p=profile&amp;id=7012" style="color: #65c816;" class="un">Thomas</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=38955" style="color: #97acef;" class="un">Uncle Steve-Pup</a></span>	 - 	Guests: <strong>114</strong> 
+	 - 	Bots: <strong>126</strong></div>
+			<div class="user-stats">
+				Users: <strong>59,508</strong> (2,249 active)							<br>Latest user: <span class="un-outer"><a href="/?p=profile&amp;id=59510" style="color: #7c60b0;" class="un">Missing Number</a></span>						</div>
+		</div>
+		<div id="main">
+			<nav id="main-menu">
+	
+<div class="box">
+	<h2>Menu</h2>
+	<div class="content">
+			<div id="site-menu" class="menu-section non-collapsible">
+			<header>
+				<h3>SMW Central</h3>
+			</header>
+			<ul class="menu-links">
+			<li><a href="/?p=main">Main Page</a></li><li><a href="/?p=news">News</a></li><li><a href="/?p=viewforum">Forums</a></li><li><a href="/?p=memberlist">Member List</a></li><li class="spacer"></li><li><a href="/?p=cms&amp;page=1417699-site-wide-general-behavior-rules-and-guidelines">Rules</a></li><li><a href="/?p=beginners">Beginners&#039; Guide</a></li><li><a href="/?p=cms&amp;page=1434479-discord">Discord</a></li><li><a href="/?p=cms&amp;page=1396725-meet-the-staff">Staff</a></li><li><a href="/?p=links">Links</a></li>			</ul>
+		</div>
+			<div id="smw-menu" class="menu-section non-collapsible">
+			<header>
+				<h3>Super Mario World</h3>
+			</header>
+			<ul class="menu-links">
+			<li><a href="/?p=section&amp;s=smwhacks">Hacks</a></li><li><a href="/?p=section&amp;s=sramdatabase">Savebase</a></li><li><a href="/?p=faq">F.A.Q.</a></li><li><a href="/?p=viewforum&amp;f=1939">Tutorials</a></li><li class="spacer"></li><li><a href="/?p=section&amp;s=tools">Tools</a></li><li><a href="/?p=onlinetools">Online Tools</a></li><li><a href="/?p=section&amp;s=smwgraphics">Graphics</a></li><li><a href="/?p=section&amp;s=smwmusic">Music</a></li><li><a href="/?p=section&amp;s=brrsamples">BRR Samples</a></li><li><a href="/?p=section&amp;s=smwblocks">Blocks</a></li><li><a href="/?p=section&amp;s=smwsprites">Sprites</a></li><li><a href="/?p=tweaks&amp;game=smw">Tweaks</a></li><li><a href="/?p=section&amp;s=smwpatches">Patches</a></li><li><a href="/?p=section&amp;s=uberasm">UberASM</a></li><li class="spacer"></li><li><a href="/?p=section&amp;s=documents">Documents</a></li><li><a href="/?p=memorymap&amp;game=smw&amp;region=rom">ROM Map</a></li><li><a href="/?p=memorymap&amp;game=smw&amp;region=ram">RAM Map</a></li><li><a href="/?p=memorymap&amp;game=smw&amp;region=hijack">Hijack Map</a></li>			</ul>
+		</div>
+			<div id="yi-menu" class="menu-section non-collapsible">
+			<header>
+				<h3>SMW2: Yoshi&#039;s Island</h3>
+			</header>
+			<ul class="menu-links">
+			<li><a href="/?p=section&amp;s=yihacks">Hacks</a></li><li>Savebase</li><li><a href="/?p=faq&amp;page=1524970-getting-started">F.A.Q.</a></li><li><a href="/?p=viewforum&amp;f=25">Tutorials</a></li><li class="spacer"></li><li><a href="/?p=section&amp;s=tools">Tools</a></li><li><a href="/?p=section&amp;s=yimusic">Music</a></li><li><a href="/?p=section&amp;s=yipatches">Patches</a></li><li><a href="/?p=section&amp;s=spasm">SPASM</a></li><li class="spacer"></li><li><a href="/?p=section&amp;s=documents">Documents</a></li><li><a href="/?p=memorymap&amp;game=yi&amp;region=rom">ROM Map</a></li><li><a href="/?p=memorymap&amp;game=yi&amp;region=ram">RAM Map</a></li><li><a href="/?p=memorymap&amp;game=yi&amp;region=sram">SRAM Map</a></li>			</ul>
+		</div>
+			<div id="sm64-menu" class="menu-section non-collapsible">
+			<header>
+				<h3>Super Mario 64</h3>
+			</header>
+			<ul class="menu-links">
+			<li><a href="/?p=section&amp;s=sm64hacks">Hacks</a></li><li>Savebase</li><li>F.A.Q.</li><li><a href="/?p=viewforum&amp;f=64">Tutorials</a></li><li class="spacer"></li><li><a href="/?p=section&amp;s=tools">Tools</a></li><li><a href="/?p=section&amp;s=sm64textures">Textures</a></li><li><a href="/?p=section&amp;s=sm64music">Music</a></li><li class="spacer"></li><li><a href="/?p=section&amp;s=documents">Documents</a></li><li><a href="/?p=memorymap&amp;game=sm64&amp;region=rom">ROM Map</a></li><li><a href="/?p=memorymap&amp;game=sm64&amp;region=ram">RAM Map</a></li>			</ul>
+		</div>
+		</div>
+</div></nav>
+			<div id="section-list-content">
+<h1 class="smw">Super Mario World Hacks</h1><div style="margin: 12px 0;">Welcome to the hack archive of SMW Central. The BPS patches in the ZIPs are the hacks; to play the hacks, apply the patches to a clean, American Super Mario World ROM using <a href="https://www.smwcentral.net/?p=section&a=details&id=11474">Floating IPS</a>. We do not provide ROMs here, nor do we link to them. For more information, see <a href="https://www.smwcentral.net/?p=faq&page=1219815-bps-files">our FAQ</a> or the forums.</div><div id="top-menu"><header class="top-line">
+	<p style="flex: none;"><strong>2,057</strong> submissions found. Showing <strong>1</strong>–<strong>50</strong>.</p>
+	<div class="actions"><p>View: <strong class="current">moderated</strong> | <a href="/?p=section&amp;a=list&amp;s=smwhacks&amp;u=1&amp;g=0" class="inline">waiting (27)</a></p>
+	<p><a class="button" href="/?p=section&amp;a=random&amp;s=smwhacks&amp;u=0">Show random</a><a class="button action user" href="/?p=section&amp;a=submit&amp;s=smwhacks">Submit a hack</a></p></div>
+</header>
+</div><form action="/" method="GET" onreset="setTimeout(() =&gt; this.requestSubmit(), 0);" id="filter"><input type="hidden" name="p" value="section"><input type="hidden" name="s" value="smwhacks"><div class="box"><header><h2>Filter</h2></header><div class="content"><div class="form"><label class="row"><div class="prompt"><header>Name</header></div><div class="field"><input type="text" size="40" id="filter_name" value="" name="f[name]"></div></label><label class="row"><div class="prompt"><header>Author</header><p>Up to 5, comma separated.</p></div><div class="field"><input type="text" size="40" id="filter_author" value="" name="f[author]"></div></label><label class="row"><div class="prompt"><header>Tags</header><p>Up to 5, comma separated. Prefix a tag with + to require multiple (+space,+planet). Prefix with - to exclude (-planet).</p></div><div class="field"><input type="text" size="40" id="filter_tags" value="" name="f[tags]"></div></label><label class="row"><div class="prompt"><header>Demo</header></div><div class="field"><input value="" type="radio" name="f[demo]" id="f[demo]-64573643ca738" checked><label for="f[demo]-64573643ca738"> Any</label> <input value="1" type="radio" name="f[demo]" id="f[demo]-64573643ca74c"><label for="f[demo]-64573643ca74c"> Yes</label> <input value="0" type="radio" name="f[demo]" id="f[demo]-64573643ca75b"><label for="f[demo]-64573643ca75b"> No</label></div></label><label class="row"><div class="prompt"><header>Featured</header><p>Controls featured status of a hack.</p></div><div class="field"><input value="" type="radio" name="f[featured]" id="f[featured]-64573643ca789" checked><label for="f[featured]-64573643ca789"> Any</label> <input value="1" type="radio" name="f[featured]" id="f[featured]-64573643ca79a"><label for="f[featured]-64573643ca79a"> Yes</label> <input value="0" type="radio" name="f[featured]" id="f[featured]-64573643ca7a8"><label for="f[featured]-64573643ca7a8"> No</label></div></label><label class="row"><div class="prompt"><header>Type</header><p> Hold control to select multiple.</p></div><div class="field"><select multiple size="10" name="f[difficulty][]"><option value="104">Standard: Easy</option><option value="105">Standard: Normal</option><option value="106">Standard: Hard</option><option value="141">Standard: Very Hard</option><option value="196">Kaizo: Beginner</option><option value="107">Kaizo: Intermediate</option><option value="197">Kaizo: Expert</option><option value="124">Tool-Assisted: Kaizo</option><option value="125">Tool-Assisted: Pit</option><option value="161">Misc.: Troll</option></select></div></label><label class="row"><div class="prompt"><header>Description</header></div><div class="field"><input type="text" size="40" value="" name="f[description]"></div></label></div></div></div><div class="final-step"><input type="submit" value="Filter"> <input type="reset" onclick="return confirm(&quot;Clear all filters?&quot;);" value="Clear"></div></form><div id="list-content"><section class="box list">
+	<header><ul class="page-list"><li class="title">Pages:</li><li class="active">1</li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=2&amp;o=date&amp;d=desc">2</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=3&amp;o=date&amp;d=desc">3</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=4&amp;o=date&amp;d=desc">4</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=5&amp;o=date&amp;d=desc">5</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=6&amp;o=date&amp;d=desc">6</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=7&amp;o=date&amp;d=desc">7</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=8&amp;o=date&amp;d=desc">8</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=9&amp;o=date&amp;d=desc">9</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=10&amp;o=date&amp;d=desc">10</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=11&amp;o=date&amp;d=desc">11</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=12&amp;o=date&amp;d=desc">12</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=13&amp;o=date&amp;d=desc">13</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=14&amp;o=date&amp;d=desc">14</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=15&amp;o=date&amp;d=desc">15</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=16&amp;o=date&amp;d=desc">16</a></li><li><select class="page-select"onchange="if(this.selectedIndex !== 0) window.location = this.dataset.url.replace('=-1', '=' + this.value);"data-url="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=-1&amp;o=date&amp;d=desc"><option>17–39</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option><option>36</option><option>37</option><option>38</option><option>39</option></select></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=40&amp;o=date&amp;d=desc">40</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=41&amp;o=date&amp;d=desc">41</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=42&amp;o=date&amp;d=desc">42</a></li></ul><div class="view-select">View as: <img src="/assets/images/icons/list_view.png" alt=""><strong class="current">List</strong> | <a href="/?p=section&amp;a=list&amp;s=smwhacks&amp;u=0&amp;g=1"><img src="/assets/images/icons/gallery_view.png" alt="">Gallery</a></div></header>
+	<div class="content has-table">
+		<table class="list">
+			<thead>
+				<tr>
+									<th>
+										<a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=name&amp;d=desc" title="Sort by name">Name</a> - <a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=date&amp;d=asc" title="Sort by date">Date</a>&nbsp;<img src="/assets/images/desc.svg" alt="&uarr;" title="Descending">
+					</th>
+				<th>Demo</th><th><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=featured&amp;d=desc" title="Sort by this column">Featured</a></th><th><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=length&amp;d=desc" title="Sort by this column">Length</a></th><th>Type</th>					<th>Authors</th>
+									<th><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=rating&amp;d=desc" title="Sort by rating">Rating</a></th>
+									<th><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=filesize&amp;d=desc" title="Sort by size">Size</a></th>
+					<th><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=1&amp;o=downloads&amp;d=desc" title="Sort by downloads">Download</a></th>
+				</tr>
+			</thead>
+			<tbody>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33861">Seek the Discrepancy</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-05-03T13:13:53">2023-05-03 01:13:53 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>15 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=42439" style="color: #f185c9;" class="un">Fyre150</a></span></td>
+									<td>4.9</td>
+									<td>731.36 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33861/SeekTheDiscrepancy.zip">Download</a><br>
+						<span class="secondary-info">207 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33806">Bro&#039;s Adventure</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-05-03T07:46:49">2023-05-03 07:46:49 AM</time></span>
+										</td>
+					<td>Yes</td><td>No</td><td>4 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=59046" style="color: #7c60b0;" class="un">Gringo Loco Jr.</a></span></td>
+									<td>None</td>
+									<td>481.52 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33806/Bro%27s%20Adventure%20%28Demo%29.zip">Download</a><br>
+						<span class="secondary-info">149 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33592">Incredibous Shells v1.3</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-05-02T15:11:10">2023-05-02 03:11:10 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>15 exit(s)</td><td>Kaizo: Expert</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=53346" style="color: #7c60b0;" class="un">arantes</a></span></td>
+									<td>4.2</td>
+									<td>844.73 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33592/Incredibous%20Shells%20v1.3.zip">Download</a><br>
+						<span class="secondary-info">725 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33789">Burning Star</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-05-02T04:44:53">2023-05-02 04:44:53 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>11 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=51841" style="color: #7c60b0;" class="un">PixlBitNick</a></span></td>
+									<td>5.0</td>
+									<td>474.73 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33789/burningstar1.2.zip">Download</a><br>
+						<span class="secondary-info">239 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33813">The Hodgepodge: A Collection of Would Be Scrapped Levels</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-05-01T21:44:55">2023-05-01 09:44:55 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>10 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=36349" style="color: #97acef;" class="un">Faro</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=36654" style="color: #7c60b0;" class="un">Kr00mmi</a></span></span></td>
+									<td>None</td>
+									<td>533.21 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33813/The%20Hodgepodge.zip">Download</a><br>
+						<span class="secondary-info">139 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33817">Mario Mania</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-27T23:35:40">2023-04-27 11:35:40 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>15 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=56714" style="color: #7c60b0;" class="un">Hammerer</a></span></td>
+									<td>3.0</td>
+									<td>595.57 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33817/M.Mania.zip">Download</a><br>
+						<span class="secondary-info">431 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33685">Mario - The Mystical Gem</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-27T22:45:58">2023-04-27 10:45:58 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>35 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=26246" style="color: #7c60b0;" class="un">Mr. MS</a></span></td>
+									<td>4.7</td>
+									<td>929.11 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33685/MTMGR1_7.zip">Download</a><br>
+						<span class="secondary-info">3,610 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33695">Nebula</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-26T13:35:13">2023-04-26 01:35:13 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>12 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=42242" style="color: #97acef;" class="un">Gulaschko</a></span></td>
+									<td>5.0</td>
+									<td>1.02 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33695/NebulaVer.1.1.zip">Download</a><br>
+						<span class="secondary-info">667 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33795">Vampire Hunter Savior Of The Kingdom</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-26T12:39:26">2023-04-26 12:39:26 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>39 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=52156" style="color: #f185c9;" class="un">AjaTheVampire</a></span></td>
+									<td>4.5</td>
+									<td>609.71 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33795/Vampire%20Hunter%20Savior%20Of%20The%20Kingdom.zip">Download</a><br>
+						<span class="secondary-info">218 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33784">Super Mario World: Bowser&#039;s Kaizo Conspiracy</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-25T23:20:58">2023-04-25 11:20:58 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>102 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=13617" style="color: #f185c9;" class="un">Gamma V</a></span></td>
+									<td>4.9</td>
+									<td>753.18 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33784/Bowser%27s%20Kaizo%20Conspiracy%20v1.1.zip">Download</a><br>
+						<span class="secondary-info">1,711 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33779">SMW The Princess Rescue 3 - The Turnabout</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-25T16:22:49">2023-04-25 04:22:49 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>120 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=21068" style="color: #97acef;" class="un">bandicoot</a></span></td>
+									<td>5.0</td>
+									<td>4.13 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33779/SMWTPR3%20v1.10.zip">Download</a><br>
+						<span class="secondary-info">1,119 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33810">Chicanery</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-25T00:59:18">2023-04-25 12:59:18 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>17 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=55838" style="color: #7c60b0;" class="un">Buflen</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=41381" style="color: #97acef;" class="un">Nirv</a></span></span></td>
+									<td>5.0</td>
+									<td>715.22 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33810/Chicanery.zip">Download</a><br>
+						<span class="secondary-info">246 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33668">Play To Win</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-23T19:15:26">2023-04-23 07:15:26 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>31 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=26246" style="color: #7c60b0;" class="un">Mr. MS</a></span></td>
+									<td>4.6</td>
+									<td>897.39 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33668/PlayToWin14.zip">Download</a><br>
+						<span class="secondary-info">3,168 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33559">X-Drive</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-23T19:14:12">2023-04-23 07:14:12 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>67 exit(s)</td><td>Standard: Very Hard</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=24081" style="color: #97acef;" class="un">Aurel509</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=56484" style="color: #7c60b0;" class="un">Kourauh</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=42226" style="color: #7c60b0;" class="un">MrJ&#039;lien</a></span></span></td>
+									<td>2.3</td>
+									<td>1.76 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33559/XDrive%20-%20v1.0.2.zip">Download</a><br>
+						<span class="secondary-info">470 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33755">Beginning of the End</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-20T12:43:07">2023-04-20 12:43:07 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>9 exit(s)</td><td>Kaizo: Beginner</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=45745" style="color: #7c60b0;" class="un">ShadowBoxer_Sandshrew</a></span></td>
+									<td>5.0</td>
+									<td>701.61 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33755/BeginningoftheEnd.zip">Download</a><br>
+						<span class="secondary-info">448 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33777">NEW Nightmare cafe 4</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-19T23:44:07">2023-04-19 11:44:07 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>2 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=46333" style="color: #f185c9;" class="un">Lush_50</a></span></td>
+									<td>5.0</td>
+									<td>808.29 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33777/NEW%20Nightmare%20cafe%204%20V1.0.zip">Download</a><br>
+						<span class="secondary-info">229 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33774">Oxworm</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-19T23:43:40">2023-04-19 11:43:40 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>16 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=47460" style="color: #97acef;" class="un">H3nt4ik4m3n</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=49922" style="color: #7c60b0;" class="un">Maw</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=46564" style="color: #7c60b0;" class="un">Twiced_</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=20871" style="color: #97acef;" class="un">neidoodle</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=49555" style="color: #f185c9;" class="un">ocked</a></span></span></td>
+									<td>3.8</td>
+									<td>1.13 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33774/Oxworm.zip">Download</a><br>
+						<span class="secondary-info">347 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33720">This Hack Needs a Name</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-19T16:24:17">2023-04-19 04:24:17 PM</time></span>
+										</td>
+					<td>No</td><td>Yes</td><td>118 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=24884" style="color: #7c60b0;" class="un">yeahman</a></span></td>
+									<td>4.7</td>
+									<td>1.55 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33720/this%20hack%20needs%20a%20name.zip">Download</a><br>
+						<span class="secondary-info">21,254 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33687">My Favorite Things</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-17T13:29:58">2023-04-17 01:29:58 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>8 exit(s)</td><td>Kaizo: Expert</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=52959" style="color: #7c60b0;" class="un">revolug</a></span></td>
+									<td>5.0</td>
+									<td>534.75 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33687/My%20Favorite%20Things%201.2.zip">Download</a><br>
+						<span class="secondary-info">253 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33725">Super Curious World (v. 1.1)</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-15T14:29:46">2023-04-15 02:29:46 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>16 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=58865" style="color: #7c60b0;" class="un">team_love</a></span></td>
+									<td>5.0</td>
+									<td>967.54 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33725/Super%20Curious%20World%201.1.zip">Download</a><br>
+						<span class="secondary-info">548 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33726">KR World</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-15T14:09:29">2023-04-15 02:09:29 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>9 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="small">Kaique Jesus, <span class="un-outer"><a href="/?p=profile&amp;id=53347" style="color: #7c60b0;" class="un">RenanSV</a></span></span></td>
+									<td>4.0</td>
+									<td>1.06 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33726/KR%20World.zip">Download</a><br>
+						<span class="secondary-info">206 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33634">Run! 2 - Don&#039;t Stop Running</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-10T16:34:47">2023-04-10 04:34:47 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>14 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=36531" style="color: #97acef;" class="un">AllexGG</a></span></td>
+									<td>5.0</td>
+									<td>387.59 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33634/Run%21%202%20Don%27t%20Stop%20Running.zip">Download</a><br>
+						<span class="secondary-info">334 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33102">Truc Bidule</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-07T03:45:57">2023-04-07 03:45:57 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>43 exit(s)</td><td>Standard: Very Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=410" style="color: #f185c9;" class="un">yogui</a></span></td>
+									<td>4.9</td>
+									<td>1.40 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33102/Truc_Bidule.zip">Download</a><br>
+						<span class="secondary-info">790 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33618">Meet The Balkans (Demo)</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-07T00:50:17">2023-04-07 12:50:17 AM</time></span>
+										</td>
+					<td>Yes</td><td>No</td><td>11 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=57947" style="color: #97acef;" class="un">karls_Corinthia</a></span></td>
+									<td>2.0</td>
+									<td>928.21 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33618/Meet%20the%20Balkans.zip">Download</a><br>
+						<span class="secondary-info">347 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33449">Memorabilia</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-06T13:42:23">2023-04-06 01:42:23 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>10 exit(s)</td><td>Kaizo: Expert</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=50165" style="color: #f185c9;" class="un">LightAligns</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=49222" style="color: #7c60b0;" class="un">Saela</a></span></span></td>
+									<td>5.0</td>
+									<td>4.96 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33449/Memorabilia.zip">Download</a><br>
+						<span class="secondary-info">340 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33538">Trinity Shells V1.1</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-06T11:21:44">2023-04-06 11:21:44 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>14 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=53346" style="color: #7c60b0;" class="un">arantes</a></span></td>
+									<td>4.4</td>
+									<td>1.43 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33538/Trinity%20Shells%20V1.1.zip">Download</a><br>
+						<span class="secondary-info">365 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33690">Buddy Shell</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-06T08:16:44">2023-04-06 08:16:44 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>12 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=55578" style="color: #f185c9;" class="un">Firstnamebutt</a></span></td>
+									<td>5.0</td>
+									<td>529.63 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33690/BUDDY%20SHELL%20v1.zip">Download</a><br>
+						<span class="secondary-info">308 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33637">Super Speed World (DEMO)</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-05T12:39:37">2023-04-05 12:39:37 PM</time></span>
+										</td>
+					<td>Yes</td><td>No</td><td>4 exit(s)</td><td>Standard: Hard, Kaizo: Beginner</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=30462" style="color: #97acef;" class="un">Revenge319</a></span></td>
+									<td>None</td>
+									<td>108.41 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33637/Super%20Speed%20World%20DEMO.zip">Download</a><br>
+						<span class="secondary-info">230 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33684">Day At The Turkey Races</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-05T12:04:02">2023-04-05 12:04:02 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>12 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=47550" style="color: #97acef;" class="un">Fryinb</a></span></td>
+									<td>5.0</td>
+									<td>2.59 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33684/Turkey.zip">Download</a><br>
+						<span class="secondary-info">295 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33563">Super LouisDoucet World 2</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-04T13:16:47">2023-04-04 01:16:47 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>30 exit(s)</td><td>Kaizo: Expert</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=25412" style="color: #7c60b0;" class="un">gui</a></span></td>
+									<td>4.5</td>
+									<td>1.28 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33563/Super%20LouisDoucet%20World%202%20%28v1.1%29.zip">Download</a><br>
+						<span class="secondary-info">472 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33669">Mario Saves Easter 2023</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-04T12:53:07">2023-04-04 12:53:07 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>17 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=35288" style="color: #f185c9;" class="un">El Cuh Fermin</a></span></td>
+									<td>5.0</td>
+									<td>447.58 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33669/Mario%20Saves%20Easter%202023.zip">Download</a><br>
+						<span class="secondary-info">570 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33615">Gauntlet</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-04T12:51:52">2023-04-04 12:51:52 PM</time></span>
+										</td>
+					<td>No</td><td>Yes</td><td>7 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=51716" style="color: #7c60b0;" class="un">Easy Difficulty</a></span></td>
+									<td>None</td>
+									<td>279.44 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33615/Gauntlet.zip">Download</a><br>
+						<span class="secondary-info">233 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33622">Joeey&#039;s Level Collection</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-04T12:48:40">2023-04-04 12:48:40 PM</time></span>
+										</td>
+					<td>Yes</td><td>No</td><td>6 exit(s)</td><td>Standard: Easy</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=25726" style="color: #97acef;" class="un">Joeey</a></span></td>
+									<td>3.0</td>
+									<td>256.89 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33622/Joeey%27s%20Level%20Collection%20-%20Demo%204.zip">Download</a><br>
+						<span class="secondary-info">2,303 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33614">New Super Mario World Edition 2023</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-04-04T12:45:56">2023-04-04 12:45:56 PM</time></span>
+										</td>
+					<td>Yes</td><td>No</td><td>15 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=48581" style="color: #f185c9;" class="un">Teaser</a></span></td>
+									<td>5.0</td>
+									<td>948.83 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33614/NSMWE%202023%20Demo%20Pt-Br%20%2B%20Usa%20Ver%201.1.zip">Download</a><br>
+						<span class="secondary-info">732 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33640">Swiftly 17</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-30T03:56:05">2023-03-30 03:56:05 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>17 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=52042" style="color: #7c60b0;" class="un">Lee12UK</a></span></td>
+									<td>5.0</td>
+									<td>2.02 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33640/Swiftly17.zip">Download</a><br>
+						<span class="secondary-info">425 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33638">NEW Nightmare cafe 3</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-30T03:55:41">2023-03-30 03:55:41 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>2 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=46333" style="color: #f185c9;" class="un">Lush_50</a></span></td>
+									<td>5.0</td>
+									<td>769.58 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33638/NEW%20Nightmare%20cafe%203%20V1.0.zip">Download</a><br>
+						<span class="secondary-info">348 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33450">Harmful V2.0</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-27T14:04:51">2023-03-27 02:04:51 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>17 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=49122" style="color: #97acef;" class="un">LiamBLOL</a></span></td>
+									<td>None</td>
+									<td>972.20 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33450/Harmful.zip">Download</a><br>
+						<span class="secondary-info">281 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33600">Lurn 2 Shell v1.1</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-26T23:49:28">2023-03-26 11:49:28 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>59 exit(s)</td><td>Kaizo: Beginner</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=41965" style="color: #7c60b0;" class="un">Wolfguy423</a></span></td>
+									<td>4.9</td>
+									<td>674.56 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33600/Lurn2Shell.zip">Download</a><br>
+						<span class="secondary-info">925 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33561">Steid&#039;s Hack</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-26T03:05:21">2023-03-26 03:05:21 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>8 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=58696" style="color: #584a72; font-style: italic;" class="un">Steid</a></span></td>
+									<td>5.0</td>
+									<td>181.75 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33561/Steid%27s%20Hack.zip">Download</a><br>
+						<span class="secondary-info">315 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33606">Mario&#039;s Ruined Seclusion</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-25T23:50:45">2023-03-25 11:50:45 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>31 exit(s)</td><td>Standard: Normal</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=25665" style="color: #97acef;" class="un">BlueSheep123</a></span></td>
+									<td>5.0</td>
+									<td>531.25 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33606/Mario%27s_Ruined_Seclusion_1.0.0.zip">Download</a><br>
+						<span class="secondary-info">594 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33604">Super Whatever Quest!!!</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-25T21:14:29">2023-03-25 09:14:29 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>36 exit(s)</td><td>Kaizo: Intermediate, Standard: Very Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=35216" style="color: #7c60b0;" class="un">NewPointless</a></span></td>
+									<td>5.0</td>
+									<td>1.20 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33604/SuperWhateverQuest1_0.zip">Download</a><br>
+						<span class="secondary-info">421 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33525">Quest on Full Moon Island v1.2 ita</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-23T21:59:51">2023-03-23 09:59:51 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>32 exit(s)</td><td>Standard: Hard</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=58619" style="color: #97acef;" class="un">Gio Gio</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=2250" style="color: #657091; font-style: italic;" class="un">Storm Kyleis</a></span></span></td>
+									<td>None</td>
+									<td>514.07 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33525/Quest%20on%20Full%20Moon%20Island%20v1.2%20ita.zip">Download</a><br>
+						<span class="secondary-info">296 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33491">Red Hero&#039;s Journey</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-22T18:44:47">2023-03-22 06:44:47 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>20 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=51347" style="color: #f185c9;" class="un">Jukeboxi_</a></span></td>
+									<td>5.0</td>
+									<td>987.01 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33491/Red%20Hero%27s%20Journey.zip">Download</a><br>
+						<span class="secondary-info">383 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33456">Super Mario World: The Lost Adventure - Episode I REMASTERED</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-20T14:59:50">2023-03-20 02:59:50 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>93 exit(s)</td><td>Standard: Normal</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=48619" style="color: #7c60b0;" class="un">RichardDS90</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=14960" style="color: #97acef;" class="un">isaix</a></span></span></td>
+									<td>4.9</td>
+									<td>2.43 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33456/SMW%20The%20Lost%20Adventure%20Episode%20I%20REMASTERED.zip">Download</a><br>
+						<span class="secondary-info">5,039 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33453">SMW: Luigi&#039;s Mystic Saga</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-20T12:44:45">2023-03-20 12:44:45 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>31 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=52902" style="color: #97acef;" class="un">Tiozinho</a></span></td>
+									<td>1.0</td>
+									<td>710.46 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33453/Luigi%27s%20Mystic%20Saga.zip">Download</a><br>
+						<span class="secondary-info">1,236 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33233">EVERY LEVEL LUDWIG!</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-20T04:40:42">2023-03-20 04:40:42 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>9 exit(s)</td><td>Standard: Hard</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=27645" style="color: #97acef;" class="un">Green Jerry</a></span></td>
+									<td>5.0</td>
+									<td>184.24 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33233/EVERY%20LEVEL%20LUDWIG%21%20%28V1.0.2%29.zip">Download</a><br>
+						<span class="secondary-info">341 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33562">Nobody Asked For This</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-18T18:49:36">2023-03-18 06:49:36 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>5 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=56330" style="color: #7c60b0;" class="un">Fe&#039;n</a></span></td>
+									<td>5.0</td>
+									<td>371.05 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33562/nobodyasked_1.0.zip">Download</a><br>
+						<span class="secondary-info">305 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33555">NEW Nightmare cafe 2</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-16T12:37:32">2023-03-16 12:37:32 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>2 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=46333" style="color: #f185c9;" class="un">Lush_50</a></span></td>
+									<td>None</td>
+									<td>708.78 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33555/NEW%20Nightmare%20cafe%202%20V1.0A.zip">Download</a><br>
+						<span class="secondary-info">361 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33435">Another Christmas Gift - Christmas in March</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-10T15:44:03">2023-03-10 03:44:03 PM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>4 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="un-outer"><a href="/?p=profile&amp;id=39461" style="color: #97acef;" class="un">The_Uber_Camper</a></span></td>
+									<td>5.0</td>
+									<td>1.32 MiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33435/Another%20Christmas%20Gift%20-%20Christmas%20in%20March.zip">Download</a><br>
+						<span class="secondary-info">549 downloads</span>
+					</td>
+				</tr>
+							<tr>
+													<td class="text">
+										<a href="/?p=section&amp;a=details&amp;id=33461">Beyond Beco World</a><br>
+											<span class="secondary-info">Added: <time datetime="2023-03-09T11:46:26">2023-03-09 11:46:26 AM</time></span>
+										</td>
+					<td>No</td><td>No</td><td>10 exit(s)</td><td>Kaizo: Intermediate</td>					<td><span class="small"><span class="un-outer"><a href="/?p=profile&amp;id=40594" style="color: #97acef;" class="un">Adriel_Isaque</a></span>, <span class="un-outer"><a href="/?p=profile&amp;id=48186" style="color: #f185c9;" class="un">Azula16</a></span></span></td>
+									<td>5.0</td>
+									<td>296.71 KiB</td>
+					<td>
+						<a href="//dl.smwcentral.net/33461/Beyond%20Beco%20World.zip">Download</a><br>
+						<span class="secondary-info">344 downloads</span>
+					</td>
+				</tr>
+						</tbody>
+		</table>
+	</div>
+	<header><ul class="page-list"><li class="title">Pages:</li><li class="active">1</li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=2&amp;o=date&amp;d=desc">2</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=3&amp;o=date&amp;d=desc">3</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=4&amp;o=date&amp;d=desc">4</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=5&amp;o=date&amp;d=desc">5</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=6&amp;o=date&amp;d=desc">6</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=7&amp;o=date&amp;d=desc">7</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=8&amp;o=date&amp;d=desc">8</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=9&amp;o=date&amp;d=desc">9</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=10&amp;o=date&amp;d=desc">10</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=11&amp;o=date&amp;d=desc">11</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=12&amp;o=date&amp;d=desc">12</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=13&amp;o=date&amp;d=desc">13</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=14&amp;o=date&amp;d=desc">14</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=15&amp;o=date&amp;d=desc">15</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=16&amp;o=date&amp;d=desc">16</a></li><li><select class="page-select"onchange="if(this.selectedIndex !== 0) window.location = this.dataset.url.replace('=-1', '=' + this.value);"data-url="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=-1&amp;o=date&amp;d=desc"><option>17–39</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option><option>36</option><option>37</option><option>38</option><option>39</option></select></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=40&amp;o=date&amp;d=desc">40</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=41&amp;o=date&amp;d=desc">41</a></li><li><a href="/?p=section&amp;s=smwhacks&amp;u=0&amp;g=0&amp;n=42&amp;o=date&amp;d=desc">42</a></li></ul><div class="view-select">View as: <img src="/assets/images/icons/list_view.png" alt=""><strong class="current">List</strong> | <a href="/?p=section&amp;a=list&amp;s=smwhacks&amp;u=0&amp;g=1"><img src="/assets/images/icons/gallery_view.png" alt="">Gallery</a></div></header>
+</section>
+</div><div id="bottom-menu"><header class="top-line">
+	<p style="flex: none;"><strong>2,057</strong> submissions found. Showing <strong>1</strong>–<strong>50</strong>.</p>
+	<div class="actions"><p>View: <strong class="current">moderated</strong> | <a href="/?p=section&amp;a=list&amp;s=smwhacks&amp;u=1&amp;g=0" class="inline">waiting (27)</a></p>
+	<p><a class="button" href="/?p=section&amp;a=random&amp;s=smwhacks&amp;u=0">Show random</a><a class="button action user" href="/?p=section&amp;a=submit&amp;s=smwhacks">Submit a hack</a></p></div>
+</header>
+</div></div>
+		</div>
+		<footer id="footer">
+			<div id="footer-box">
+				<p>
+					Views: <strong>1,098,488,161</strong><br>
+					<!-- TODO: <a href="stats.php">Site statistics</a> -->
+				</p>
+				<hr>
+				<p>
+					&copy;&nbsp;2005&ndash;2023 SMW Central<br>
+					<a href="/?p=cms&amp;page=1219789-legal-information">Legal Information</a> -
+					<a href="/?p=cms&amp;page=1148011-privacy-policy">Privacy Policy</a><br>
+									<a href="/?p=links">Affiliates (Link to us)</a><br>
+					<a href="/?p=cms&amp;page=1611253-open-source">Open Source</a>
+				</p>
+				<p class="affiliates">
+									<a href="https://www.smbxgame.com/" title="Super Mario Bros. X" rel="nofollow"><img src="/assets/images/affiliates/smbx.gif" alt="Super Mario Bros. X"></a>
+									<a href="https://www.romhacking.net/" title="ROMhacking.net" rel="nofollow"><img src="/assets/images/affiliates/rhdn.gif" alt="ROMhacking.net"></a>
+									<a href="https://www.mfgg.net/" title="Mario Fan Games Galaxy" rel="nofollow"><img src="/assets/images/affiliates/mfgg.gif" alt="Mario Fan Games Galaxy"></a>
+									<a href="https://sm64romhacks.com/" title="sm64romhacks" rel="nofollow"><img src="/assets/images/affiliates/sm64romhacks.png" alt="sm64romhacks"></a>
+								</p>
+						</div>
+		</footer>
+		<script defer src="/assets/js/page.js"></script>
+			<script defer src="/assets/js/pages/section_list.js"></script>
+		</body>
+</html>
