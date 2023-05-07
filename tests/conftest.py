@@ -1,6 +1,9 @@
 import pytest
 from pathlib import Path
 
+from smwc.scraper import SMWCentralScraper
+
+# utils.py
 @pytest.fixture
 def mock_ra_config_dir(tmp_path: Path) -> Path:
     config_dir = tmp_path / "config"
@@ -24,3 +27,15 @@ def mock_empty_dir(tmp_path: Path) -> Path:
     return empty_dir
 
 
+# scraper.py
+@pytest.fixture(scope="session")
+def mock_scraper() -> SMWCentralScraper:
+    return SMWCentralScraper(
+        'https://raw.githubusercontent.com/divSelector/smwcentral-scraper/main/tests/mocks/smwcentral-hack-list-html.txt'
+    )
+
+@pytest.fixture(scope="session")
+def mock_scraped_page(mock_scraper: SMWCentralScraper) -> str:
+    return  mock_scraper.get_page_content(
+        mock_scraper.hacks_url
+    )

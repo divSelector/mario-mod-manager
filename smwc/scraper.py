@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from typing import List, Dict
+from typing import List, Dict, Optional
 import requests
 import sys
 from datetime import datetime
@@ -11,10 +11,14 @@ from .utils import get_bin
 
 class SMWCentralScraper:
     HACKS_URL = "https://www.smwcentral.net/?p=section&s=smwhacks"
-    def __init__(self) -> None:
-        self.hack_pages_count: int = self.get_hack_pages_count()
+    def __init__(self, url: Optional[str] = None) -> None:
+        self.hacks_url = url if url is not None else self.HACKS_URL
+        self.hacks_page_content: str = self.get_page_content(self.hacks_url)
+
+    def scrape(self) -> None:
+        self.hack_pages_count: int = self.get_hack_pages_count(self.hacks_page_content)
         self.hack_pages_urls: list = self.get_hack_pages_urls(
-            SMWCentralScraper.HACKS_URL
+            self.hacks_url
         )
 
         self.already_scraped = [
@@ -23,7 +27,7 @@ class SMWCentralScraper:
             )
         ]
 
-        self.all_records: List[Dict] = self.flatten(self.scrape_all_pages())
+        self.all_records: List[Dict] = self.flatten(self._scrape_all_pages())
 
         # Remove Already Downloaded Hack Records
         self.records: List[Dict] = [
@@ -32,24 +36,24 @@ class SMWCentralScraper:
         ]
 
 
-    def get_page_content(self, page: str) -> str:
+    @classmethod
+    def get_page_content(cls, page: str) -> str:
         print(f"Requesting page: {page}")
         res = requests.get(page)
         res.raise_for_status()
         return str(res.content)
-    
-    def get_content_soup(self, content: str) -> BeautifulSoup:
-        return BeautifulSoup(content, "html.parser")
-    
-    def get_hack_pages_count(self) -> int:
-        content: str = self.get_page_content(SMWCentralScraper.HACKS_URL)
-        soup: BeautifulSoup = self.get_content_soup(content)
+
+
+    def get_hack_pages_count(self, content: str) -> int:
+        soup: BeautifulSoup = BeautifulSoup(content, "html.parser")
         last_page: Tag = soup.select_one('ul.page-list li:last-child')
         try:
             return int(last_page.string)
-        except ValueError:
-            print(f"{last_page.string} is not a number.")
+        except (ValueError, AttributeError):
+            error_ref = last_page.string if last_page is not None else ""
+            print(f"{error_ref} is not a number.")
             sys.exit()
+
 
     def get_hack_pages_urls(self, base_url: str) -> List[str]:
         urls = []
@@ -57,7 +61,8 @@ class SMWCentralScraper:
             urls.append(base_url + f"&n={page_number}")
         return urls
     
-    def scrape_all_pages(self) -> List[List[Dict]]:
+
+    def _scrape_all_pages(self) -> List[List[Dict]]:
         total_hacks_on_all_pages = []
 
         if DEBUG_SCRAPER["ONE_PAGE_ONLY"]:
@@ -68,10 +73,11 @@ class SMWCentralScraper:
 
         return total_hacks_on_all_pages
 
+
     def scrape_hacks_list_page(self, url: str) -> List[dict]:
         total_hacks_on_page: List[dict] = []
         content: str = self.get_page_content(url)
-        page_soup: BeautifulSoup = self.get_content_soup(content)
+        page_soup: BeautifulSoup = BeautifulSoup(content, "html.parser")
         page_row_tags: List[Tag] = page_soup.select('table.list tbody tr')
 
         if DEBUG_SCRAPER["ONE_HACK_ONLY"]:
@@ -81,6 +87,7 @@ class SMWCentralScraper:
                 total_hacks_on_page.append(self.scrape_row_from_hacks_list(row))
 
         return total_hacks_on_page
+
 
     def scrape_row_from_hacks_list(self, row: Tag) -> dict:
         hack_title: str = self.scrape_title_from_row(row)
@@ -119,14 +126,17 @@ class SMWCentralScraper:
         
         return record
 
+
     @staticmethod
     def scrape_url_from_row(row: Tag) -> str:
         base = "https://www.smwcentral.net"
         return base + row.select_one('td.text a')['href']
 
+
     @staticmethod
     def scrape_title_from_row(row: Tag) -> str:
         return row.select_one('td.text a').string
+
 
     @staticmethod
     def scrape_upload_time_from_row(row: Tag) -> datetime:
@@ -141,6 +151,7 @@ class SMWCentralScraper:
         except ValueError:
             return 0.0
         
+
     @staticmethod
     def flatten(array: List) -> List:
         return [item for sublist in array for item in sublist]

@@ -131,6 +131,7 @@ class SMWCommandLineInterface:
         clean_smw = get_clean_rom_path()
 
         self.scraper = SMWCentralScraper()
+        self.scraper.scrape()
         
         if not DEBUG_SCRAPER['SKIP_DOWNLOAD'] and clean_smw is not None:
             self.downloader = SMWRomhackDownloader(self.scraper.records, {
@@ -195,8 +196,6 @@ class SMWCommandLineInterface:
             
             print(f"\nYou haven't {'cleared' if beaten else 'started'} any yet... :(")
         print()
-
-
 
 
     @staticmethod
