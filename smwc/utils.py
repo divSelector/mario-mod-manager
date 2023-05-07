@@ -14,9 +14,9 @@ from .config import (
 
 def get_bin(path: str, 
             which_cmd_name: str, 
-            version_output_substrings: List[str]) -> Path|str:
+            version_output_substrings: List[str]) -> Optional[Path]:
     
-    def run_which() -> Path:
+    def run_which() -> Optional[Path]:
         if platform.system() != 'Windows':
             try:
                 path = subprocess.check_output(
@@ -26,7 +26,9 @@ def get_bin(path: str,
             except (subprocess.CalledProcessError,
                     PermissionError) as e:
                 print(f"{which_cmd_name} is not installed")
-                return ''
+                return None
+        else:
+            return None
 
     if path:
         bin_path = Path(path)
@@ -43,6 +45,7 @@ def get_bin(path: str,
                 return bin_path
             else:
                 print(f"This is something other than {which_cmd_name}")
+                return None
         except (subprocess.CalledProcessError,
                 PermissionError) as e:
             return run_which()
@@ -53,14 +56,14 @@ def locate_retroarch_config_dir(
         specified_config_dir: str = RETROARCH_CONFIG_DIR
     ) -> Path:
 
-    def find_cfg_in_log():
+    def find_cfg_in_log() -> Path:
         tmp: Path = BASE_DIR / 'tmp.log'
         retroarch_bin = get_bin(
             RETROARCH_BIN, 
             which_cmd_name='retroarch', 
             version_output_substrings=['retroarch']
         )
-        cmd: List[str] = [retroarch_bin, '--verbose', '--log-file', tmp, '&', 'pkill', 'retroarch']
+        cmd: List[str] = [str(retroarch_bin), '--verbose', '--log-file', str(tmp), '&', 'pkill', 'retroarch']
         subprocess.run(cmd)
         with tmp.open('r') as fo:
             lines = fo.readlines()
@@ -70,20 +73,20 @@ def locate_retroarch_config_dir(
         tmp.unlink()
         return Path(config_file).parent
 
-
     if specified_config_dir:
         ra_config_dir = Path(specified_config_dir)
         if ra_config_dir.is_dir():
             cfg = ra_config_dir / 'retroarch.cfg'
             if cfg.is_file():
                 return ra_config_dir
+            return find_cfg_in_log()
         else:
             return find_cfg_in_log()
     else:
         return find_cfg_in_log()
 
 
-def validate_clean_rom(path) -> bool:
+def validate_clean_rom(path: Path) -> bool:
     BASE_CHECKSUM = 0xB19ED489
 
     try:
@@ -102,12 +105,11 @@ def validate_clean_rom(path) -> bool:
     if crc32rom != BASE_CHECKSUM:
         print(f'{BASE_CHECKSUM:08X}, got {crc32rom:08X}')
         return False
-    
     return True
 
-def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Path:
+def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Optional[Path]:
 
-    def handle_not_found():
+    def handle_not_found() -> None:
         try:
             clean_rom_dir.mkdir(parents=True, exist_ok=True)
         except PermissionError:
@@ -133,3 +135,5 @@ def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Path:
             handle_not_found()
     except AttributeError:
         handle_not_found()
+
+    return None

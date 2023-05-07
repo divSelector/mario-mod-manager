@@ -5,19 +5,19 @@ import sqlite3
 from .config import BASE_DIR
 
 class SMWCentralDatabase:
-    def __init__(self, db_path: str) -> None:
+    def __init__(self, db_path: Path) -> None:
         self.db: Path = Path(db_path)
         if not self.db.exists():
             self.create_tables()
 
     @staticmethod
-    def read(path: str|Path):
+    def read(path: str|Path) -> str:
         p = Path(path) if isinstance(path, str) else path
         with p.open() as fo:
             sql = fo.read()
         return sql
     
-    def create_tables(self, sql_file: str = 'smwc/sql/create_table.sql'):
+    def create_tables(self, sql_file: str = 'smwc/sql/create_table.sql') -> None:
         sql_queries: List[str] = self.read(sql_file).split(';')
         with sqlite3.connect(self.db) as conn:
             cursor = conn.cursor()
@@ -59,7 +59,7 @@ class SMWCentralDatabase:
                 pass
         return structured_results
 
-    def write_records(self, records: List[dict]):
+    def write_records(self, records: List[dict]) -> None:
         print(f"Preparing to write {len(records)} records")
         with sqlite3.connect(self.db) as conn:
             for record in records:
@@ -115,7 +115,7 @@ class SMWCentralDatabase:
             return self.db_results_to_dict(results)
         
 
-    def select_hack_by(self, field_name: str, field_value: str|int) -> dict:
+    def select_hack_by(self, field_name: str, field_value: str|int) -> List[Dict]:
         sql_path = BASE_DIR / f'smwc/sql/select_hack_by_{field_name}.sql'
         sql_query = self.read(sql_path)
         with sqlite3.connect(self.db) as conn:
@@ -134,7 +134,7 @@ class SMWCentralDatabase:
             return c.fetchall()
 
 
-    def execute(self, sql_statement: str, sql_params: Optional[Tuple]):
+    def execute(self, sql_statement: str, sql_params: Optional[Tuple]) -> None:
         with sqlite3.connect(self.db) as conn:
             if sql_params is None:
                 conn.execute(sql_statement)

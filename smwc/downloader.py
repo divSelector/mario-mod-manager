@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Sequence
 from pathlib import Path
 import requests
 import shutil
@@ -32,9 +32,9 @@ class SMWRomhackDownloader:
     def __init__(self, records: List[Dict], opts: Dict, clean_rom: Path) -> None:
         self.clean_rom = clean_rom
         self.records: List[Dict] = records
-        self.failures = { 'http': [],
-                          'badzip': [],
-                          'timeout': [] }
+        self.failures: Dict[str, List] = { 'http': [],
+                                           'badzip': [],
+                                           'timeout': [] }
         
         self.batch_size: int = opts['batch_size']
         self.batch_delay: int = opts['batch_delay']        # seconds
@@ -67,7 +67,7 @@ class SMWRomhackDownloader:
         return [records[i:i+self.batch_size] 
                 for i in range(0, len(records), self.batch_size)]
 
-    def make_temp_dirs(self, dirs: List[Path]):
+    def make_temp_dirs(self, dirs: List[Path]) -> None:
         """
         Create temp directories if they do not exist
         """
@@ -155,14 +155,14 @@ class SMWRomhackDownloader:
             special_chars = special_chars.replace(old_char, new_char)
 
         # Replace URL encoded spaces with underscores and remove all characters defined above
-        replace_chars: List[Tuple] = [('%20', '_')] + [(c, '') for c in special_chars]
+        replace_chars: Sequence[Tuple] = [('%20', '_')] + [(c, '') for c in special_chars]
         for old_char, new_char in replace_chars:
             filename = filename.replace(old_char, new_char)
 
         return filename
 
 
-    def unzip(self, zip_path: Path):
+    def unzip(self, zip_path: Path) -> List[str]:
         """
         Unzip a single file and log failures.
         """
@@ -213,12 +213,12 @@ class SMWRomhackDownloader:
         Locate the Floating IPS binary and run it on the clean vanilla SMW rom.
         """
         ROMHACKS_DIR.mkdir(parents=True, exist_ok=True)
-        if platform.system() != 'Windows':
-            sfc_file_suffix: str = f"-{datetime.now().strftime('%Y%m%d%H%M%S')}.sfc"
-            sfc_path: Path = ROMHACKS_DIR / (patch.stem + sfc_file_suffix)
 
-            print("Executing flips to patch romhack...")
-            flips_bin = SMWRomhackDownloader.flips_bin
-            subprocess.run([flips_bin, '-a', patch, self.clean_rom, sfc_path])
+        sfc_file_suffix: str = f"-{datetime.now().strftime('%Y%m%d%H%M%S')}.sfc"
+        sfc_path: Path = ROMHACKS_DIR / (patch.stem + sfc_file_suffix)
 
-            return sfc_path.relative_to(ROMHACKS_DIR)
+        print("Executing flips to patch romhack...")
+        flips_bin = SMWRomhackDownloader.flips_bin
+        subprocess.run([str(flips_bin), '-a', str(patch), str(self.clean_rom), str(sfc_path)])
+
+        return sfc_path.relative_to(ROMHACKS_DIR)

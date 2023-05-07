@@ -36,7 +36,7 @@ class SMWCentralScraper:
         print(f"Requesting page: {page}")
         res = requests.get(page)
         res.raise_for_status()
-        return res.content
+        return str(res.content)
     
     def get_content_soup(self, content: str) -> BeautifulSoup:
         return BeautifulSoup(content, "html.parser")
@@ -44,21 +44,21 @@ class SMWCentralScraper:
     def get_hack_pages_count(self) -> int:
         content: str = self.get_page_content(SMWCentralScraper.HACKS_URL)
         soup: BeautifulSoup = self.get_content_soup(content)
-        last_page: str = soup.select_one('ul.page-list li:last-child')
+        last_page: Tag = soup.select_one('ul.page-list li:last-child')
         try:
             return int(last_page.string)
         except ValueError:
             print(f"{last_page.string} is not a number.")
             sys.exit()
 
-    def get_hack_pages_urls(self, base_url: str):
-        urls: list = []
+    def get_hack_pages_urls(self, base_url: str) -> List[str]:
+        urls = []
         for page_number in range(1, self.hack_pages_count+1):
             urls.append(base_url + f"&n={page_number}")
         return urls
     
-    def scrape_all_pages(self) -> None:
-        total_hacks_on_all_pages: List[dict] = []
+    def scrape_all_pages(self) -> List[List[Dict]]:
+        total_hacks_on_all_pages = []
 
         if DEBUG_SCRAPER["ONE_PAGE_ONLY"]:
             total_hacks_on_all_pages.append(self.scrape_hacks_list_page(self.hack_pages_urls[0]))
@@ -129,7 +129,7 @@ class SMWCentralScraper:
         return row.select_one('td.text a').string
 
     @staticmethod
-    def scrape_upload_time_from_row(row: Tag) -> str:
+    def scrape_upload_time_from_row(row: Tag) -> datetime:
         t = row.select_one('time')['datetime']
         return datetime.strptime(t.replace('T', ' '), '%Y-%m-%d %H:%M:%S')
 

@@ -20,7 +20,7 @@ class SMWCommandLineInterface:
     """
     EPILOG: str = ""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.scraper: Optional[SMWCentralScraper] = None
         self.downloader: Optional[SMWRomhackDownloader] = None
         
@@ -127,12 +127,12 @@ class SMWCommandLineInterface:
 
         return parser.parse_args()
 
-    def scrape(self):
+    def scrape(self) -> None:
         clean_smw = get_clean_rom_path()
 
         self.scraper = SMWCentralScraper()
         
-        if not DEBUG_SCRAPER['SKIP_DOWNLOAD']:
+        if not DEBUG_SCRAPER['SKIP_DOWNLOAD'] and clean_smw is not None:
             self.downloader = SMWRomhackDownloader(self.scraper.records, {
                 'batch_size': 10, 'batch_delay': 8, 'download_delay': 3, 
                 'timeout': 60, 'max_retries': 3
@@ -141,7 +141,7 @@ class SMWCommandLineInterface:
         if not DEBUG_SCRAPER['SKIP_DATABASE_INSERT']:
             db.write_records(self.scraper.records)
 
-            if self.downloader.failures['badzip']:
+            if self.downloader is not None and self.downloader.failures['badzip']:
                 print("Removing records without paths to an SFC file...")
                 db.execute(
                     db.read(BASE_DIR / 'smwc/sql/delete_hacks_where_null_path.sql'), sql_params=None
@@ -150,7 +150,7 @@ class SMWCommandLineInterface:
     def play_random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
                          rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
                          downloads_lt: int, created_on_gt: str, created_on_lt: str, 
-                         featured: str, demo: str, rewind: Optional[bool]=None):
+                         featured: str, demo: str, rewind: Optional[bool]=None) -> None:
         hacks: List[dict] = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
                                 exits_gt, exits_lt, downloads_gt, downloads_lt, created_on_gt,
                                 created_on_lt, featured, demo)
@@ -165,17 +165,17 @@ class SMWCommandLineInterface:
         self.launch_hack(pick['path'][0], {'rewind': rewind})
         
 
-    def play_hack_with_id(self, _id: int, rewind: Optional[bool]=None):
+    def play_hack_with_id(self, _id: int, rewind: Optional[bool]=None) -> None:
         hack = db.select_hack_by('id', _id)[0]
         self.print_record(hack)
         self.launch_hack(hack['path'][0], {'rewind': rewind})
 
     @staticmethod
-    def launch_hack(path: str, opts: Dict):
+    def launch_hack(path: str, opts: Dict) -> None:
         romhack = SMWRomhack(path)
         romhack.launch_in_retroarch(rewind=opts['rewind'])
 
-    def show_exits_cleared(self, beaten: bool = False):
+    def show_exits_cleared(self, beaten: bool = False) -> None:
         if beaten:
             print("\nHACKS WITH ALL EXITS CLEARED:")
             results = db.select_without_params_from_file(
@@ -200,7 +200,7 @@ class SMWCommandLineInterface:
 
 
     @staticmethod
-    def print_record(r):
+    def print_record(r: Dict[str, str]) -> None:
         print(f"ID: {r['id']}")
         print(f"Title: {r['title']}")
         print(f"Created On: {r['created_on']}")
