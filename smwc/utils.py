@@ -17,7 +17,7 @@ def get_bin(path: str,
             version_output_substrings: List[str]) -> Optional[Path]:
     
     def run_which() -> Optional[Path]:
-       
+      
         try:
             path = subprocess.check_output(
                 ['which', which_cmd_name]
@@ -27,8 +27,9 @@ def get_bin(path: str,
                 PermissionError) as e:
             print(f"{which_cmd_name} is not installed")
             return None
-
-
+    print()
+    print(path)
+    print()
     if path:
         bin_path = Path(path)
     else:

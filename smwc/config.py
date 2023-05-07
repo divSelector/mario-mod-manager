@@ -13,16 +13,19 @@ USER_HOME = Path.home()
 # # you can.
 
 # RetroArch Binary
-RETROARCH_BIN = ''
+# If you change the path, do it like this: ( r'C:\different\path\retroarch.exe' )
+# the "r" is required on Windows.
+RETROARCH_BIN = r'C:\RetroArch-Win64\retroarch.exe'
 
 # Floating IPS Binary
 FLIPS_BIN = ''
 
 # RA Config Directory
-RETROARCH_CONFIG_DIR = ''
+RETROARCH_CONFIG_DIR = r'C:\RetroArch-Win64'
 
 # RA SNES Core
-SNES_CORE = 'cores/snes9x_libretro.so'
+# Leave the .so (Linux) or .dll (Windows) off.
+SNES_CORE = 'cores/snes9x_libretro'
 
 
 #####################################################################
@@ -49,7 +52,28 @@ SNES_CORE = 'cores/snes9x_libretro.so'
 
 
 
+
+
+
+
 # Just Leave These Alone
+# Just Leave These Alone
+# Just Leave These Alone
+# Just Leave These Alone
+# Just Leave These Alone
+# Just Leave These Alone
+# Just Leave These Alone
+
+
+
+
+
+if platform.system() != "Windows":
+    SNES_CORE = SNES_CORE + ".so"
+else:
+    SNES_CORE = SNES_CORE + ".dll"
+
+
 DEFAULT_RA_CONFIG  = 'retroarch.cfg'            # RA Default Config
 MODIFIED_RA_CONFIG = 'retroarch-modified.cfg'  # Save location for copy of default 
                                                # config used for options like --no-rewind
