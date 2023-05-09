@@ -19,7 +19,6 @@ class SMWRomhack:
     def __init__(self, sfc_file: str):
         self.sfc: Path = ROMHACKS_DIR / sfc_file
         self.ra_config_dir: Path = locate_retroarch_config_dir()
-        print(self.ra_config_dir)
         self.srm : Optional[Path] = self.get_srm_from_sfc(sfc_file)
         
 
@@ -81,7 +80,6 @@ class SMWRomhack:
             )
         else:
             retroarch_bin = Path(RETROARCH_BIN)
-            print(retroarch_bin)
         snes_core: Path = self.ra_config_dir / SNES_CORE
         cmd: List = [retroarch_bin, '-L', snes_core, self.sfc]
 

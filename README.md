@@ -8,7 +8,7 @@ The end goal of this project was to have a large collection of Super Mario World
 
 ## What Does This Scraper Do?
 
-It automates gathering romhacks, unzipping the archives, extracting the BPS patches out of them, and outputting playable ROMs. It enders the records of each all the information about them that it scrapes into a database and allows the user to query it for what to launch in an emulator.
+It automates gathering romhacks, unzipping the archives, extracting the BPS patches out of them, and outputting playable ROMs. It enters a record of all the information about each hack that it scrapes into a database and allows the user to query it for what to launch in an emulator based on specific criteria.
 
 It's more than a scraper really.
 

@@ -27,9 +27,7 @@ def get_bin(path: str,
                 PermissionError) as e:
             print(f"{which_cmd_name} is not installed")
             return None
-    print()
-    print(path)
-    print()
+        
     if path:
         bin_path = Path(path)
     else:
