@@ -180,6 +180,7 @@ Downloading batches complete
 Preparing to write 0 records
 ```
 
+
 ### Random Game
 
 Let's say you want to play a random game that has 'Standard' somewhere in the type... the rating is over 3.9, and the upload date is something after 2018. And... turn the rewind feature off in RA so you're not tempted to use it.
@@ -244,6 +245,19 @@ Neat! You may have noticed the last one that says 119/1 exits cleared! I told yo
 
 The IDs are quite useful for working on the games you have started but not finished yet.
 
+### Hack Selection in List
+
+In the latest version, we can do more than have it put on something random. We can replace `--random` with `--list` using the same type of query command:
+
+`$ python smwcentral.py --list --rating-over 4.5 --type Standard --date-before 2014-01-01`
+
+This time instead of just putting one on, it will prompt us to pick one.
+
+![Select a Romhack](screenshots/pick1.png)
+![Choose the SFC](screenshots/pick2.png)
+![Confirm with Ok](screenshots/pick3.png)
+
+It might seem silly to confirm both the romhack title and the SFC, but... many romhacks have multiple SFC files for different languages or updated versions.
 
 
 ## Installation
