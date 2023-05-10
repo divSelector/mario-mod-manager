@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-
+from typing import List, Dict
 from smwc.scraper import SMWCentralScraper
 
 # utils.py

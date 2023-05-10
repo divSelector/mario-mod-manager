@@ -8,15 +8,13 @@ class SMWRomhackSelection(urwid.WidgetPlaceholder):
     max_box_levels = 4
 
     def __init__(self, queryset: List[Dict]) -> None:
-        super(SMWRomhackSelection, self).__init__(urwid.SolidFill('M'))
+        super(SMWRomhackSelection, self).__init__(urwid.SolidFill('.'))
         self.box_level = 0
         self.romhack: Optional[SMWRomhack] = None
 
         menu_items = [self.sub_menu(record['title'], [
-
             self.menu_button(sfc, self.item_chosen)
             for sfc in record['path']
-
         ]) for record in queryset]
 
         menu_top = self.menu(u'Select a Romhack', menu_items)
@@ -39,6 +37,8 @@ class SMWRomhackSelection(urwid.WidgetPlaceholder):
         if key == 'esc' and self.box_level > 1:
             self.original_widget = self.original_widget[0]
             self.box_level -= 1
+        elif key == 'esc' and self.box_level == 1:
+            self.exit_program()
         else:
             return super(SMWRomhackSelection, self).keypress(size, key)
         
@@ -60,17 +60,29 @@ class SMWRomhackSelection(urwid.WidgetPlaceholder):
 
     def item_chosen(self, button: urwid.Button) -> None:
         self.romhack = SMWRomhack(button.label)
-        response = urwid.Text([u'You chose ', button.label, u'\n'])
-        done = self.menu_button(u'Ok', self.launch_and_exit)
+        response = urwid.Text([
+            'ID:', str(self.romhack.data[0]['id']), '\n',
+            'Title:', self.romhack.data[0]['title'], '\n',
+            'Authors:', str(self.romhack.data[0]['author']), '\n',
+            "Created On:", str(self.romhack.data[0]['created_on']), '\n',
+            "Page URL:", self.romhack.data[0]['page_url'], '\n',
+            "Demo:", self.romhack.data[0]['is_demo'], '\n',
+            "Featured:", self.romhack.data[0]['is_featured'], '\n',
+            "Exit Count:", str(self.romhack.data[0]['exit_count']), '\n',
+            "Exits Cleared:", str(self.romhack.data[0]['exits_cleared']), '\n',
+            "Rating:", str(self.romhack.data[0]['rating']), '\n',
+            "Download Count:", str(self.romhack.data[0]['downloaded_count']), '\n',
+            "Type:", str(self.romhack.data[0]['hack_type']), '\n',
+
+        ])
+        done = self.menu_button(u'Ok', self.launch)
         self.open_box(urwid.Filler(urwid.Pile([response, done])))
 
-    def exit_program(self) -> None:
+    def exit(self) -> None:
         raise urwid.ExitMainLoop()
 
-    def launch_and_exit(self, button: urwid.Button) -> None:
+    def launch(self, button: urwid.Button) -> None:
         if self.romhack is not None:
             self.romhack.launch_in_retroarch()
             self.exit_program()
         
-
-# main_box = SMWRomhackSelection()

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, List, Tuple, Any, Union
+from typing import Optional, List, Tuple, Any, Union, Dict
 import subprocess 
 import sys
 import platform
@@ -19,6 +19,7 @@ class SMWRomhack:
     def __init__(self, sfc_file: str):
         self.sfc: Path = ROMHACKS_DIR / sfc_file
         self.ra_config_dir: Path = locate_retroarch_config_dir()
+        self.data: Dict = db.select_hack_by('path', self.sfc.name)
         self.srm : Optional[Path] = self.get_srm_from_sfc(sfc_file)
         
     def get_srm_from_sfc(self, sfc_file: Union[str, Path]) -> Optional[Path]:
