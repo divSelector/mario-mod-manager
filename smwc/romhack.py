@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, List, Tuple, Any, Union
+from typing import Optional, List, Tuple, Any, Union, Dict
 import subprocess 
 import sys
 import platform
@@ -19,10 +19,9 @@ class SMWRomhack:
     def __init__(self, sfc_file: str):
         self.sfc: Path = ROMHACKS_DIR / sfc_file
         self.ra_config_dir: Path = locate_retroarch_config_dir()
+        self.data: Dict = db.select_hack_by('path', self.sfc.name)
         self.srm : Optional[Path] = self.get_srm_from_sfc(sfc_file)
         
-
-
     def get_srm_from_sfc(self, sfc_file: Union[str, Path]) -> Optional[Path]:
         sfc_path = Path(sfc_file)
         srm_filename = sfc_path.stem + ".srm"
@@ -48,7 +47,7 @@ class SMWRomhack:
         sa1_value = self.read_memory_address(SA1_MEMORY_ADDRESS)
         return sa1_value if sa1_value != 0 else value
     
-    def launch_in_retroarch(self, rewind: bool) -> None:
+    def launch_in_retroarch(self, rewind: Optional[bool] = None) -> None:
 
         def modify_cfg(old: str, new: str, subprocess_cmd: List[str]) -> List[str]:
             modified_ra_cfg: Path = self.ra_config_dir / MODIFIED_RA_CONFIG
