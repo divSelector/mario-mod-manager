@@ -1,7 +1,8 @@
 from random import choice
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Tuple
 from argparse import ArgumentParser, Namespace
 import sys
+import urwid
 
 from smwc import db
 from .database import SMWCentralDatabase
@@ -9,7 +10,8 @@ from .scraper import SMWCentralScraper
 from .downloader import SMWRomhackDownloader
 from .romhack import SMWRomhack
 from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR
-from .utils import validate_clean_rom, get_clean_rom_path
+from .utils import get_clean_rom_path
+from .tui import SMWRomhackSelection
 
 class SMWCommandLineInterface:
 
@@ -21,6 +23,16 @@ class SMWCommandLineInterface:
     EPILOG: str = ""
 
     def __init__(self) -> None:
+
+        def _get_queryset_call():
+            return self.get_queryset(
+                self.args.title, self.args.type, self.args.author, self.args.rating_over, 
+                self.args.rating_under, self.args.exits_over, self.args.exits_under, 
+                self.args.downloads_over, self.args.downloads_under,self.args.date_after, 
+                self.args.date_before, self.args.featured, self.args.demo, rewind
+            )
+
+
         self.scraper: Optional[SMWCentralScraper] = None
         self.downloader: Optional[SMWRomhackDownloader] = None
         
@@ -34,13 +46,17 @@ class SMWCommandLineInterface:
             self.play_hack_with_id(self.args._id, rewind)
 
         elif self.args.random:
-            self.play_random_hack(self.args.title, self.args.type, self.args.author, self.args.rating_over, 
-                                  self.args.rating_under, self.args.exits_over, self.args.exits_under, 
-                                  self.args.downloads_over, self.args.downloads_under,self.args.date_after, 
-                                  self.args.date_before, self.args.featured, self.args.demo, rewind)
+            hacks, options = _get_queryset_call()
+            self.play_random_hack(hacks, options)
             
         if self.args.show_beaten:
             self.show_exits_cleared(beaten=True)
+
+
+        if self.args.list:
+            hacks, options = _get_queryset_call()
+            self.list_hacks(hacks, options)
+        
 
         if self.args.show_started:
             self.show_exits_cleared()
@@ -61,12 +77,15 @@ class SMWCommandLineInterface:
         top_level_options.add_argument('--random', action='store_true', 
             help='Choose a random SMW hack and launch in RetroArch'
         )
+        top_level_options.add_argument('--list', action='store_true', 
+            help='Open text-based user interface to select hack from query'
+        )
         top_level_options.add_argument('--id', type=int, default=None, metavar='X', dest='_id',
             help='Launch a specific hack by ID number. Ignores --random and query options.'
         )
 
         # Query Options
-        query_options = parser.add_argument_group("Query Modifiers (use these with --random)")
+        query_options = parser.add_argument_group("Query Modifiers (use these with --random or --list)")
         query_options.add_argument('--title', type=str, default='', metavar='X',
             help='Substring to match against hack titles to include (e.g., "Super", "World")'
         )
@@ -148,22 +167,30 @@ class SMWCommandLineInterface:
                     db.read(BASE_DIR / 'smwc/sql/delete_hacks_where_null_path.sql'), sql_params=None
                 )
 
-    def play_random_hack(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
+    def get_queryset(self, title_substr: str, type_substr: str, author_substr: str, rating_gt: float, 
                          rating_lt: float, exits_gt: int, exits_lt: int, downloads_gt: int, 
                          downloads_lt: int, created_on_gt: str, created_on_lt: str, 
-                         featured: str, demo: str, rewind: Optional[bool]=None) -> None:
-        hacks: List[dict] = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
+                         featured: str, demo: str, rewind: Optional[bool]=None) -> Tuple[List[dict], Dict]:
+        
+        hacks = db.select_hacks(title_substr, type_substr, author_substr, rating_gt, rating_lt, 
                                 exits_gt, exits_lt, downloads_gt, downloads_lt, created_on_gt,
                                 created_on_lt, featured, demo)
+        
+        return hacks, { 'rewind': rewind }
 
+    def play_random_hack(self, hacks: List[Dict], opts: Dict) -> None:
         try:
             pick: dict = choice(hacks)
         except IndexError as e:
             print(e)
             sys.exit()
-
         self.print_record(pick)
-        self.launch_hack(pick['path'][0], {'rewind': rewind})
+        self.launch_hack(pick['path'][0], opts)
+
+
+    def list_hacks(self, hacks: List[Dict], opts: Dict) -> None:
+        urwid.MainLoop(SMWRomhackSelection(hacks), 
+                       palette=[('reversed', 'standout', '')]).run()
         
 
     def play_hack_with_id(self, _id: int, rewind: Optional[bool]=None) -> None:
