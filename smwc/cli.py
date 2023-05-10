@@ -24,7 +24,7 @@ class SMWCommandLineInterface:
 
     def __init__(self) -> None:
 
-        def _get_queryset_call():
+        def _get_queryset_call() -> Tuple[List[Dict[str, str]], Dict[str, str]]:
             return self.get_queryset(
                 self.args.title, self.args.type, self.args.author, self.args.rating_over, 
                 self.args.rating_under, self.args.exits_over, self.args.exits_under, 

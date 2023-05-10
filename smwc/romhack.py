@@ -46,7 +46,7 @@ class SMWRomhack:
         sa1_value = self.read_memory_address(SA1_MEMORY_ADDRESS)
         return sa1_value if sa1_value != 0 else value
     
-    def launch_in_retroarch(self, rewind: bool = None) -> None:
+    def launch_in_retroarch(self, rewind: Optional[bool] = None) -> None:
 
         def modify_cfg(old: str, new: str, subprocess_cmd: List[str]) -> List[str]:
             modified_ra_cfg: Path = self.ra_config_dir / MODIFIED_RA_CONFIG
