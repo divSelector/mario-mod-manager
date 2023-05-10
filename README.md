@@ -250,6 +250,19 @@ The IDs are quite useful for working on the games you have started but not finis
 
 Clone the repo. Open virtual environment. Install python dependencies:
 
+### Windows
+
+```cmd
+py -m pip install virtualenv
+py -m virtualenv venv
+.\venv\Scripts\activate
+py -m pip install --upgrade pip
+py -m pip install -r .\requirements.txt
+py smwcentral.py --help
+```
+
+### Not Windows
+
 ```bash
 git clone https://github.com/divSelector/smwcentral-scraper.git
 cd smwcentral-scraper
@@ -258,6 +271,7 @@ python3 -m virtualenv venv
 . venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+python smwcentral.py --help
 ```
 
 There are two additional binaries required:
@@ -280,13 +294,7 @@ Install [RetroArch](https://github.com/libretro/RetroArch) in order to use the l
 
 **Another thing...** Once you have downloaded retroarch, you'll need to download a snes core. I use `snes9x_libretro.so` but you can use any SNES core for RA if you specify the path to it in `smwc/config.py`.
 
-#### I have build script for retroarch on debian systems btw
-
-[Here](https://github.com/divSelector/ra-sh/blob/main/build.sh)...
-
-#### I've written more about setting up retroarch and downloading cores before if you're interested
-
-[Here](https://divsel.neocities.org/blog/2023/03/retroarch-linux/)...
+#### [I have build script for retroarch on debian systems btw](https://github.com/divSelector/ra-sh/blob/main/build.sh)
 
 ### 3. Oh yeah... you need a clean Super Mario World rom
 
