@@ -227,21 +227,23 @@ class SMWCommandLineInterface:
 
     @staticmethod
     def print_record(r: Dict[str, str]) -> None:
-        print(f"ID: {r['id']}")
-        print(f"Title: {r['title']}")
-        print(f"Created On: {r['created_on']}")
-        print(f"Page URL: {r['page_url']}")
-        print(f"Is Demo: {r['is_demo']}")
-        print(f"Is Featured: {r['is_featured']}")
-        print(f"Exit Count: {r['exit_count']}")
-        print(f"Exits Cleared: {r['exits_cleared']}")
-        print(f"Rating: {r['rating']}")
-        print(f"Size: {r['size']} {r['size_units']}")
-        print(f"Download Count: {r['downloaded_count']}")
-        print(f"Type: {r['hack_type']}")
-        print(f"Path: {r['path']}")
-        print(f"Author: {r['author']}")
-        input("\nPRESS ANY KEY TO START")
+        print(''.join([
+            f"ID:               {r['id']}\n",
+            f"Title:            {r['title']}\n",
+            f"Created On:       {r['created_on']}\n",
+            f"Page URL:         {r['page_url']}\n",
+            f"Is Demo:          {r['is_demo']}\n",
+            f"Is Featured:      {r['is_featured']}\n",
+            f"Exit Count:       {r['exit_count']}\n",
+            f"Exits Cleared:    {r['exits_cleared']}\n",
+            f"Rating:           {r['rating']}\n",
+            f"Size:             {r['size']} {r['size_units']}\n",
+            f"Download Count:   {r['downloaded_count']}\n",
+            f"Type:             {r['hack_type']}\n",
+            f"Path:             {r['path']}\n",
+            f"Authors:          {r['author']}\n",
+        ]))
+        input("\nPRESS ENTER KEY TO START")
 
 
 if __name__ == '__main__':
