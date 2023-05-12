@@ -98,7 +98,7 @@ class SMWCentralDatabase:
             downloads_gt: int = -1,
             downloads_lt: int = 99999,
             created_on_gt: str = '1999-08-24',
-            created_on_lt: str = '2023-03-24',
+            created_on_lt: str = '3023-03-24',
             featured: str = '',
             demo: str = '') -> List[dict]:
         sql_path = BASE_DIR / 'smwc/sql/select_hacks.sql'

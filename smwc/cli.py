@@ -116,7 +116,7 @@ class SMWCommandLineInterface:
         query_options.add_argument('--date-after', type=str, default='1999-08-24', metavar='X',
             help='Must be uploaded after this date for hack to be considered (e.g., 1999-08-24)'
         )
-        query_options.add_argument('--date-before', type=str, default='2023-03-24', metavar='X',
+        query_options.add_argument('--date-before', type=str, default='3023-03-24', metavar='X',
             help='Must be uploaded before this date for hack to be considered (e.g., 2023-03-24)'
         )
         query_options.add_argument('--featured', type=str, default='', metavar='X',
