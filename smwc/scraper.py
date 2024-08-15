@@ -12,8 +12,19 @@ from .utils import get_bin
 class SMWCentralScraper:
     HACKS_URL = "https://www.smwcentral.net/?p=section&s=smwhacks"
     def __init__(self, url: Optional[str] = None) -> None:
+        self.session = requests.Session()
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate, br",
+            "DNT": "1",
+            "Sec-GPC": "1",
+            "Connection": "keep-alive",
+        }
         self.hacks_url = url if url is not None else self.HACKS_URL
         self.hacks_page_content: str = self.get_page_content(self.hacks_url)
+
 
     def scrape(self) -> None:
         self.hack_pages_count: int = self.get_hack_pages_count(self.hacks_page_content)
@@ -35,11 +46,14 @@ class SMWCentralScraper:
             if record['page_url'] not in self.already_scraped
         ]
 
+    def bypass_ddos(self):
+        self.session.post('https://www.smwcentral.net/', headers=self.headers, data={"unlock_me": "30"})
 
-    @classmethod
-    def get_page_content(cls, page: str) -> str:
+    def get_page_content(self, page: str) -> str:
+        print(f"Bypassing DDoS:")
+        self.bypass_ddos()
         print(f"Requesting page: {page}")
-        res = requests.get(page)
+        res = self.session.get(page)
         res.raise_for_status()
         return str(res.content)
 
@@ -51,7 +65,7 @@ class SMWCentralScraper:
             return int(last_page.string)
         except (ValueError, AttributeError):
             error_ref = last_page.string if last_page is not None else ""
-            print(f"{error_ref} is not a number.")
+            print(f"ERROOR failed to get pages. {error_ref}")
             sys.exit()
 
 
@@ -106,7 +120,7 @@ class SMWCentralScraper:
                 'value': row.find_all('td')[7].string.split('\\xc2\\xa0')[0],
                 'units': row.find_all('td')[7].string.split('\\xc2\\xa0')[1]
             }
-            hack_download_url: str = "https:" + row.find_all('td')[8].select_one('a')['href']
+            hack_download_url: str = row.find_all('td')[8].select_one('a')['href']
             hack_total_downloads: str = row.find_all('td')[8].select_one('span.secondary-info').string.split()[0].replace(',', '')
         except IndexError as e:
             print("Problem scraping size due to separator characters:")
