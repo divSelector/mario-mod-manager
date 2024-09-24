@@ -12,7 +12,7 @@ from .config import (
     DEFAULT_RA_CONFIG,
     MODIFIED_RA_CONFIG
 )
-from .utils import get_bin, locate_retroarch_config_dir
+from .utils import get_bin, locate_retroarch_config_dir, update_stream_text
 from .downloader import ROMHACKS_DIR
 
 class SMWRomhack:
@@ -36,7 +36,6 @@ class SMWRomhack:
                 data = fo.read(size_bytes)
                 return int.from_bytes(data, byteorder="little")
         else:
-            print(f"SRAM Does Not Exist: {self.srm}")
             return 0
 
         
@@ -48,6 +47,8 @@ class SMWRomhack:
         return sa1_value if sa1_value != 0 else value
     
     def launch_in_retroarch(self, rewind: Optional[bool] = None) -> None:
+
+        update_stream_text(self.data[0]['title'], self.data[0]['author'])
 
         def modify_cfg(old: str, new: str, subprocess_cmd: List[str]) -> List[str]:
             modified_ra_cfg: Path = self.ra_config_dir / MODIFIED_RA_CONFIG
@@ -90,7 +91,7 @@ class SMWRomhack:
             cmd = modify_cfg('rewind_enable = "true"',
                              'rewind_enable = "false"', cmd)
 
-        subprocess.run(cmd)
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
         self.post_launch()
 
@@ -101,7 +102,6 @@ class SMWRomhack:
     def update_exit_clear_count(self) -> None:
         count_from_srm: int = self.get_exit_clear_count()
         try:
-            print(self.sfc)
             hack = db.select_hack_by('path', self.sfc.name)[0]
         except IndexError as e:
             print(e)

@@ -62,7 +62,8 @@ def locate_retroarch_config_dir(
             version_output_substrings=['retroarch']
         )
         cmd: List[str] = [str(retroarch_bin), '--verbose', '--log-file', str(tmp), '&', 'pkill', 'retroarch']
-        subprocess.run(cmd)
+
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         with tmp.open('r') as fo:
             lines = fo.readlines()
         config_line_designator = '[INFO] [Config]: Looking for config in: "'
@@ -135,3 +136,32 @@ def get_clean_rom_path(clean_rom_dir: Path = CLEAN_ROM_DIR) -> Optional[Path]:
         handle_not_found()
 
     return None
+
+
+
+def update_stream_text(title, author, max_words_per_line=3, max_chars_per_line=14):
+    stream_text_dir = Path("/mnt/hdd/stream/text")
+    stream_text_title = stream_text_dir / "title.txt"
+    stream_text_author = stream_text_dir / "authors.txt"
+
+    if stream_text_title.exists():
+        words = title.split()
+        lines = []
+        current_line = ""
+
+        for word in words:
+            if (len(current_line.split()) < max_words_per_line and
+                len(current_line) + len(word) + (1 if current_line else 0) <= max_chars_per_line):
+                current_line += (word if not current_line else " " + word)
+            else:
+                lines.append(current_line)
+                current_line = word 
+
+        if current_line:
+            lines.append(current_line)
+
+        stream_text_title.write_text("\n".join(lines))
+
+    if stream_text_author.exists():
+        authors = "by\n" + "\n".join(author)
+        stream_text_author.write_text(authors)

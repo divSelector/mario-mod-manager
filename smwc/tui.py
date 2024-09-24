@@ -2,7 +2,7 @@ import urwid
 from typing import List, Dict, Callable, Optional, Union
 
 from .romhack import SMWRomhack
-
+from .utils import update_stream_text
 
 class SMWRomhackSelection(urwid.WidgetPlaceholder):
     max_box_levels = 4
@@ -85,6 +85,6 @@ class SMWRomhackSelection(urwid.WidgetPlaceholder):
 
     def launch(self, button: urwid.Button) -> None:
         if self.romhack is not None:
-            self.romhack.launch_in_retroarch()
+            # self.romhack.launch_in_retroarch()
             self.exit()
         

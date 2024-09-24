@@ -10,3 +10,4 @@ roms/hacks
 roms/clean/*.sfc
 .pytest*
 *cache
+hacks.txt

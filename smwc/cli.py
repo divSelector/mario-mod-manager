@@ -13,6 +13,8 @@ from .config import DEBUG_SCRAPER, SQLITE_DB_FILE, BASE_DIR
 from .utils import get_clean_rom_path
 from .tui import SMWRomhackSelection
 
+from .utils import update_stream_text
+
 class SMWCommandLineInterface:
 
     PROG: str = 'smwcentral.py'
@@ -243,6 +245,9 @@ class SMWCommandLineInterface:
             f"Path:             {r['path']}\n",
             f"Authors:          {r['author']}\n",
         ]))
+
+        # update_stream_text(r['title'], r['author'])
+
         input("\nPRESS ENTER KEY TO START")
 
 
